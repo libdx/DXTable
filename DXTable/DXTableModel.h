@@ -22,7 +22,7 @@ extern NSString *const DXTableSectionsKey;
 /**
  Enabled sections.
  */
-@property (nonatomic, readonly) NSArray *sections;
+@property (nonatomic, readonly) NSArray *activeSections;
 
 /**
  Returns index path object among enabled rows.

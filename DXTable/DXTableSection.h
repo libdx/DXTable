@@ -13,7 +13,7 @@ extern NSString *const DXTableRowsKey;
 @interface DXTableSection : DXTableItem
 
 @property (nonatomic, readonly) NSArray *allRows;
-@property (nonatomic, readonly) NSArray *rows;
+@property (nonatomic, readonly) NSArray *activeRows;
 
 - (NSInteger)numberOfRows;
 

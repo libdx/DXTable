@@ -26,7 +26,7 @@
     return _allSections;
 }
 
-- (NSArray *)sections
+- (NSArray *)activeSections
 {
     return [_allSections filteredArrayUsingPredicate:
             [DXTableItem predicateForEnabledItems]];
@@ -35,12 +35,12 @@
 - (NSIndexPath *)indexPathOfRow:(DXTableRow *)row
 {
     NSPredicate *containsRow =
-    [NSPredicate predicateWithFormat:@"rows CONTAINS %@", row];
+    [NSPredicate predicateWithFormat:@"activeRows CONTAINS %@", row];
 
-    DXTableSection *section = [self.sections filteredArrayUsingPredicate:containsRow].firstObject;
+    DXTableSection *section = [self.activeSections filteredArrayUsingPredicate:containsRow].firstObject;
 
-    NSUInteger sectionIndex = [self.sections indexOfObject:section];
-    NSUInteger rowIndex = [section.rows indexOfObject:row];
+    NSUInteger sectionIndex = [self.activeSections indexOfObject:section];
+    NSUInteger rowIndex = [section.activeRows indexOfObject:row];
 
     NSIndexPath *indexPath = [NSIndexPath indexPathForRow:rowIndex inSection:sectionIndex];
 
@@ -56,11 +56,11 @@
     NSPredicate *byEnabledAndGivenRow = [NSCompoundPredicate orPredicateWithSubpredicates:
                                          @[[DXTableItem predicateForEnabledItems], byRow]];
 
-    DXTableSection *section = [self.sections filteredArrayUsingPredicate:containsRow].firstObject;
+    DXTableSection *section = [self.activeSections filteredArrayUsingPredicate:containsRow].firstObject;
     // TODO: handle situation when section disabled
     NSArray *rows = [section.allRows filteredArrayUsingPredicate:byEnabledAndGivenRow];
 
-    NSUInteger sectionIndex = [self.sections indexOfObject:section];
+    NSUInteger sectionIndex = [self.activeSections indexOfObject:section];
     NSUInteger rowIndex = [rows indexOfObject:row];
 
     NSIndexPath *indexPath = [NSIndexPath indexPathForRow:rowIndex inSection:sectionIndex];

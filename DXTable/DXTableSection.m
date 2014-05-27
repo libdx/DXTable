@@ -25,7 +25,7 @@
     return _allRows;
 }
 
-- (NSArray *)rows
+- (NSArray *)activeRows
 {
     return [_allRows filteredArrayUsingPredicate:
             [DXTableItem predicateForEnabledItems]];
@@ -34,7 +34,7 @@
 - (NSInteger)numberOfRows
 {
     // Support for repeatable rows
-    return [[self.rows valueForKeyPath:@"@sum.repeatCount"] integerValue];
+    return [[self.activeRows valueForKeyPath:@"@sum.repeatCount"] integerValue];
 }
 
 @end

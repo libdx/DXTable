@@ -10,25 +10,21 @@
 #import "DXTableModel.h"
 #import "DXTableSection.h"
 #import "DXTableRow.h"
+#import "DXTableObserver.h"
 #import "FBKVOController.h"
 #import "DXBindings.h"
 
 #import <objc/runtime.h>
 
-@interface DXTableViewSource ()
+@interface DXTableViewSource () <DXTableObserverDelegate>
 
 @property (nonatomic) DXTableModel *tableModel;
 @property (nonatomic, weak) UITableView *tableView;
 @property (nonatomic, weak) id dataContext;
-
+@property (nonatomic) DXTableObserver *tableObserver;
 @property (nonatomic) FBKVOController *kvoController;
 
 @end
-
-static id nilIfNull(id object)
-{
-    return [object isKindOfClass:[NSNull class]] ? nil : object;
-}
 
 static Class classFromClassOrName(id classOrString)
 {
@@ -54,9 +50,13 @@ static UINib *nibFromNibOrName(id nibOrString)
         self.tableModel = tableModel;
         self.dataContext = dataContext;
         self.tableView = tableView;
-        self.kvoController = [FBKVOController controllerWithObserver:self];
         tableView.delegate = self;
         tableView.dataSource = self;
+        self.kvoController = [FBKVOController controllerWithObserver:self];
+        self.tableObserver = [[DXTableObserver alloc] init];
+        self.tableObserver.delegate = self;
+
+        [self.tableObserver startObservingTableModel:tableModel inDataContext:dataContext];
 
         // TODO: add on table model method that returns dictionary of cell classes and nibs
         // register cell classes and nibs
@@ -75,130 +75,56 @@ static UINib *nibFromNibOrName(id nibOrString)
                 }
             }
         }
-
-        // subscribe to each row "enabled" keypath
-        for (DXTableSection *section in self.tableModel.allSections) {
-            for (DXTableRow *row in section.allRows) {
-                [self.kvoController observe:row keyPath:@"enabled" options:NSKeyValueObservingOptionNew block:
-                 ^(DXTableViewSource *observer, DXTableRow *row, NSDictionary *change) {
-                     BOOL isEnabled = [change[NSKeyValueChangeNewKey] boolValue];
-                     NSArray *indexPathsToInsert;
-                     NSArray *indexPathsToDelete;
-                     if (isEnabled) {
-                         indexPathsToInsert = @[[self.tableModel indexPathOfRow:row]];
-                     } else {
-                         indexPathsToDelete = @[[self.tableModel indexPathOfRowIfWereEnabled:row]];
-                     }
-
-                     [observer.tableView beginUpdates];
-                     [observer.tableView insertRowsAtIndexPaths:indexPathsToInsert
-                                               withRowAnimation:UITableViewRowAnimationFade];
-                     [observer.tableView deleteRowsAtIndexPaths:indexPathsToDelete
-                                               withRowAnimation:UITableViewRowAnimationFade];
-                     [observer.tableView endUpdates];
-                 }];
-            }
-        }
-
-        // subscribe to each section "enabled" keypath
-        // TODO
-
-        // subscribe to some of rows' keypaths (wat?)
-        for (DXTableSection *section in self.tableModel.allSections) {
-            for (DXTableRow *row in section.allRows) {
-                id enabledValue = row[DXTableEnabledKey];
-                NSString *keypath = DXTableKeypathFromObject(enabledValue);
-                if (keypath) {
-                    NSKeyValueObservingOptions options =
-                    NSKeyValueObservingOptionInitial | NSKeyValueObservingOptionNew;
-                    [self.kvoController observe:self.dataContext keyPath:keypath options:options block:
-                    ^(id observer, id object, NSDictionary *change) {
-                        row.enabled = [change[NSKeyValueChangeNewKey] boolValue];
-                    }];
-                }
-            }
-        }
     }
     return self;
+}
+
+#pragma mark - DXTableModelController
+
+- (void)tableObserver:(DXTableObserver *)observer
+didObserveActivityChange:(BOOL)active
+               forRow:(DXTableRow *)row
+          atIndexPath:(NSIndexPath *)indexPath
+{
+    if (active) {
+        [self.tableView insertRowsAtIndexPaths:@[indexPath]
+                              withRowAnimation:UITableViewRowAnimationFade];
+    } else {
+        [self.tableView deleteRowsAtIndexPaths:@[indexPath]
+                              withRowAnimation:UITableViewRowAnimationFade];
+    }
 }
 
 #pragma mark - UITableViewDataSource
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-    return self.tableModel.sections.count;
+    return self.tableModel.activeSections.count;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return [self.tableModel.sections[section] rows].count;
+    return [self.tableModel.activeSections[section] activeRows].count;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    DXTableRow *row = [self.tableModel.sections[indexPath.section] rows][indexPath.row];
+    DXTableRow *row = [self.tableModel.activeSections[indexPath.section] activeRows][indexPath.row];
     id cell = [tableView dequeueReusableCellWithIdentifier:row[DXTableNameKey]
                                               forIndexPath:indexPath];
-
-    NSDictionary *bindings = row[DXTablePropertiesKey];
-    for (NSString *cellKeypath in bindings) { // "textLabel.text": "Hello"
-        id value = bindings[cellKeypath];
-        NSString *dataKeypath = DXTableKeypathFromObject(value);
-        if (dataKeypath == nil) {
-            // assign `value` directly
-            [cell setValue:nilIfNull(value) forKeyPath:cellKeypath];
-        } else {
-            // `value` is actually a keypath then dealing with bindings
-
-            // bind model to views
-            FBKVOController *cellKvoController = [FBKVOController controllerWithObserver:cell];
-            static void *cellKvoControllerKey = &cellKvoControllerKey;
-            objc_setAssociatedObject(cell, cellKvoControllerKey, cellKvoController, OBJC_ASSOCIATION_RETAIN);
-            NSKeyValueObservingOptions options =
-            NSKeyValueObservingOptionInitial | NSKeyValueObservingOptionNew;
-            [cellKvoController observe:self.dataContext keyPath:dataKeypath options:options block:
-            ^(id observer, id object, NSDictionary *change) {
-                id newValue = change[NSKeyValueChangeNewKey];
-                [cell setValue:nilIfNull(newValue) forKeyPath:cellKeypath];
-            }];
-
-            // bind views (controls) to model
-            // lookup UIControl objects among traversing through cellKeypath components
-            // "textField.text"
-            // FIXME: use runtime to retrieve this information,
-            // because objects at specified keypaths might be nil during this code execution
-            NSArray *cellKeypathComponents = [cellKeypath componentsSeparatedByString:@"."];
-            [cellKeypathComponents enumerateObjectsUsingBlock:
-            ^(NSString *component, NSUInteger idx, BOOL *stop) {
-                NSString *leftSideKeypath =
-                [[cellKeypathComponents subarrayWithRange:NSMakeRange(0, idx + 1)]
-                 componentsJoinedByString:@"."];
-                id object = [cell valueForKeyPath:leftSideKeypath];
-                if ([object isKindOfClass:[UIControl class]]) {
-                    UIControl *control = object;
-                    DXValueTarget *target = [[DXValueTarget alloc] init];
-                    [target becomeTargetOfControl:control];
-                    [target setValueChanged:^(id value, UIEvent *event) {
-                        [self.dataContext setValue:nilIfNull(value) forKeyPath:dataKeypath];
-                    }];
-                    static void *ControlValueTargetKey = &ControlValueTargetKey;
-                    objc_setAssociatedObject(control, ControlValueTargetKey, target, OBJC_ASSOCIATION_RETAIN);
-                }
-            }];
-        }
-    }
+    [self.tableObserver setupBindingsForCell:cell atRow:row inDataContext:self.dataContext];
     return cell;
 }
 
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
 {
-    return self.tableModel.sections[section][DXTableTitleKey];
+    return self.tableModel.activeSections[section][DXTableTitleKey];
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    DXTableSection *section = self.tableModel.sections[indexPath.section];
-    NSNumber *height = section.rows[indexPath.row][DXTableHeightKey];
+    DXTableSection *section = self.tableModel.activeSections[indexPath.section];
+    NSNumber *height = section.activeRows[indexPath.row][DXTableHeightKey];
     return height ? height.floatValue : UITableViewAutomaticDimension;
 }
 
@@ -206,8 +132,8 @@ static UINib *nibFromNibOrName(id nibOrString)
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    DXTableSection *section = self.tableModel.sections[indexPath.section];
-    DXTableRow *row = section.rows[indexPath.row];
+    DXTableSection *section = self.tableModel.activeSections[indexPath.section];
+    DXTableRow *row = section.activeRows[indexPath.row];
     SEL action = NSSelectorFromString(row[DXTableActionsKey][DXTableRowDidSelectActionKey]);
     if (action) {
         [[UIApplication sharedApplication] sendAction:action

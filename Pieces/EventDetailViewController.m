@@ -181,16 +181,16 @@ static UIView *lookupFirstResponder(UIView *view)
 - (void)visualInsertDeleteRowsTest
 {
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(2 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-        [[self.tableModel.sections[1] allRows][1] setEnabled:YES];
-        [[self.tableModel.sections[1] allRows][2] setEnabled:NO];
-        [[self.tableModel.sections[0] allRows][0] setEnabled:NO];
-        [[self.tableModel.sections[2] allRows][1] setEnabled:NO];
+        [[self.tableModel.activeSections[1] allRows][1] setEnabled:YES];
+        [[self.tableModel.activeSections[1] allRows][2] setEnabled:NO];
+        [[self.tableModel.activeSections[0] allRows][0] setEnabled:NO];
+        [[self.tableModel.activeSections[2] allRows][1] setEnabled:NO];
 
         dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(2 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-            [[self.tableModel.sections[1] allRows][1] setEnabled:NO];
-            [[self.tableModel.sections[1] allRows][2] setEnabled:YES];
-            [[self.tableModel.sections[0] allRows][0] setEnabled:YES];
-            [[self.tableModel.sections[2] allRows][1] setEnabled:YES];
+            [[self.tableModel.activeSections[1] allRows][1] setEnabled:NO];
+            [[self.tableModel.activeSections[1] allRows][2] setEnabled:YES];
+            [[self.tableModel.activeSections[0] allRows][0] setEnabled:YES];
+            [[self.tableModel.activeSections[2] allRows][1] setEnabled:YES];
         });
     });
 }
