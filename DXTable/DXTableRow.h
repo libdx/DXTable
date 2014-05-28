@@ -8,6 +8,8 @@
 
 #import "DXTableItem.h"
 
+@class DXTableSection;
+
 //extern NSString *const DXTableRowIdentifierKey; //?
 extern NSString *const DXTableRowClassKey;
 extern NSString *const DXTableRowNibKey;
@@ -17,6 +19,10 @@ extern NSString *const DXTableRowDidSelectActionKey;
 
 @interface DXTableRow : DXTableItem
 
+- (instancetype)initWithSection:(DXTableSection *)section
+                        options:(NSDictionary *)options;
+
+@property (nonatomic, readonly) CGFloat height;
 @property (nonatomic, readonly) NSInteger repeatCount;
 
 @end

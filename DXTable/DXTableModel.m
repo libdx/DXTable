@@ -12,6 +12,15 @@
 
 @implementation DXTableModel
 
+@synthesize dataContext = _dataContext;
+- (id)dataContext
+{
+    if (_dataContext == nil) {
+        NSAssert(NO, @"dataContext for the table model %@ has not been setup", self);
+    }
+    return _dataContext;
+}
+
 @synthesize allSections = _allSections;
 - (NSArray *)allSections
 {
@@ -19,7 +28,7 @@
         NSMutableArray *sections = [NSMutableArray array];
         for (NSDictionary *options in self[DXTableSectionsKey]) {
             [sections addObject:[[DXTableSection alloc]
-                                 initWithOptions:options]];
+                                 initWithModel:self options:options]];
         }
         _allSections = sections.copy;
     }

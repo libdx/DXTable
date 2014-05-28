@@ -103,10 +103,8 @@ static id nilIfNull(id object)
              }];
 
             // bind views (controls) to model
-            // lookup UIControl objects among traversing through cellKeypath components
+            // lookup UIControl objects traversing through cellKeypath components
             // "textField.text"
-            // FIXME: use runtime to retrieve this information,
-            // because objects at specified keypaths might be nil during this code execution
             NSArray *cellKeypathComponents = [cellKeypath componentsSeparatedByString:@"."];
             [cellKeypathComponents enumerateObjectsUsingBlock:
              ^(NSString *component, NSUInteger idx, BOOL *stop) {

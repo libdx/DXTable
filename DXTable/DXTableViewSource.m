@@ -104,7 +104,7 @@ didObserveActivityChange:(BOOL)active
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return [self.tableModel.activeSections[section] activeRows].count;
+    return [self.tableModel.activeSections[section] numberOfRows];
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -123,9 +123,8 @@ didObserveActivityChange:(BOOL)active
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    DXTableSection *section = self.tableModel.activeSections[indexPath.section];
-    NSNumber *height = section.activeRows[indexPath.row][DXTableHeightKey];
-    return height ? height.floatValue : UITableViewAutomaticDimension;
+    DXTableSection * section = self.tableModel.activeSections[indexPath.section];
+    return [section.activeRows[indexPath.row] height];
 }
 
 #pragma mark - UITableViewDelegate

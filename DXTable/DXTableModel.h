@@ -14,6 +14,8 @@ extern NSString *const DXTableSectionsKey;
 
 @interface DXTableModel : DXTableItem
 
+@property (nonatomic, weak) id dataContext;
+
 /**
  Sections including disabled (isEnabled == NO).
  */

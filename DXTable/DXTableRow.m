@@ -7,12 +7,56 @@
 //
 
 #import "DXTableRow.h"
+#import "DXTableSection.h"
+
+@interface DXTableRow ()
+
+@property (nonatomic, weak) DXTableSection *section;
+
+@end
 
 @implementation DXTableRow
 
+- (instancetype)initWithOptions:(NSDictionary *)options
+{
+    NSAssert(NO, @"Use designated initializer: -initWithSection:options:");
+    return nil;
+}
+
+- (instancetype)initWithSection:(DXTableSection *)section
+                        options:(NSDictionary *)options
+{
+    self = [super initWithOptions:options];
+    if (self) {
+        self.section = section;
+    }
+    return self;
+}
+
+- (id)dataContext
+{
+    return self.section.dataContext;
+}
+
+- (CGFloat)height
+{
+    CGFloat height = UITableViewAutomaticDimension;
+    if ([self[DXTableHeightKey] isKindOfClass:[NSNumber class]]) {
+        height = [self[DXTableHeightKey] doubleValue];
+    } else {
+        NSString *heightKeypath = DXTableKeypathFromObject(self[DXTableHeightKey]);
+        if (heightKeypath) {
+            height = [[self.dataContext valueForKeyPath:heightKeypath] doubleValue];
+        }
+    }
+    return height;
+}
+
 - (NSInteger)repeatCount
 {
-    return [self[DXTableRepeatableKey] boolValue] == NO ? 1 : 0/* ?? */;
+    NSString *arrayKeypath = DXTableKeypathFromObject(self[DXTableListKey]);
+    return [self[DXTableRepeatableKey] boolValue] == YES ?
+    [[self.dataContext valueForKeyPath:arrayKeypath] integerValue] : 1;
 }
 
 @end

@@ -8,8 +8,37 @@
 
 #import "DXTableSection.h"
 #import "DXTableRow.h"
+#import "DXTableModel.h"
+
+@interface DXTableSection ()
+
+@property (nonatomic, weak) DXTableModel *tableModel;
+
+@end
 
 @implementation DXTableSection
+
+- (instancetype)initWithOptions:(NSDictionary *)options
+{
+    NSAssert(NO, @"Use designated initializer: -initWithModel:options:");
+    return nil;
+}
+
+- (instancetype)initWithModel:(DXTableModel *)tableModel
+                      options:(NSDictionary *)options
+{
+    self = [super initWithOptions:options];
+    if (self) {
+        self.tableModel = tableModel;
+    }
+    return self;
+}
+
+
+- (id)dataContext
+{
+    return self.tableModel.dataContext;
+}
 
 @synthesize allRows = _allRows;
 - (NSArray *)allRows
@@ -18,7 +47,7 @@
         NSMutableArray *rows = [NSMutableArray array];
         for (NSDictionary *options in self[DXTableRowsKey]) {
             [rows addObject:[[DXTableRow alloc]
-                             initWithOptions:options]];
+                             initWithSection:self options:options]];
         }
         _allRows = rows.copy;
     }

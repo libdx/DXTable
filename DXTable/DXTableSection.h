@@ -8,12 +8,17 @@
 
 #import "DXTableItem.h"
 
+@class DXTableModel;
+
 extern NSString *const DXTableRowsKey;
 
 @interface DXTableSection : DXTableItem
 
 @property (nonatomic, readonly) NSArray *allRows;
 @property (nonatomic, readonly) NSArray *activeRows;
+
+- (instancetype)initWithModel:(DXTableModel *)tableModel
+                      options:(NSDictionary *)options;
 
 - (NSInteger)numberOfRows;
 
