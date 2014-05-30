@@ -35,6 +35,11 @@
     return _allSections;
 }
 
+- (NSArray *)allRows
+{
+    return [[self.allSections valueForKeyPath:@"allRows"] valueForKeyPath:@"@unionOfArrays.self.self"];
+}
+
 - (NSArray *)activeSections
 {
     return [_allSections filteredArrayUsingPredicate:

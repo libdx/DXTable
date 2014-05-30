@@ -81,7 +81,7 @@ static UIView *lookupFirstResponder(UIView *view)
                   @{@"titleLabel.text": @"Due date (Tap me)",
                     @"switchControl.on": @"@showsDueDatePicker"}
               },
-            @{DXTableNameKey: @"DueDatePicker",
+            @{DXTableNameKey: @"dueDatePicker",
               DXTableRowNibKey: @"DatePickerCell",
               DXTableEnabledKey: @"@showsDueDatePicker",
               DXTableHeightKey: @216,
@@ -92,6 +92,24 @@ static UIView *lookupFirstResponder(UIView *view)
               DXTablePropertiesKey:
                   @{@"textLabel.text": @"Alert",
                     @"accessoryType": @(UITableViewCellAccessoryDisclosureIndicator)}
+              }
+            ]
+      };
+
+    NSDictionary *stuffSection =
+    @{DXTableNameKey: @"stuff",
+      DXTableTitleKey: @"Stuff to get",
+      DXTableRowsKey:
+          @[@{DXTableNameKey: @"thing",
+              DXTableRepeatableKey: @YES,
+              DXTableListKey: @"@things",
+              DXTablePropertiesKey:
+                  @{@"textLabel.text": @"@.name"}},
+            @{DXTableNameKey: @"newThing",
+              DXTableActionsKey:
+                  @{DXTableRowDidSelectActionKey: @"addThing"},
+              DXTablePropertiesKey:
+                  @{@"textLabel.text": @"Add new thing"}
               }
             ]
       };
@@ -125,8 +143,6 @@ static UIView *lookupFirstResponder(UIView *view)
                             dataContext:self.viewModel
                             options:@{DXTableViewSourceCellClassKey:
                                           [UITableViewCell class]}];
-
-
 }
 
 - (EventViewModel *)viewModel

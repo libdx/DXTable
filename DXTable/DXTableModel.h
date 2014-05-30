@@ -22,6 +22,11 @@ extern NSString *const DXTableSectionsKey;
 @property (nonatomic, readonly) NSArray *allSections;
 
 /**
+ Returns flatten array of all rows from all sections
+ */
+@property (nonatomic, readonly) NSArray *allRows;
+
+/**
  Enabled sections.
  */
 @property (nonatomic, readonly) NSArray *activeSections;

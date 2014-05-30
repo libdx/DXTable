@@ -21,3 +21,5 @@
 
 extern NSString *DXTableViewSourceCellClassKey;
 extern NSString *DXTableViewSourceInsertAnimationKey;
+extern NSString *DXTableViewSourceUseLocalizedStringKey;
+extern NSString *DXTableViewSourceCanEditRowsKey; // are rows editable by default

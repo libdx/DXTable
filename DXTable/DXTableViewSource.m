@@ -82,14 +82,15 @@ static UINib *nibFromNibOrName(id nibOrString)
 #pragma mark - DXTableModelController
 
 - (void)tableObserver:(DXTableObserver *)observer
-didObserveActivityChange:(BOOL)active
-               forRow:(DXTableRow *)row
+  didObserveRowChange:(DXTableRow *)row
           atIndexPath:(NSIndexPath *)indexPath
+        forChangeType:(DXTableObserverChangeType)changeType
+         newIndexPath:(NSIndexPath *)newIndexPath
 {
-    if (active) {
+    if (changeType == DXTableObserverChangeInsert) {
         [self.tableView insertRowsAtIndexPaths:@[indexPath]
                               withRowAnimation:UITableViewRowAnimationFade];
-    } else {
+    } else if (changeType == DXTableObserverChangeDelete) {
         [self.tableView deleteRowsAtIndexPaths:@[indexPath]
                               withRowAnimation:UITableViewRowAnimationFade];
     }
@@ -147,3 +148,5 @@ didObserveActivityChange:(BOOL)active
 
 NSString *DXTableViewSourceCellClassKey = @"CellClass";
 NSString *DXTableViewSourceInsertAnimationKey = @"InsertAnimation";
+NSString *DXTableViewSourceUseLocalizedStringKey = @"UseLocalizedString";
+NSString *DXTableViewSourceCanEditRowsKey = @"CanEditRows";

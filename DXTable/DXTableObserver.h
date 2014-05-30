@@ -11,6 +11,8 @@
 @class DXTableModel, DXTableRow;
 @protocol DXTableObserverDelegate;
 
+// FIXME: redesign this class it is mess of code
+
 // TODO: pickup better name
 // possible names are DXTableBinder[Helper] DXTableObser[er][Helper]
 @interface DXTableObserver : NSObject
@@ -22,12 +24,20 @@
 
 @end
 
+typedef NS_ENUM(NSInteger, DXTableObserverChangeType) {
+    DXTableObserverChangeInsert = 1,
+    DXTableObserverChangeDelete,
+    DXTableObserverChangeMove,
+    DXTableObserverChangeUpdate
+};
+
 @protocol DXTableObserverDelegate <NSObject>
 
 @optional
 - (void)tableObserver:(DXTableObserver *)observer
-    didObserveActivityChange:(BOOL)active
-                      forRow:(DXTableRow *)row
-                 atIndexPath:(NSIndexPath *)indexPath;
+  didObserveRowChange:(DXTableRow *)row
+          atIndexPath:(NSIndexPath *)indexPath
+        forChangeType:(DXTableObserverChangeType)changeType
+         newIndexPath:(NSIndexPath *)newIndexPath;
 
 @end

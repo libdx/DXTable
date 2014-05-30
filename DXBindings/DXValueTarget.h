@@ -15,5 +15,6 @@
 @property (nonatomic, copy) void (^valueChanged)(id value, UIEvent *event);
 
 - (void)becomeTargetOfControl:(UIControl *)control;
+- (void)resignTargetOfControl:(UIControl *)control;
 
 @end

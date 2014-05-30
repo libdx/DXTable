@@ -44,7 +44,7 @@
     if ([self[DXTableHeightKey] isKindOfClass:[NSNumber class]]) {
         height = [self[DXTableHeightKey] doubleValue];
     } else {
-        NSString *heightKeypath = DXTableKeypathFromObject(self[DXTableHeightKey]);
+        NSString *heightKeypath = DXTableParseKeyValue(self[DXTableHeightKey]);
         if (heightKeypath) {
             height = [[self.dataContext valueForKeyPath:heightKeypath] doubleValue];
         }
@@ -54,7 +54,7 @@
 
 - (NSInteger)repeatCount
 {
-    NSString *arrayKeypath = DXTableKeypathFromObject(self[DXTableListKey]);
+    NSString *arrayKeypath = DXTableParseKeyValue(self[DXTableListKey]);
     return [self[DXTableRepeatableKey] boolValue] == YES ?
     [[self.dataContext valueForKeyPath:arrayKeypath] integerValue] : 1;
 }

@@ -15,7 +15,7 @@ extern NSString *const DXTableTitleKey;
 extern NSString *const DXTableHeightKey;
 extern NSString *const DXTableEnabledKey; // aka Visible or Active
 extern NSString *const DXTableRepeatableKey; // aka Template
-extern NSString *const DXTableListKey; // aka Array
+extern NSString *const DXTableListKey; // aka Array or Collection
 extern NSString *const DXTableEditingStyleKey;
 extern NSString *const DXTablePropertiesKey; // aka Attributes or Data or Bindings or Keypaths
 extern NSString *const DXTableActionsKey;
@@ -39,10 +39,15 @@ extern NSString *const DXTableActionsKey;
 
 @end
 
+
+// TODO: move following functions to bindings (table model bindings) or utils module
 /**
- TODO: move this function to bindings (table model bindings) or utils module
  Converts DXTable format of keypath to KVC-compliant keypath.
- Returns `nil` if `object` is nil, not a string object or have wrong format.
- Accepted keypath format is any KVC-compliant keypath with `@` prefix.
+ Returns `nil` if `object` is nil, not a string object or has wrong format.
+ Accepted keypath format is any KVC-compliant keypath with `@` or `@.` prefix.
+ Examples:
+    `@items` - keypath comprises with one key
+    `@items.name` - keypath comprises with couple keys
+    `@.name` - keypath is being resolved against `DXTableListKey` value (is used in repeatable rows)
  */
-NSString *DXTableKeypathFromObject(id object);
+NSString *DXTableParseKeyValue(id value);

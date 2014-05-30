@@ -4,10 +4,11 @@
 - Bindings from views (controls at first place) to model
     ✓ UITextField, UIDatePicker, UIStepper, UISwitch, UIPageControl, UISlider
     - UITextView
-- Fix action sent to deallocated DXValueTarger instance issues
+✓ Fix action sent to deallocated DXValueTarger instance issues
 - Implement more custom cells (with switches etc)
     - Make nice looking form (with alert subform)
 - Support for repeatable items (rows)
+    - Add DXTableRowCollection to abstract repeatable rows
 - Reordering (canMoveRowAt...)
     - rows reordering whithin repeatable items
     - rows reordering in general

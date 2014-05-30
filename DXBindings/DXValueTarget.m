@@ -43,6 +43,13 @@ static UIControlEvents defaultEventsForControl(Class control)
       forControlEvents:defaultEventsForControl([control class])];
 }
 
+- (void)resignTargetOfControl:(UIControl *)control
+{
+    [control removeTarget:self
+                   action:NULL
+         forControlEvents:defaultEventsForControl([control class])];
+}
+
 - (void)controlChanged:(id)control withEvent:(UIEvent *)event
 {
     self.value = [control valueForKeyPath:valueKeypathForControl([control class])];

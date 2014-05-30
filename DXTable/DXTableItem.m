@@ -47,18 +47,6 @@
 
 @end
 
-NSString *DXTableKeypathFromObject(id object)
-{
-    NSString *res;
-    if ([object isKindOfClass:[NSString class]]) {
-        NSString *string = object;
-        if ([string hasPrefix:@"@"]) {
-            res = [string stringByReplacingOccurrencesOfString:@"@" withString:@""];
-        }
-    }
-    return res;
-}
-
 NSString *const DXTableNameKey = @"name";
 NSString *const DXTableTitleKey = @"title";
 NSString *const DXTableHeightKey = @"height";
@@ -68,3 +56,22 @@ NSString *const DXTableListKey = @"list";
 NSString *const DXTableEditingStyleKey = @"editingStyle";
 NSString *const DXTablePropertiesKey = @"properties";
 NSString *const DXTableActionsKey = @"actions";
+
+#pragma mark - Parser
+
+static NSString *const DXKeypathPrefix = @"@";
+static NSString *const DXInnerKeyPathPrefix = @"@.";
+
+NSString *DXTableParseKeyValue(id value)
+{
+    NSString *res;
+    if ([value isKindOfClass:[NSString class]]) {
+        NSString *string = value;
+        for (NSString *prefix in @[DXInnerKeyPathPrefix, DXKeypathPrefix]) {
+            if ([string hasPrefix:prefix]) {
+                res = [string stringByReplacingOccurrencesOfString:prefix withString:@""];
+            }
+        }
+    }
+    return res;
+}

@@ -27,6 +27,13 @@ static NSDate *nextMonth()
     return self;
 }
 
+- (void)addThing
+{
+    NSMutableArray *things = [self mutableArrayValueForKey:@"things"];
+    NSDictionary *thing = @{@"name": [NSDate date].description};
+    [things addObject:thing];
+}
+
 - (void)toggleShowDueDatePicker
 {
     self.showsDueDatePicker = !self.showsDueDatePicker;
