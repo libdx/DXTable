@@ -27,6 +27,14 @@ static NSDate *nextMonth()
     return self;
 }
 
+- (NSArray *)things
+{
+    if (_things == nil) {
+        _things = @[];
+    }
+    return _things.copy;
+}
+
 - (void)addThing
 {
     NSMutableArray *things = [self mutableArrayValueForKey:@"things"];

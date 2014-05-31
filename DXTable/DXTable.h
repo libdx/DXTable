@@ -10,5 +10,6 @@
 #import "DXTableRow.h"
 #import "DXTableSection.h"
 #import "DXTableModel.h"
+#import "DXTableRowArray.h"
 #import "DXTableObserver.h"
 #import "DXTableViewSource.h"

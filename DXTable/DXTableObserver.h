@@ -36,8 +36,8 @@ typedef NS_ENUM(NSInteger, DXTableObserverChangeType) {
 @optional
 - (void)tableObserver:(DXTableObserver *)observer
   didObserveRowChange:(DXTableRow *)row
-          atIndexPath:(NSIndexPath *)indexPath
+         atIndexPaths:(NSArray *)indexPaths
         forChangeType:(DXTableObserverChangeType)changeType
-         newIndexPath:(NSIndexPath *)newIndexPath;
+        newIndexPaths:(NSArray *)newIndexPaths;
 
 @end

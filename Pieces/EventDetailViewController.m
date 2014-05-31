@@ -105,12 +105,13 @@ static UIView *lookupFirstResponder(UIView *view)
               DXTableListKey: @"@things",
               DXTablePropertiesKey:
                   @{@"textLabel.text": @"@.name"}},
+            
             @{DXTableNameKey: @"newThing",
               DXTableActionsKey:
                   @{DXTableRowDidSelectActionKey: @"addThing"},
               DXTablePropertiesKey:
                   @{@"textLabel.text": @"Add new thing"}
-              }
+              },
             ]
       };
 
@@ -133,7 +134,7 @@ static UIView *lookupFirstResponder(UIView *view)
     NSDictionary *eventModel =
     @{DXTableNameKey: @"Event",
       DXTableSectionsKey:
-          @[headSection, datesSection, notesSection]
+          @[headSection, datesSection, stuffSection, notesSection]
       };
 
     self.tableModel = [[DXTableModel alloc] initWithOptions:eventModel];

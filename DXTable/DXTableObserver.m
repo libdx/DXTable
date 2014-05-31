@@ -49,22 +49,22 @@ static id nilIfNull(id object)
     // subscribe to each row "enabled" keypath
     [self observeCollection:tableModel.allRows keyPath:@"enabled" options:NSKeyValueObservingOptionNew block:
      ^(DXTableObserver *observer, DXTableRow *row, NSDictionary *change) {
-         BOOL isEnabled = [change[NSKeyValueChangeNewKey] boolValue];
-         NSIndexPath *indexPath = isEnabled ?
-         [tableModel indexPathOfRow:row] : [tableModel indexPathOfRowIfWereEnabled:row];
-         DXTableObserverChangeType changeType = isEnabled ?
-         DXTableObserverChangeInsert : DXTableObserverChangeDelete;
-
          if ([observer.delegate respondsToSelector:@selector(tableObserver:
                                                              didObserveRowChange:
-                                                             atIndexPath:forChangeType:
-                                                             newIndexPath:)])
+                                                             atIndexPaths:
+                                                             forChangeType:
+                                                             newIndexPaths:)])
          {
+             BOOL isEnabled = [change[NSKeyValueChangeNewKey] boolValue];
+             NSArray *indexPaths = isEnabled ?
+             [tableModel indexPathsOfRow:row] : [tableModel indexPathsOfRowIfWereEnabled:row];
+             DXTableObserverChangeType changeType = isEnabled ?
+             DXTableObserverChangeInsert : DXTableObserverChangeDelete;
              [observer.delegate tableObserver:self
                           didObserveRowChange:row
-                                  atIndexPath:indexPath
+                                 atIndexPaths:indexPaths
                                 forChangeType:changeType
-                                 newIndexPath:nil];
+                                newIndexPaths:nil];
          }
      }];
 
@@ -88,6 +88,44 @@ static id nilIfNull(id object)
     }
 
     // subscribe to repeatable rows to insert/delete cells
+    for (DXTableRow *row in tableModel.allRows) {
+        if (row.isRepeatable) {
+            NSString *listKeypath = DXTableParseKeyValue(row[DXTableListKey]);
+            NSKeyValueObservingOptions options = /*NSKeyValueObservingOptionInitial |*/
+            NSKeyValueObservingOptionNew;
+            [self.kvoController observe:dataContext keyPath:listKeypath options:options block:
+             ^(DXTableObserver *observer, id dataContext, NSDictionary *change) {
+                 if ([observer.delegate respondsToSelector:@selector(tableObserver:
+                                                                     didObserveRowChange:
+                                                                     atIndexPaths:
+                                                                     forChangeType:
+                                                                     newIndexPaths:)])
+                 {
+                     NSIndexSet *indexes = change[NSKeyValueChangeIndexesKey];
+                     NSMutableArray *indexPaths = [NSMutableArray array];
+                     NSUInteger index = indexes.firstIndex;
+                     while (index != NSNotFound) {
+                         NSInteger sectionIndex = [tableModel.activeSections indexOfObject:row.section];
+                         NSIndexPath *indexPath = [NSIndexPath indexPathForRow:index inSection:sectionIndex];
+                         [indexPaths addObject:indexPath];
+                         index = [indexes indexGreaterThanIndex:index];
+                     }
+                     NSInteger kind = [change[NSKeyValueChangeKindKey] integerValue];
+                     DXTableObserverChangeType changeType;
+                     if (kind == NSKeyValueChangeInsertion) {
+                         changeType = DXTableObserverChangeInsert;
+                     } else if (kind == NSKeyValueChangeRemoval) {
+                         changeType = DXTableObserverChangeDelete;
+                     }
+                     [observer.delegate tableObserver:observer
+                                  didObserveRowChange:row
+                                         atIndexPaths:indexPaths
+                                        forChangeType:changeType
+                                        newIndexPaths:nil];
+                 }
+             }];
+        }
+    }
 }
 
 - (void)setupBindingsForCell:(UITableViewCell *)cell atRow:(DXTableRow *)row inDataContext:(id)dataContext;
@@ -101,6 +139,19 @@ static id nilIfNull(id object)
             [cell setValue:nilIfNull(value) forKeyPath:cellKeypath];
         } else {
             // `value` is actually a keypath then dealing with bindings
+
+            { // support for repeatable rows
+                if (row.isRepeatable) {
+
+                    cell.textLabel.text = @"Repeatable Cell";
+                    break; // don't observe repeatable rows for now
+//                    NSString *listKeypath = DXTableParseKeyValue(row[DXTableListKey]);
+//                    // TODO: check is listKeypath is not nil
+//                    dataKeypath = [NSString stringWithFormat:@"%@.%@",
+//                                   listKeypath, dataKeypath];
+                }
+                // FIXME: observe items in array
+            }
 
             // bind model to views
             FBKVOController *cellKvoController = [FBKVOController controllerWithObserver:cell];

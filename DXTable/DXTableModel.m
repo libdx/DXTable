@@ -9,6 +9,7 @@
 #import "DXTableModel.h"
 #import "DXTableSection.h"
 #import "DXTableRow.h"
+#import "DXTableRowArray.h"
 
 @implementation DXTableModel
 
@@ -46,22 +47,30 @@
             [DXTableItem predicateForEnabledItems]];
 }
 
-- (NSIndexPath *)indexPathOfRow:(DXTableRow *)row
+- (NSArray *)indexPathsOfRow:(DXTableRow *)row
 {
     NSPredicate *containsRow =
-    [NSPredicate predicateWithFormat:@"activeRows CONTAINS %@", row];
+    [NSPredicate predicateWithFormat:@"activeRows.array CONTAINS %@", row];
 
-    DXTableSection *section = [self.activeSections filteredArrayUsingPredicate:containsRow].firstObject;
+    DXTableSection *section = [self.activeSections
+                               filteredArrayUsingPredicate:containsRow].firstObject;
 
     NSUInteger sectionIndex = [self.activeSections indexOfObject:section];
-    NSUInteger rowIndex = [section.activeRows indexOfObject:row];
+    NSIndexSet *rowIndexes = [section.activeRows indexesOfRow:row];
 
-    NSIndexPath *indexPath = [NSIndexPath indexPathForRow:rowIndex inSection:sectionIndex];
+    NSMutableArray *indexPaths = [NSMutableArray array];
+    NSUInteger rowIndex = [rowIndexes firstIndex];
+    while (rowIndex != NSNotFound) {
+        NSIndexPath *indexPath = [NSIndexPath indexPathForRow:rowIndex
+                                                    inSection:sectionIndex];
+        [indexPaths addObject:indexPath];
+        rowIndex = [rowIndexes indexGreaterThanIndex:rowIndex];
+    }
 
-    return indexPath;
+    return indexPaths;
 }
 
-- (NSIndexPath *)indexPathOfRowIfWereEnabled:(DXTableRow *)row
+- (NSArray *)indexPathsOfRowIfWereEnabled:(DXTableRow *)row
 {
     NSPredicate *containsRow =
     [NSPredicate predicateWithFormat:@"allRows CONTAINS %@", row];
@@ -72,14 +81,23 @@
 
     DXTableSection *section = [self.activeSections filteredArrayUsingPredicate:containsRow].firstObject;
     // TODO: handle situation when section disabled
-    NSArray *rows = [section.allRows filteredArrayUsingPredicate:byEnabledAndGivenRow];
+    DXTableRowArray *rows =
+    [[DXTableRowArray alloc] initWithArray:
+     [section.allRows filteredArrayUsingPredicate:byEnabledAndGivenRow]];
 
     NSUInteger sectionIndex = [self.activeSections indexOfObject:section];
-    NSUInteger rowIndex = [rows indexOfObject:row];
+    NSIndexSet *rowIndexes = [rows indexesOfRow:row];
 
-    NSIndexPath *indexPath = [NSIndexPath indexPathForRow:rowIndex inSection:sectionIndex];
+    NSMutableArray *indexPaths = [NSMutableArray array];
+    NSUInteger rowIndex = [rowIndexes firstIndex];
+    while (rowIndex != NSNotFound) {
+        NSIndexPath *indexPath = [NSIndexPath indexPathForRow:rowIndex
+                                                    inSection:sectionIndex];
+        [indexPaths addObject:indexPath];
+        rowIndex = [rowIndexes indexGreaterThanIndex:rowIndex];
+    }
 
-    return indexPath;
+    return indexPaths;
 }
 
 @end

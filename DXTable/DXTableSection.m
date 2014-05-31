@@ -9,6 +9,7 @@
 #import "DXTableSection.h"
 #import "DXTableRow.h"
 #import "DXTableModel.h"
+#import "DXTableRowArray.h"
 
 @interface DXTableSection ()
 
@@ -54,16 +55,11 @@
     return _allRows;
 }
 
-- (NSArray *)activeRows
+- (DXTableRowArray *)activeRows
 {
-    return [_allRows filteredArrayUsingPredicate:
-            [DXTableItem predicateForEnabledItems]];
-}
-
-- (NSInteger)numberOfRows
-{
-    // Support for repeatable rows
-    return [[self.activeRows valueForKeyPath:@"@sum.repeatCount"] integerValue];
+    return [[DXTableRowArray alloc] initWithArray:
+    [_allRows filteredArrayUsingPredicate:
+     [DXTableItem predicateForEnabledItems]]];
 }
 
 @end

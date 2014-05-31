@@ -32,14 +32,14 @@ extern NSString *const DXTableSectionsKey;
 @property (nonatomic, readonly) NSArray *activeSections;
 
 /**
- Returns index path object among enabled rows.
+ Returns index path objects among enabled rows.
  Given `row` must be enabled.
  */
-- (NSIndexPath *)indexPathOfRow:(DXTableRow *)row;
+- (NSArray *)indexPathsOfRow:(DXTableRow *)row;
 
 /**
- Returns index path object among enabled rows if given row were enabled.
+ Returns index path objects among enabled rows if given row were enabled.
  */
-- (NSIndexPath *)indexPathOfRowIfWereEnabled:(DXTableRow *)row;
+- (NSArray *)indexPathsOfRowIfWereEnabled:(DXTableRow *)row;
 
 @end

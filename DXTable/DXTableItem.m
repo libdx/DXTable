@@ -70,6 +70,7 @@ NSString *DXTableParseKeyValue(id value)
         for (NSString *prefix in @[DXInnerKeyPathPrefix, DXKeypathPrefix]) {
             if ([string hasPrefix:prefix]) {
                 res = [string stringByReplacingOccurrencesOfString:prefix withString:@""];
+                break;
             }
         }
     }

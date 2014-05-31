@@ -9,12 +9,6 @@
 #import "DXTableRow.h"
 #import "DXTableSection.h"
 
-@interface DXTableRow ()
-
-@property (nonatomic, weak) DXTableSection *section;
-
-@end
-
 @implementation DXTableRow
 
 - (instancetype)initWithOptions:(NSDictionary *)options
@@ -56,7 +50,12 @@
 {
     NSString *arrayKeypath = DXTableParseKeyValue(self[DXTableListKey]);
     return [self[DXTableRepeatableKey] boolValue] == YES ?
-    [[self.dataContext valueForKeyPath:arrayKeypath] integerValue] : 1;
+    [[self.dataContext valueForKeyPath:arrayKeypath] count] : 1;
+}
+
+- (BOOL)isRepeatable
+{
+    return [self[DXTableRepeatableKey] boolValue];
 }
 
 @end

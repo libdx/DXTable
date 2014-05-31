@@ -8,7 +8,8 @@
 - Implement more custom cells (with switches etc)
     - Make nice looking form (with alert subform)
 - Support for repeatable items (rows)
-    - Add DXTableRowCollection to abstract repeatable rows
+    ✓ Add DXTableRowArray to abstract repeatable rows
+    - Add KVO and KVC for repeatable rows
 - Reordering (canMoveRowAt...)
     - rows reordering whithin repeatable items
     - rows reordering in general

@@ -10,6 +10,7 @@
 #import "DXTableModel.h"
 #import "DXTableSection.h"
 #import "DXTableRow.h"
+#import "DXTableRowArray.h"
 #import "DXTableObserver.h"
 #import "FBKVOController.h"
 #import "DXBindings.h"
@@ -48,6 +49,7 @@ static UINib *nibFromNibOrName(id nibOrString)
     self = [super init];
     if (self) {
         self.tableModel = tableModel;
+        self.tableModel.dataContext = dataContext;
         self.dataContext = dataContext;
         self.tableView = tableView;
         tableView.delegate = self;
@@ -83,15 +85,15 @@ static UINib *nibFromNibOrName(id nibOrString)
 
 - (void)tableObserver:(DXTableObserver *)observer
   didObserveRowChange:(DXTableRow *)row
-          atIndexPath:(NSIndexPath *)indexPath
+         atIndexPaths:(NSArray *)indexPaths
         forChangeType:(DXTableObserverChangeType)changeType
-         newIndexPath:(NSIndexPath *)newIndexPath
+        newIndexPaths:(NSArray *)newIndexPaths;
 {
     if (changeType == DXTableObserverChangeInsert) {
-        [self.tableView insertRowsAtIndexPaths:@[indexPath]
+        [self.tableView insertRowsAtIndexPaths:indexPaths
                               withRowAnimation:UITableViewRowAnimationFade];
     } else if (changeType == DXTableObserverChangeDelete) {
-        [self.tableView deleteRowsAtIndexPaths:@[indexPath]
+        [self.tableView deleteRowsAtIndexPaths:indexPaths
                               withRowAnimation:UITableViewRowAnimationFade];
     }
 }
@@ -105,7 +107,7 @@ static UINib *nibFromNibOrName(id nibOrString)
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return [self.tableModel.activeSections[section] numberOfRows];
+    return [self.tableModel.activeSections[section] activeRows].count;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -125,13 +127,14 @@ static UINib *nibFromNibOrName(id nibOrString)
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     DXTableSection * section = self.tableModel.activeSections[indexPath.section];
-    return [section.activeRows[indexPath.row] height];
+    return section.activeRows[indexPath.row].height;
 }
 
 #pragma mark - UITableViewDelegate
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    [self.tableView deselectRowAtIndexPath:indexPath animated:YES];
     DXTableSection *section = self.tableModel.activeSections[indexPath.section];
     DXTableRow *row = section.activeRows[indexPath.row];
     SEL action = NSSelectorFromString(row[DXTableActionsKey][DXTableRowDidSelectActionKey]);
@@ -141,7 +144,6 @@ static UINib *nibFromNibOrName(id nibOrString)
                                                  from:nil
                                              forEvent:nil];
     }
-    [self.tableView deselectRowAtIndexPath:indexPath animated:YES];
 }
 
 @end
