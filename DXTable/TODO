@@ -17,6 +17,7 @@
 
 - Support for model-wide and section-wide rows and sections properties
 - Rename Enabled key to Active key (DXTableEnabledKey to DXTableActiveKey) (?)
+- Cleanup DXTableObserver
 
 - Support for section's header and footer
     (add new subclass of DXTableItem or put logic into DXTableSection ?)
@@ -27,6 +28,7 @@
 - Trigger reloadRowAt... for certain cases:
     - changing height
     - ...
+- Support for more UITableView actions (willSelectCell..., didHighlightCell... etc)
 - Add ability to extend binding to support custom views' properties for binding to model
     - Declare (DX)Binder protocol or base class
     - Implement chain of responsibility

@@ -179,7 +179,7 @@
 				FA02CB34192FE8DE00FAD416 /* EventViewModel.h */,
 				FA02CB35192FE8DE00FAD416 /* EventViewModel.m */,
 				FA0EAE92192E8DAE00E81168 /* Images.xcassets */,
-				FA0EAE87192E8DAE00E81168 /* Supporting Files */,
+				FA0EAE87192E8DAE00E81168 /* Misc */,
 				FA027D3519314E260025EBDC /* FieldCell.xib */,
 				FA027D3719314EAC0025EBDC /* FieldCell.h */,
 				FA027D3819314EAC0025EBDC /* FieldCell.m */,
@@ -193,7 +193,7 @@
 			path = Pieces;
 			sourceTree = "<group>";
 		};
-		FA0EAE87192E8DAE00E81168 /* Supporting Files */ = {
+		FA0EAE87192E8DAE00E81168 /* Misc */ = {
 			isa = PBXGroup;
 			children = (
 				FA0EAE88192E8DAE00E81168 /* Pieces-Info.plist */,
@@ -201,7 +201,7 @@
 				FA0EAE8C192E8DAE00E81168 /* main.m */,
 				FA0EAE8E192E8DAE00E81168 /* Pieces-Prefix.pch */,
 			);
-			name = "Supporting Files";
+			name = Misc;
 			sourceTree = "<group>";
 		};
 		FA0EAE9F192E8DAE00E81168 /* PiecesTests */ = {
