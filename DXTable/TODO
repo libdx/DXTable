@@ -14,10 +14,10 @@
     - rows reordering whithin repeatable items
     - rows reordering in general
     - sections reordering
+- Cleanup DXTableObserver
 
 - Support for model-wide and section-wide rows and sections properties
 - Rename Enabled key to Active key (DXTableEnabledKey to DXTableActiveKey) (?)
-- Cleanup DXTableObserver
 
 - Support for section's header and footer
     (add new subclass of DXTableItem or put logic into DXTableSection ?)

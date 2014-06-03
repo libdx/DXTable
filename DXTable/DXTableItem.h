@@ -8,7 +8,7 @@
 
 #import <Foundation/Foundation.h>
 
-#define DXKeyPath(sel) NSStringFromSelector(@selector(sel)) //?
+//#define DXKeyPath(sel) NSStringFromSelector(@selector(sel)) //?
 
 extern NSString *const DXTableNameKey;
 extern NSString *const DXTableTitleKey;

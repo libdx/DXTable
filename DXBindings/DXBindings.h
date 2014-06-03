@@ -7,3 +7,4 @@
 //
 
 #import "DXValueTarget.h"
+#import "DXKVOInfo.h"

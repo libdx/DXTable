@@ -11,6 +11,7 @@
 		FA027D3619314E260025EBDC /* FieldCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = FA027D3519314E260025EBDC /* FieldCell.xib */; };
 		FA027D3919314EAC0025EBDC /* FieldCell.m in Sources */ = {isa = PBXBuildFile; fileRef = FA027D3819314EAC0025EBDC /* FieldCell.m */; };
 		FA02800B19351A520031CDC9 /* DXTableObserver.m in Sources */ = {isa = PBXBuildFile; fileRef = FA02800A19351A520031CDC9 /* DXTableObserver.m */; };
+		FA02B574193A730800940061 /* DXKVOInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = FA02B573193A730700940061 /* DXKVOInfo.m */; };
 		FA02CB33192FDAC100FAD416 /* EventDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FA02CB32192FDAC100FAD416 /* EventDetailViewController.m */; };
 		FA02CB36192FE8DE00FAD416 /* EventViewModel.m in Sources */ = {isa = PBXBuildFile; fileRef = FA02CB35192FE8DE00FAD416 /* EventViewModel.m */; };
 		FA02CB3A192FED1D00FAD416 /* FBKVOController.m in Sources */ = {isa = PBXBuildFile; fileRef = FA02CB39192FED1D00FAD416 /* FBKVOController.m */; };
@@ -56,6 +57,8 @@
 		FA027D3819314EAC0025EBDC /* FieldCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FieldCell.m; sourceTree = "<group>"; };
 		FA02800919351A520031CDC9 /* DXTableObserver.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DXTableObserver.h; sourceTree = "<group>"; };
 		FA02800A19351A520031CDC9 /* DXTableObserver.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DXTableObserver.m; sourceTree = "<group>"; };
+		FA02B572193A730700940061 /* DXKVOInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DXKVOInfo.h; sourceTree = "<group>"; };
+		FA02B573193A730700940061 /* DXKVOInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DXKVOInfo.m; sourceTree = "<group>"; };
 		FA02CB31192FDAC100FAD416 /* EventDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EventDetailViewController.h; sourceTree = "<group>"; };
 		FA02CB32192FDAC100FAD416 /* EventDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EventDetailViewController.m; sourceTree = "<group>"; };
 		FA02CB34192FE8DE00FAD416 /* EventViewModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EventViewModel.h; sourceTree = "<group>"; };
@@ -234,6 +237,8 @@
 			children = (
 				FA0446C319327EBD00546442 /* DXValueTarget.h */,
 				FA0446C419327EBD00546442 /* DXValueTarget.m */,
+				FA02B572193A730700940061 /* DXKVOInfo.h */,
+				FA02B573193A730700940061 /* DXKVOInfo.m */,
 				FA0446C619327EEE00546442 /* DXBindings.h */,
 			);
 			path = DXBindings;
@@ -365,6 +370,7 @@
 				FA0EAEBA192E930F00E81168 /* DXTableModel.m in Sources */,
 				FA0EAE91192E8DAE00E81168 /* AppDelegate.m in Sources */,
 				FA0EAEB4192E92D600E81168 /* DXTableItem.m in Sources */,
+				FA02B574193A730800940061 /* DXKVOInfo.m in Sources */,
 				FA0446CC1932974B00546442 /* SwitchCell.m in Sources */,
 				FA0446C519327EBD00546442 /* DXValueTarget.m in Sources */,
 				FA02CB3A192FED1D00FAD416 /* FBKVOController.m in Sources */,
