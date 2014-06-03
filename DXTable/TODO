@@ -9,7 +9,8 @@
     - Make nice looking form (with alert subform)
 - Support for repeatable items (rows)
     ✓ Add DXTableRowArray to abstract repeatable rows
-    - Add KVO and KVC for repeatable rows
+    ✓ Add KVO and KVC for repeatable rows
+    - From view to model bindings for repeatable rows
 - Reordering (canMoveRowAt...)
     - rows reordering whithin repeatable items
     - rows reordering in general

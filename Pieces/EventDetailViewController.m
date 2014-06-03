@@ -150,7 +150,7 @@ static UIView *lookupFirstResponder(UIView *view)
 {
     if (_viewModel == nil) {
         _viewModel = [[EventViewModel alloc] init];
-        _viewModel.title = @"Rock-n-roll party";
+//        _viewModel.title = @"Rock-n-roll party";
     }
     return _viewModel;
 }
