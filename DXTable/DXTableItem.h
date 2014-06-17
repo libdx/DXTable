@@ -19,6 +19,7 @@ extern NSString *const DXTableListKey; // aka Array or Collection
 extern NSString *const DXTableEditingStyleKey;
 extern NSString *const DXTablePropertiesKey; // aka Attributes or Data or Bindings or Keypaths
 extern NSString *const DXTableActionsKey;
+extern NSString *const DXTableTargetKey;
 
 // TODO:
 // add key like needsUpdate to trigger reloadRowAt... action

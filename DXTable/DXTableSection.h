@@ -14,6 +14,8 @@ extern NSString *const DXTableRowsKey;
 
 @interface DXTableSection : DXTableItem
 
+@property (nonatomic, weak, readonly) DXTableModel *tableModel;
+
 @property (nonatomic, readonly) NSArray *allRows;
 @property (nonatomic, readonly) DXTableRowArray *activeRows;
 

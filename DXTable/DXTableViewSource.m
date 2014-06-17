@@ -115,7 +115,7 @@ static UINib *nibFromNibOrName(id nibOrString)
     DXTableRow *row = [self.tableModel.activeSections[indexPath.section] activeRows][indexPath.row];
     id cell = [tableView dequeueReusableCellWithIdentifier:row[DXTableNameKey]
                                               forIndexPath:indexPath];
-    [self.tableObserver setupBindingsForCell:cell atRow:row inDataContext:self.dataContext];
+    [self.tableObserver setupBindingsForCell:cell row:row atIndexPath:indexPath inDataContext:self.dataContext];
     return cell;
 }
 
@@ -140,7 +140,7 @@ static UINib *nibFromNibOrName(id nibOrString)
     SEL action = NSSelectorFromString(row[DXTableActionsKey][DXTableRowDidSelectActionKey]);
     if (action) {
         [[UIApplication sharedApplication] sendAction:action
-                                                   to:self.dataContext
+                                                   to:row.target
                                                  from:nil
                                              forEvent:nil];
     }

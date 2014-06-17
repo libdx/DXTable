@@ -175,16 +175,16 @@
 				FA02E8D319505FA800862BB9 /* DXTable.h */,
 				FA02E8D419505FA800862BB9 /* DXTableItem.h */,
 				FA02E8D519505FA800862BB9 /* DXTableItem.m */,
-				FA02E8D619505FA800862BB9 /* DXTableModel.h */,
-				FA02E8D719505FA800862BB9 /* DXTableModel.m */,
-				FA02E8D819505FA800862BB9 /* DXTableObserver.h */,
-				FA02E8D919505FA800862BB9 /* DXTableObserver.m */,
 				FA02E8DA19505FA800862BB9 /* DXTableRow.h */,
 				FA02E8DB19505FA800862BB9 /* DXTableRow.m */,
-				FA02E8DC19505FA800862BB9 /* DXTableRowArray.h */,
-				FA02E8DD19505FA800862BB9 /* DXTableRowArray.m */,
 				FA02E8DE19505FA800862BB9 /* DXTableSection.h */,
 				FA02E8DF19505FA800862BB9 /* DXTableSection.m */,
+				FA02E8D619505FA800862BB9 /* DXTableModel.h */,
+				FA02E8D719505FA800862BB9 /* DXTableModel.m */,
+				FA02E8DC19505FA800862BB9 /* DXTableRowArray.h */,
+				FA02E8DD19505FA800862BB9 /* DXTableRowArray.m */,
+				FA02E8D819505FA800862BB9 /* DXTableObserver.h */,
+				FA02E8D919505FA800862BB9 /* DXTableObserver.m */,
 				FA02E8E019505FA800862BB9 /* DXTableViewSource.h */,
 				FA02E8E119505FA800862BB9 /* DXTableViewSource.m */,
 				FA02E8E219505FA800862BB9 /* TODO */,
@@ -397,6 +397,7 @@
 		FA02E8C719505F5300862BB9 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
 				DSTROOT = /tmp/DXTable.dst;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "DXTable/DXTable-Prefix.pch";
@@ -409,6 +410,7 @@
 		FA02E8C819505F5300862BB9 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
 				DSTROOT = /tmp/DXTable.dst;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "DXTable/DXTable-Prefix.pch";

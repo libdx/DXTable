@@ -236,7 +236,7 @@ static void addObjectIfNotNil(NSMutableArray *array, id object)
     }
 }
 
-- (void)setupBindingsForCell:(UITableViewCell *)cell atRow:(DXTableRow *)row inDataContext:(id)dataContext
+- (void)setupBindingsForCell:(UITableViewCell *)cell row:(DXTableRow *)row atIndexPath:(NSIndexPath *)indexPath inDataContext:(id)dataContext
 {
     NSDictionary *bindings = row[DXTablePropertiesKey];
     for (NSString *cellKeypath in bindings) { // "textLabel.text": "Hello"
@@ -256,13 +256,16 @@ static void addObjectIfNotNil(NSMutableArray *array, id object)
                 NSString *listKeypath = DXTableParseKeyValue(row[DXTableListKey]);
                 // stupid way to observe objects in array
                 NSArray *list = [dataContext valueForKeyPath:listKeypath];
-                for (id item in list) {
-                    [modelToViewBindings addObject:
-                     [self bindInfoFromDataContext:item
-                                       dataKeypath:dataKeypath
-                                            toView:cell
-                                       viewKeypath:cellKeypath]];
-                }
+                // find first index in section of repeatable row
+                NSUInteger firstRowIndex = [row.section.activeRows indexesOfRow:row].firstIndex;
+                NSInteger rowIndex = indexPath.row - firstRowIndex;
+                id item  = list[rowIndex];
+
+                [modelToViewBindings addObject:
+                 [self bindInfoFromDataContext:item
+                                   dataKeypath:dataKeypath
+                                        toView:cell
+                                   viewKeypath:cellKeypath]];
             } else {
                 DXKVOInfo *modelToView = [self bindInfoFromDataContext:dataContext
                                                            dataKeypath:dataKeypath
@@ -291,6 +294,7 @@ static void addObjectIfNotNil(NSMutableArray *array, id object)
             }
 
             FBKVOController *cellKvoController = [self kvoControllerForObject:cell];
+            [cellKvoController unobserve:cell];
             for (id info in modelToViewBindings) {
                 [self observeWithInfo:info usingKVOController:cellKvoController];
             }

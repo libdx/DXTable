@@ -11,6 +11,12 @@
 #import "DXTableRow.h"
 #import "DXTableSection.h"
 
+@interface DXTableRow ()
+
+@property (nonatomic, weak) DXTableSection *section;
+
+@end
+
 @implementation DXTableRow
 
 - (instancetype)initWithOptions:(NSDictionary *)options
@@ -32,6 +38,11 @@
 - (id)dataContext
 {
     return self.section.dataContext;
+}
+
+- (id)target
+{
+    return self[DXTableTargetKey];
 }
 
 - (CGFloat)height

@@ -14,6 +14,9 @@ extern NSString *const DXTableSectionsKey;
 
 @interface DXTableModel : DXTableItem
 
+/**
+ Data context (a.k.a. data provider) an object which have KVO and KVC compliant properties
+ */
 @property (nonatomic, weak) id dataContext;
 
 /**

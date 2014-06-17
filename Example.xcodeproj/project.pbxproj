@@ -28,7 +28,7 @@
 		FA02E95E1950615800862BB9 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = FA02E95A1950615800862BB9 /* InfoPlist.strings */; };
 		FA02E95F1950615800862BB9 /* ExampleTests-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = FA02E95C1950615800862BB9 /* ExampleTests-Info.plist */; };
 		FA02E9601950615800862BB9 /* ExampleTests.m in Sources */ = {isa = PBXBuildFile; fileRef = FA02E95D1950615800862BB9 /* ExampleTests.m */; };
-		FA02E9781950628B00862BB9 /* libDXTable.a in Frameworks */ = {isa = PBXBuildFile; fileRef = FA02E972195061D500862BB9 /* libDXTable.a */; };
+		FA02E9B419508C5900862BB9 /* libDXTable.a in Frameworks */ = {isa = PBXBuildFile; fileRef = FA02E9AF19508C3C00862BB9 /* libDXTable.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -39,19 +39,26 @@
 			remoteGlobalIDString = FA02E8FA195060B600862BB9;
 			remoteInfo = Example;
 		};
-		FA02E971195061D500862BB9 /* PBXContainerItemProxy */ = {
+		FA02E9AE19508C3C00862BB9 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
-			containerPortal = FA02E96C195061D500862BB9 /* DXTable.xcodeproj */;
+			containerPortal = FA02E9A919508C3C00862BB9 /* DXTable.xcodeproj */;
 			proxyType = 2;
 			remoteGlobalIDString = FA02E8A319505F5300862BB9;
 			remoteInfo = DXTable;
 		};
-		FA02E973195061D500862BB9 /* PBXContainerItemProxy */ = {
+		FA02E9B019508C3C00862BB9 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
-			containerPortal = FA02E96C195061D500862BB9 /* DXTable.xcodeproj */;
+			containerPortal = FA02E9A919508C3C00862BB9 /* DXTable.xcodeproj */;
 			proxyType = 2;
 			remoteGlobalIDString = FA02E8B319505F5300862BB9;
 			remoteInfo = DXTableTests;
+		};
+		FA02E9B219508C4900862BB9 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = FA02E9A919508C3C00862BB9 /* DXTable.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = FA02E8A219505F5300862BB9;
+			remoteInfo = DXTable;
 		};
 /* End PBXContainerItemProxy section */
 
@@ -85,7 +92,7 @@
 		FA02E95B1950615800862BB9 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		FA02E95C1950615800862BB9 /* ExampleTests-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "ExampleTests-Info.plist"; sourceTree = "<group>"; };
 		FA02E95D1950615800862BB9 /* ExampleTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ExampleTests.m; sourceTree = "<group>"; };
-		FA02E96C195061D500862BB9 /* DXTable.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; path = DXTable.xcodeproj; sourceTree = "<group>"; };
+		FA02E9A919508C3C00862BB9 /* DXTable.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; path = DXTable.xcodeproj; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -93,7 +100,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				FA02E9781950628B00862BB9 /* libDXTable.a in Frameworks */,
+				FA02E9B419508C5900862BB9 /* libDXTable.a in Frameworks */,
 				FA02E901195060B600862BB9 /* CoreGraphics.framework in Frameworks */,
 				FA02E903195060B600862BB9 /* UIKit.framework in Frameworks */,
 				FA02E8FF195060B600862BB9 /* Foundation.framework in Frameworks */,
@@ -116,7 +123,7 @@
 		FA02E8F2195060B600862BB9 = {
 			isa = PBXGroup;
 			children = (
-				FA02E96C195061D500862BB9 /* DXTable.xcodeproj */,
+				FA02E9A919508C3C00862BB9 /* DXTable.xcodeproj */,
 				FA02E9301950614F00862BB9 /* Example */,
 				FA02E9411950614F00862BB9 /* Images.xcassets */,
 				FA02E9591950615800862BB9 /* ExampleTests */,
@@ -197,11 +204,11 @@
 			name = Cells;
 			sourceTree = "<group>";
 		};
-		FA02E96D195061D500862BB9 /* Products */ = {
+		FA02E9AA19508C3C00862BB9 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				FA02E972195061D500862BB9 /* libDXTable.a */,
-				FA02E974195061D500862BB9 /* DXTableTests.xctest */,
+				FA02E9AF19508C3C00862BB9 /* libDXTable.a */,
+				FA02E9B119508C3C00862BB9 /* DXTableTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -220,6 +227,7 @@
 			buildRules = (
 			);
 			dependencies = (
+				FA02E9B319508C4900862BB9 /* PBXTargetDependency */,
 			);
 			name = Example;
 			productName = Example;
@@ -270,8 +278,8 @@
 			projectDirPath = "";
 			projectReferences = (
 				{
-					ProductGroup = FA02E96D195061D500862BB9 /* Products */;
-					ProjectRef = FA02E96C195061D500862BB9 /* DXTable.xcodeproj */;
+					ProductGroup = FA02E9AA19508C3C00862BB9 /* Products */;
+					ProjectRef = FA02E9A919508C3C00862BB9 /* DXTable.xcodeproj */;
 				},
 			);
 			projectRoot = "";
@@ -283,18 +291,18 @@
 /* End PBXProject section */
 
 /* Begin PBXReferenceProxy section */
-		FA02E972195061D500862BB9 /* libDXTable.a */ = {
+		FA02E9AF19508C3C00862BB9 /* libDXTable.a */ = {
 			isa = PBXReferenceProxy;
 			fileType = archive.ar;
 			path = libDXTable.a;
-			remoteRef = FA02E971195061D500862BB9 /* PBXContainerItemProxy */;
+			remoteRef = FA02E9AE19508C3C00862BB9 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
-		FA02E974195061D500862BB9 /* DXTableTests.xctest */ = {
+		FA02E9B119508C3C00862BB9 /* DXTableTests.xctest */ = {
 			isa = PBXReferenceProxy;
 			fileType = wrapper.cfbundle;
 			path = DXTableTests.xctest;
-			remoteRef = FA02E973195061D500862BB9 /* PBXContainerItemProxy */;
+			remoteRef = FA02E9B019508C3C00862BB9 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 /* End PBXReferenceProxy section */
@@ -353,6 +361,11 @@
 			isa = PBXTargetDependency;
 			target = FA02E8FA195060B600862BB9 /* Example */;
 			targetProxy = FA02E91B195060B600862BB9 /* PBXContainerItemProxy */;
+		};
+		FA02E9B319508C4900862BB9 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = DXTable;
+			targetProxy = FA02E9B219508C4900862BB9 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -451,6 +464,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Alexander Ignatenko (K2MQ9CJ648)";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Example/Example-Prefix.pch";
 				HEADER_SEARCH_PATHS = (
@@ -460,6 +474,7 @@
 				);
 				INFOPLIST_FILE = "Example/Example-Info.plist";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "79F9A354-C485-4D4F-95E4-82F1F0D2F3D7";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -478,6 +493,7 @@
 				);
 				INFOPLIST_FILE = "Example/Example-Info.plist";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "79F9A354-C485-4D4F-95E4-82F1F0D2F3D7";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;

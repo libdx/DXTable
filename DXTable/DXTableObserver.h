@@ -21,7 +21,7 @@
 @property (nonatomic, weak) id<DXTableObserverDelegate> delegate;
 
 - (void)startObservingTableModel:(DXTableModel *)tableModel inDataContext:(id)dataContext;
-- (void)setupBindingsForCell:(UITableViewCell *)cell atRow:(DXTableRow *)row inDataContext:(id)dataContext;
+- (void)setupBindingsForCell:(UITableViewCell *)cell row:(DXTableRow *)row atIndexPath:(NSIndexPath *)indexPath inDataContext:(id)dataContext;
 
 @end
 

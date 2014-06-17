@@ -25,9 +25,11 @@ extern NSString *const DXTableRowDidSelectActionKey;
 - (instancetype)initWithSection:(DXTableSection *)section
                         options:(NSDictionary *)options;
 
-@property (nonatomic, weak) DXTableSection *section;
+@property (nonatomic, weak, readonly) DXTableSection *section;
 
 @property (nonatomic, readonly, getter=isRepeatable) BOOL repeatable;
+
+@property (nonatomic, readonly) id target;
 
 @property (nonatomic, readonly) CGFloat height;
 @property (nonatomic, readonly) NSInteger repeatCount;

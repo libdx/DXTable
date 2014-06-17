@@ -56,6 +56,7 @@ NSString *const DXTableListKey = @"list";
 NSString *const DXTableEditingStyleKey = @"editingStyle";
 NSString *const DXTablePropertiesKey = @"properties";
 NSString *const DXTableActionsKey = @"actions";
+NSString *const DXTableTargetKey = @"target";
 
 #pragma mark - Parser
 
