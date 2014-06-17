@@ -6,6 +6,8 @@
 //  Copyright (c) 2014 Alexander Ignatenko. All rights reserved.
 //
 
+#import <UIKit/UIKit.h>
+
 #import "DXTableModel.h"
 #import "DXTableSection.h"
 #import "DXTableRow.h"

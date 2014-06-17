@@ -7,6 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
+#import <UIKit/UIKit.h>
 
 @class DXTableModel, DXTableRow;
 @protocol DXTableObserverDelegate;

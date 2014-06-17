@@ -6,8 +6,8 @@
 //  Copyright (c) 2014 Alexander Ignatenko. All rights reserved.
 //
 
+#import <DXTable.h>
 #import "EventDetailViewController.h"
-#import "DXTable.h"
 #import "EventViewModel.h"
 
 @interface EventDetailViewController ()

@@ -6,6 +6,9 @@
 //  Copyright (c) 2014 Alexander Ignatenko. All rights reserved.
 //
 
+#import <Foundation/Foundation.h>
+#import <CoreGraphics/CoreGraphics.h>
+
 #import "DXTableItem.h"
 
 @class DXTableSection;

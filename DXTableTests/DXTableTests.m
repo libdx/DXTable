@@ -1,18 +1,18 @@
 //
-//  PiecesTests.m
-//  PiecesTests
+//  DXTableTests.m
+//  DXTableTests
 //
-//  Created by Alexander Ignatenko on 22/05/14.
+//  Created by Alexander Ignatenko on 17/06/14.
 //  Copyright (c) 2014 Alexander Ignatenko. All rights reserved.
 //
 
 #import <XCTest/XCTest.h>
 
-@interface PiecesTests : XCTestCase
+@interface DXTableTests : XCTestCase
 
 @end
 
-@implementation PiecesTests
+@implementation DXTableTests
 
 - (void)setUp
 {
