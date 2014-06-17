@@ -132,6 +132,18 @@ static UINib *nibFromNibOrName(id nibOrString)
 
 #pragma mark - UITableViewDelegate
 
+static UIResponder *lookupRespondent(UIResponder *topResponder, SEL action)
+{
+    UIResponder *responder = topResponder;
+    while (responder) {
+        if ([responder respondsToSelector:action]) {
+            break;
+        }
+        responder = [responder nextResponder];
+    }
+    return responder;
+}
+
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     [self.tableView deselectRowAtIndexPath:indexPath animated:YES];
@@ -139,9 +151,13 @@ static UINib *nibFromNibOrName(id nibOrString)
     DXTableRow *row = section.activeRows[indexPath.row];
     SEL action = NSSelectorFromString(row[DXTableActionsKey][DXTableRowDidSelectActionKey]);
     if (action) {
+        id target = row.target;
+        if (target == nil) {
+            target = lookupRespondent(tableView, action);
+        }
         [[UIApplication sharedApplication] sendAction:action
-                                                   to:row.target
-                                                 from:nil
+                                                   to:target
+                                                 from:indexPath
                                              forEvent:nil];
     }
 }
