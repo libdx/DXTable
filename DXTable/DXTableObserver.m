@@ -119,7 +119,7 @@ static void addObjectIfNotNil(NSMutableArray *array, id object)
             NSIndexSet *indexes = change[NSKeyValueChangeIndexesKey];
 
             NSMutableArray *indexPaths = [NSMutableArray array];
-            NSUInteger index = indexes.firstIndex;
+            NSUInteger index = indexes ? indexes.firstIndex : NSNotFound;
             while (index != NSNotFound) {
                 NSInteger sectionIndex = [tableModel.activeSections indexOfObject:row.section];
                 NSIndexPath *indexPath = [NSIndexPath indexPathForRow:index inSection:sectionIndex];
@@ -133,6 +133,8 @@ static void addObjectIfNotNil(NSMutableArray *array, id object)
                 changeType = DXTableObserverChangeInsert;
             } else if (kind == NSKeyValueChangeRemoval) {
                 changeType = DXTableObserverChangeDelete;
+            } else if (kind == NSKeyValueChangeSetting) {
+                changeType = DXTableObserverChangeSetting;
             }
 
             [observer.delegate tableObserver:observer

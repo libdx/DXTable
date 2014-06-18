@@ -29,7 +29,8 @@ typedef NS_ENUM(NSInteger, DXTableObserverChangeType) {
     DXTableObserverChangeInsert = 1,
     DXTableObserverChangeDelete,
     DXTableObserverChangeMove,
-    DXTableObserverChangeUpdate
+    DXTableObserverChangeUpdate,
+    DXTableObserverChangeSetting
 };
 
 @protocol DXTableObserverDelegate <NSObject>

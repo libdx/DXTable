@@ -95,6 +95,11 @@ static UINib *nibFromNibOrName(id nibOrString)
     } else if (changeType == DXTableObserverChangeDelete) {
         [self.tableView deleteRowsAtIndexPaths:indexPaths
                               withRowAnimation:UITableViewRowAnimationFade];
+    } else if (changeType == DXTableObserverChangeSetting) {
+            [self.tableView reloadData];
+    } else if (changeType == DXTableObserverChangeUpdate) {
+        [self.tableView reloadRowsAtIndexPaths:indexPaths
+                              withRowAnimation:UITableViewRowAnimationFade];
     }
 }
 

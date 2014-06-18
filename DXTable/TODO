@@ -48,6 +48,7 @@ ________
 ## Issues
 ✓ Fix action sent to deallocated DXValueTarger instance issues
 - Profile and fix possible leaks
+✓ Fix freeze when setting observable array
 
 
 Example:
