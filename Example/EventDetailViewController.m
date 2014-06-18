@@ -103,7 +103,7 @@ static UIView *lookupFirstResponder(UIView *view)
       DXTableRowsKey:
           @[@{DXTableNameKey: @"thing",
               DXTableRepeatableKey: @YES,
-              DXTableListKey: @"@things",
+              DXTableArrayKey: @"@things",
               DXTableBindingsKey:
                   @{@"textLabel.text": @"@.name"}},
             

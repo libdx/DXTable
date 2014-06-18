@@ -61,7 +61,7 @@
 
 - (NSInteger)repeatCount
 {
-    NSString *arrayKeypath = DXTableParseKeyValue(self[DXTableListKey]);
+    NSString *arrayKeypath = DXTableParseKeyValue(self[DXTableArrayKey]);
     return [self[DXTableRepeatableKey] boolValue] == YES ?
     [[self.dataContext valueForKeyPath:arrayKeypath] count] : 1;
 }

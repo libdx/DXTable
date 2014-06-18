@@ -110,7 +110,7 @@ static void addObjectIfNotNil(NSMutableArray *array, id object)
         info = [[DXKVOInfo alloc] init];
         info.object = dataContext;
         info.options = NSKeyValueObservingOptionNew;
-        info.keypath = DXTableParseKeyValue(row[DXTableListKey]);
+        info.keypath = DXTableParseKeyValue(row[DXTableArrayKey]);
         info.block = ^(DXTableObserver *observer, id dataContext, NSDictionary *change) {
             if (!_observerFlags.delegateRowChange) {
                 return;
@@ -253,13 +253,13 @@ static void addObjectIfNotNil(NSMutableArray *array, id object)
             if (row.isRepeatable) {
                 // support for repeatable rows
 
-                NSString *listKeypath = DXTableParseKeyValue(row[DXTableListKey]);
+                NSString *arrayKeypath = DXTableParseKeyValue(row[DXTableArrayKey]);
                 // stupid way to observe objects in array
-                NSArray *list = [dataContext valueForKeyPath:listKeypath];
+                NSArray *array = [dataContext valueForKeyPath:arrayKeypath];
                 // find first index in section of repeatable row
                 NSUInteger firstRowIndex = [row.section.activeRows indexesOfRow:row].firstIndex;
                 NSInteger rowIndex = indexPath.row - firstRowIndex;
-                id item  = list[rowIndex];
+                id item  = array[rowIndex];
 
                 [modelToViewBindings addObject:
                  [self bindInfoFromDataContext:item
