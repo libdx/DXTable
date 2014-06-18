@@ -81,7 +81,7 @@ static UINib *nibFromNibOrName(id nibOrString)
     return self;
 }
 
-#pragma mark - DXTableModelController
+#pragma mark - DXTableObserverDelegate
 
 - (void)tableObserver:(DXTableObserver *)observer
   didObserveRowChange:(DXTableRow *)row
