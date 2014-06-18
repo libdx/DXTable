@@ -1,12 +1,12 @@
+DXTable:
+________
+
 ✓ Support of custom cell classes and nibs
 ✓ Bindings from model to views
 ✓ Show and hide due date picker using view model
 - Bindings from views (controls at first place) to model
     ✓ UITextField, UIDatePicker, UIStepper, UISwitch, UIPageControl, UISlider
     - UITextView
-✓ Fix action sent to deallocated DXValueTarger instance issues
-- Implement more custom cells (with switches etc)
-    - Make nice looking form (with alert subform)
 - Support for repeatable items (rows)
     ✓ Add DXTableRowArray to abstract repeatable rows
     ✓ Add KVO and KVC for repeatable rows
@@ -17,15 +17,18 @@
     - sections reordering
 - Cleanup DXTableObserver
 
+- Search support (describe declerative info for UISearchDisplayController and/or UISearchBar and/or UISearchController)
 - Support for model-wide and section-wide rows and sections properties
 ✓ Rename Enabled key to Active key (DXTableEnabledKey to DXTableActiveKey)
+✓ Accept values for DXTableRowClassKey both string and class object and
+    for DXTableRowNibKey both string and nib object
 
 - Support for section's header and footer
     (add new subclass of DXTableItem or put logic into DXTableSection ?)
+- Support for table header and footer with bindings
 - Support for binding of custom UITableViewCell properties (i.e. NSString *title etc) (?)
 - Support of actions for buttons (UIButton, UISegmentedControl)
-- Support UITableView for bindings (wat?)
-- Enabling/disabling sections
+- Activating/deactivating sections
 - Trigger reloadRowAt... for certain cases:
     - changing height
     - ...
@@ -40,7 +43,15 @@
 - Add configuration properties on TableViewSource
 - Make TableViewSource subclassable (?)
 - Section indexes (ABCDE...Z)
-- Accept values for DXTableRowClassKey both string and class object and
-    for DXTableRowNibKey both string and nib object
-- Search support (describe declerative info for UISearchDisplayController and/or UISearchBar)
 - JSON
+
+## Issues
+✓ Fix action sent to deallocated DXValueTarger instance issues
+- Profile and fix possible leaks
+
+
+Example:
+__________
+
+- Implement more custom cells (with switches etc)
+    - Make nice looking form (with alert subform)
