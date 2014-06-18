@@ -204,6 +204,18 @@ static void addObjectIfNotNil(NSMutableArray *array, id object)
     return target;
 }
 
+- (DXViewDelegate *)viewDelegateForTextView:(UITextView *)textView
+{
+    static void *DelegateKey = &DelegateKey;
+    DXViewDelegate *delegate = objc_getAssociatedObject(textView, DelegateKey);
+    if (delegate == nil) {
+        delegate = [[DXViewDelegate alloc] init];
+        textView.delegate = delegate;
+        objc_setAssociatedObject(textView, DelegateKey, delegate, OBJC_ASSOCIATION_RETAIN);
+    }
+    return delegate;
+}
+
 - (void)observeWithInfo:(DXKVOInfo *)info
 {
     if (info.type == DXKVOTypeObject) {
@@ -289,6 +301,11 @@ static void addObjectIfNotNil(NSMutableArray *array, id object)
                          UIControl *control = object;
                          DXValueTarget *target = [self valueTargetForControl:control];
                          target.valueChanged = ^(id value, UIEvent *event) {
+                             [dataContext setValue:nilIfNull(value) forKeyPath:dataKeypath];
+                         };
+                     } else if ([object isKindOfClass:[UITextView class]]) {
+                         DXViewDelegate *delegate = [self viewDelegateForTextView:object];
+                         delegate.valueChanged = ^(id value) {
                              [dataContext setValue:nilIfNull(value) forKeyPath:dataKeypath];
                          };
                      }

@@ -4,9 +4,9 @@ ________
 ✓ Support of custom cell classes and nibs
 ✓ Bindings from model to views
 ✓ Show and hide due date picker using view model
-- Bindings from views (controls at first place) to model
+✓ Bindings from views (controls at first place) to model
     ✓ UITextField, UIDatePicker, UIStepper, UISwitch, UIPageControl, UISlider
-    - UITextView
+    ✓ UITextView
 - Support for repeatable items (rows)
     ✓ Add DXTableRowArray to abstract repeatable rows
     ✓ Add KVO and KVC for repeatable rows

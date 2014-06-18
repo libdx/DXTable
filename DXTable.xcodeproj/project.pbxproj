@@ -24,6 +24,7 @@
 		FA02E8EE19505FA800862BB9 /* DXTableSection.m in Sources */ = {isa = PBXBuildFile; fileRef = FA02E8DF19505FA800862BB9 /* DXTableSection.m */; };
 		FA02E8EF19505FA800862BB9 /* DXTableViewSource.m in Sources */ = {isa = PBXBuildFile; fileRef = FA02E8E119505FA800862BB9 /* DXTableViewSource.m */; };
 		FA02E8F019505FA800862BB9 /* FBKVOController.m in Sources */ = {isa = PBXBuildFile; fileRef = FA02E8E519505FA800862BB9 /* FBKVOController.m */; };
+		FA0464641951F63900EF8681 /* DXViewDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = FA0464631951F63900EF8681 /* DXViewDelegate.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -82,6 +83,8 @@
 		FA02E8E519505FA800862BB9 /* FBKVOController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FBKVOController.m; sourceTree = "<group>"; };
 		FA02E8E619505FA800862BB9 /* LICENSE */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = LICENSE; sourceTree = "<group>"; };
 		FA02E8F119505FF100862BB9 /* DXTable-Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "DXTable-Prefix.pch"; sourceTree = "<group>"; };
+		FA0464621951F63900EF8681 /* DXViewDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DXViewDelegate.h; sourceTree = "<group>"; };
+		FA0464631951F63900EF8681 /* DXViewDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DXViewDelegate.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -164,6 +167,8 @@
 				FA02E8CF19505FA800862BB9 /* DXKVOInfo.m */,
 				FA02E8D019505FA800862BB9 /* DXValueTarget.h */,
 				FA02E8D119505FA800862BB9 /* DXValueTarget.m */,
+				FA0464621951F63900EF8681 /* DXViewDelegate.h */,
+				FA0464631951F63900EF8681 /* DXViewDelegate.m */,
 			);
 			path = DXBindings;
 			sourceTree = "<group>";
@@ -290,6 +295,7 @@
 				FA02E8F019505FA800862BB9 /* FBKVOController.m in Sources */,
 				FA02E8EF19505FA800862BB9 /* DXTableViewSource.m in Sources */,
 				FA02E8EE19505FA800862BB9 /* DXTableSection.m in Sources */,
+				FA0464641951F63900EF8681 /* DXViewDelegate.m in Sources */,
 				FA02E8E719505FA800862BB9 /* DXKVOInfo.m in Sources */,
 				FA02E8ED19505FA800862BB9 /* DXTableRowArray.m in Sources */,
 				FA02E8EC19505FA800862BB9 /* DXTableRow.m in Sources */,
