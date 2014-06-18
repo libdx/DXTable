@@ -62,15 +62,15 @@ static void addObjectIfNotNil(NSMutableArray *array, id object)
 {
     DXKVOInfo *info = [[DXKVOInfo alloc] init];
     info.object = row;
-    info.keypath = @"enabled";
+    info.keypath = @"active";
     info.options = NSKeyValueObservingOptionNew;
     info.block = ^(DXTableObserver *observer, DXTableRow *row, NSDictionary *change) {
-        BOOL isEnabled = [change[NSKeyValueChangeNewKey] boolValue];
+        BOOL isActive = [change[NSKeyValueChangeNewKey] boolValue];
 
-        NSArray *indexPaths = isEnabled ?
-        [tableModel indexPathsOfRow:row] : [tableModel indexPathsOfRowIfWereEnabled:row];
+        NSArray *indexPaths = isActive ?
+        [tableModel indexPathsOfRow:row] : [tableModel indexPathsOfRowIfWereActive:row];
 
-        DXTableObserverChangeType changeType = isEnabled ?
+        DXTableObserverChangeType changeType = isActive ?
         DXTableObserverChangeInsert : DXTableObserverChangeDelete;
 
         if (_observerFlags.delegateRowChange) {
@@ -86,16 +86,16 @@ static void addObjectIfNotNil(NSMutableArray *array, id object)
 
 - (DXKVOInfo *)infoToTriggerRowProperties:(DXTableRow *)row inDataContext:(id)dataContext
 {
-    id enabledValue = row[DXTableEnabledKey];
-    NSString *keypath = DXTableParseKeyValue(enabledValue);
+    id activeValue = row[DXTableActiveKey];
+    NSString *keypath = DXTableParseKeyValue(activeValue);
     DXKVOInfo *info;
     if (keypath) {
         info = [[DXKVOInfo alloc] init];
         info.object = dataContext;
-        info.keypath = DXTableParseKeyValue(enabledValue);
+        info.keypath = DXTableParseKeyValue(activeValue);
         info.options = NSKeyValueObservingOptionInitial | NSKeyValueObservingOptionNew;
         info.block = ^(id observer, id dataContext, NSDictionary *change) {
-            row.enabled = [change[NSKeyValueChangeNewKey] boolValue];
+            row.active = [change[NSKeyValueChangeNewKey] boolValue];
         };
     }
     return info;
@@ -226,7 +226,7 @@ static void addObjectIfNotNil(NSMutableArray *array, id object)
             addObjectIfNotNil(infos, [self infoForRepeatableRow:row
                                                  fromTableModel:tableModel
                                                   inDataContext:dataContext]);
-            // subscribe to each section "enabled" keypath
+            // subscribe to each section "active" keypath
             // TODO
         }
     }

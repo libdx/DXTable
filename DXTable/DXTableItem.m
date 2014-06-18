@@ -16,9 +16,9 @@
 
 @implementation DXTableItem
 
-+ (NSPredicate *)predicateForEnabledItems
++ (NSPredicate *)predicateForActiveItems
 {
-    return [NSPredicate predicateWithFormat:@"isEnabled = YES"];
+    return [NSPredicate predicateWithFormat:@"isActive = YES"];
 }
 
 - (instancetype)initWithOptions:(NSDictionary *)options
@@ -26,9 +26,9 @@
     self = [super init];
     if (self) {
         self.options = options;
-        self.enabled = YES;
-        if ([options[DXTableEnabledKey] isKindOfClass:[NSNumber class]]) {
-            self.enabled = [options[DXTableEnabledKey] boolValue];
+        self.active = YES;
+        if ([options[DXTableActiveKey] isKindOfClass:[NSNumber class]]) {
+            self.active = [options[DXTableActiveKey] boolValue];
         }
     }
     return self;
@@ -50,7 +50,7 @@
 NSString *const DXTableNameKey = @"name";
 NSString *const DXTableTitleKey = @"title";
 NSString *const DXTableHeightKey = @"height";
-NSString *const DXTableEnabledKey = @"enabled";
+NSString *const DXTableActiveKey = @"active";
 NSString *const DXTableRepeatableKey = @"repeatable";
 NSString *const DXTableListKey = @"list";
 NSString *const DXTableEditingStyleKey = @"editingStyle";

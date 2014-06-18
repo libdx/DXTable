@@ -13,7 +13,7 @@
 extern NSString *const DXTableNameKey;
 extern NSString *const DXTableTitleKey;
 extern NSString *const DXTableHeightKey;
-extern NSString *const DXTableEnabledKey; // aka Visible or Active
+extern NSString *const DXTableActiveKey; // aka Enabled or Visible
 extern NSString *const DXTableRepeatableKey; // aka Template
 extern NSString *const DXTableListKey; // aka Array or Collection
 extern NSString *const DXTableEditingStyleKey;
@@ -28,9 +28,9 @@ extern NSString *const DXTableTargetKey;
 
 @interface DXTableItem : NSObject
 
-+ (NSPredicate *)predicateForEnabledItems;
++ (NSPredicate *)predicateForActiveItems;
 
-@property (nonatomic, getter=isEnabled) BOOL enabled; // rename to active/isActive
+@property (nonatomic, getter=isActive) BOOL active;
 
 @property (nonatomic, readonly) id dataContext;
 

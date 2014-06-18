@@ -75,6 +75,7 @@ static UIView *lookupFirstResponder(UIView *view)
       DXTableRowsKey:
           @[@{DXTableNameKey: @"dueDate",
               DXTableRowNibKey: @"SwitchCell",
+              DXTableTargetKey: self.viewModel,
               DXTableActionsKey:
                   @{DXTableRowDidSelectActionKey: @"toggleShowDueDatePicker"},
               DXTablePropertiesKey:
@@ -83,7 +84,7 @@ static UIView *lookupFirstResponder(UIView *view)
               },
             @{DXTableNameKey: @"dueDatePicker",
               DXTableRowNibKey: @"DatePickerCell",
-              DXTableEnabledKey: @"@showsDueDatePicker",
+              DXTableActiveKey: @"@showsDueDatePicker",
               DXTableHeightKey: @216,
               DXTablePropertiesKey:
                   @{@"datePicker.date": @"@dueDate"}
@@ -107,6 +108,7 @@ static UIView *lookupFirstResponder(UIView *view)
                   @{@"textLabel.text": @"@.name"}},
             
             @{DXTableNameKey: @"newThing",
+              DXTableTargetKey: self.viewModel,
               DXTableActionsKey:
                   @{DXTableRowDidSelectActionKey: @"addThing"},
               DXTablePropertiesKey:
@@ -198,16 +200,16 @@ static UIView *lookupFirstResponder(UIView *view)
 - (void)visualInsertDeleteRowsTest
 {
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(2 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-        [[self.tableModel.activeSections[1] allRows][1] setEnabled:YES];
-        [[self.tableModel.activeSections[1] allRows][2] setEnabled:NO];
-        [[self.tableModel.activeSections[0] allRows][0] setEnabled:NO];
-        [[self.tableModel.activeSections[2] allRows][1] setEnabled:NO];
+        [[self.tableModel.activeSections[1] allRows][1] setActive:YES];
+        [[self.tableModel.activeSections[1] allRows][2] setActive:NO];
+        [[self.tableModel.activeSections[0] allRows][0] setActive:NO];
+        [[self.tableModel.activeSections[2] allRows][1] setActive:NO];
 
         dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(2 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-            [[self.tableModel.activeSections[1] allRows][1] setEnabled:NO];
-            [[self.tableModel.activeSections[1] allRows][2] setEnabled:YES];
-            [[self.tableModel.activeSections[0] allRows][0] setEnabled:YES];
-            [[self.tableModel.activeSections[2] allRows][1] setEnabled:YES];
+            [[self.tableModel.activeSections[1] allRows][1] setActive:NO];
+            [[self.tableModel.activeSections[1] allRows][2] setActive:YES];
+            [[self.tableModel.activeSections[0] allRows][0] setActive:YES];
+            [[self.tableModel.activeSections[2] allRows][1] setActive:YES];
         });
     });
 }

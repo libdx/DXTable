@@ -59,7 +59,7 @@
 {
     return [[DXTableRowArray alloc] initWithArray:
     [_allRows filteredArrayUsingPredicate:
-     [DXTableItem predicateForEnabledItems]]];
+     [DXTableItem predicateForActiveItems]]];
 }
 
 @end

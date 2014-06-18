@@ -18,7 +18,7 @@
 - Cleanup DXTableObserver
 
 - Support for model-wide and section-wide rows and sections properties
-- Rename Enabled key to Active key (DXTableEnabledKey to DXTableActiveKey) (?)
+✓ Rename Enabled key to Active key (DXTableEnabledKey to DXTableActiveKey)
 
 - Support for section's header and footer
     (add new subclass of DXTableItem or put logic into DXTableSection ?)

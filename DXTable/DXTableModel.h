@@ -20,7 +20,7 @@ extern NSString *const DXTableSectionsKey;
 @property (nonatomic, weak) id dataContext;
 
 /**
- Sections including disabled (isEnabled == NO).
+ Sections including disabled (isActive == NO).
  */
 @property (nonatomic, readonly) NSArray *allSections;
 
@@ -30,19 +30,19 @@ extern NSString *const DXTableSectionsKey;
 @property (nonatomic, readonly) NSArray *allRows;
 
 /**
- Enabled sections.
+ Active sections.
  */
 @property (nonatomic, readonly) NSArray *activeSections;
 
 /**
- Returns index path objects among enabled rows.
- Given `row` must be enabled.
+ Returns index path objects among active rows.
+ Given `row` must be active.
  */
 - (NSArray *)indexPathsOfRow:(DXTableRow *)row;
 
 /**
- Returns index path objects among enabled rows if given row were enabled.
+ Returns index path objects among active rows if given row were active.
  */
-- (NSArray *)indexPathsOfRowIfWereEnabled:(DXTableRow *)row;
+- (NSArray *)indexPathsOfRowIfWereActive:(DXTableRow *)row;
 
 @end
