@@ -238,7 +238,7 @@ static void addObjectIfNotNil(NSMutableArray *array, id object)
 
 - (void)setupBindingsForCell:(UITableViewCell *)cell row:(DXTableRow *)row atIndexPath:(NSIndexPath *)indexPath inDataContext:(id)dataContext
 {
-    NSDictionary *bindings = row[DXTablePropertiesKey];
+    NSDictionary *bindings = row[DXTableBindingsKey];
     for (NSString *cellKeypath in bindings) { // "textLabel.text": "Hello"
         id value = bindings[cellKeypath];
         NSString *dataKeypath = DXTableParseKeyValue(value);

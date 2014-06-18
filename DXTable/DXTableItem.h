@@ -17,7 +17,7 @@ extern NSString *const DXTableActiveKey; // aka Enabled or Visible
 extern NSString *const DXTableRepeatableKey; // aka Template
 extern NSString *const DXTableListKey; // aka Array or Collection
 extern NSString *const DXTableEditingStyleKey;
-extern NSString *const DXTablePropertiesKey; // aka Attributes or Data or Bindings or Keypaths
+extern NSString *const DXTableBindingsKey; // aka Attributes or Data or Properties or Keypaths
 extern NSString *const DXTableActionsKey;
 extern NSString *const DXTableTargetKey;
 

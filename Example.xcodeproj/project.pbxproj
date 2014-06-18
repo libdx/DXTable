@@ -26,7 +26,6 @@
 		FA02E9511950614F00862BB9 /* SwitchCell.m in Sources */ = {isa = PBXBuildFile; fileRef = FA02E9441950614F00862BB9 /* SwitchCell.m */; };
 		FA02E9521950614F00862BB9 /* SwitchCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = FA02E9451950614F00862BB9 /* SwitchCell.xib */; };
 		FA02E95E1950615800862BB9 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = FA02E95A1950615800862BB9 /* InfoPlist.strings */; };
-		FA02E95F1950615800862BB9 /* ExampleTests-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = FA02E95C1950615800862BB9 /* ExampleTests-Info.plist */; };
 		FA02E9601950615800862BB9 /* ExampleTests.m in Sources */ = {isa = PBXBuildFile; fileRef = FA02E95D1950615800862BB9 /* ExampleTests.m */; };
 		FA02E9B419508C5900862BB9 /* libDXTable.a in Frameworks */ = {isa = PBXBuildFile; fileRef = FA02E9AF19508C3C00862BB9 /* libDXTable.a */; };
 /* End PBXBuildFile section */
@@ -325,7 +324,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				FA02E95E1950615800862BB9 /* InfoPlist.strings in Resources */,
-				FA02E95F1950615800862BB9 /* ExampleTests-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

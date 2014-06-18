@@ -56,14 +56,14 @@ static UIView *lookupFirstResponder(UIView *view)
       DXTableRowsKey:
           @[@{DXTableNameKey: @"title",
               DXTableRowNibKey: @"FieldCell",
-              DXTablePropertiesKey:
+              DXTableBindingsKey:
                   @{@"titleLabel.text": @"Title",
                     @"textField.text": @"@title",
                     @"textField.placeholder": @"Title your event",
                     @"textField.inputAccessoryView": [self inputAccessoryView]}
               },
             @{DXTableNameKey: @"location",
-              DXTablePropertiesKey:
+              DXTableBindingsKey:
                   @{@"textLabel.text": @"Location"}
               }
             ]
@@ -78,7 +78,7 @@ static UIView *lookupFirstResponder(UIView *view)
               DXTableTargetKey: self.viewModel,
               DXTableActionsKey:
                   @{DXTableRowDidSelectActionKey: @"toggleShowDueDatePicker"},
-              DXTablePropertiesKey:
+              DXTableBindingsKey:
                   @{@"titleLabel.text": @"Due date (Tap me)",
                     @"switchControl.on": @"@showsDueDatePicker"}
               },
@@ -86,11 +86,11 @@ static UIView *lookupFirstResponder(UIView *view)
               DXTableRowNibKey: @"DatePickerCell",
               DXTableActiveKey: @"@showsDueDatePicker",
               DXTableHeightKey: @216,
-              DXTablePropertiesKey:
+              DXTableBindingsKey:
                   @{@"datePicker.date": @"@dueDate"}
               },
             @{DXTableNameKey: @"alert",
-              DXTablePropertiesKey:
+              DXTableBindingsKey:
                   @{@"textLabel.text": @"Alert",
                     @"accessoryType": @(UITableViewCellAccessoryDisclosureIndicator)}
               }
@@ -104,14 +104,14 @@ static UIView *lookupFirstResponder(UIView *view)
           @[@{DXTableNameKey: @"thing",
               DXTableRepeatableKey: @YES,
               DXTableListKey: @"@things",
-              DXTablePropertiesKey:
+              DXTableBindingsKey:
                   @{@"textLabel.text": @"@.name"}},
             
             @{DXTableNameKey: @"newThing",
               DXTableTargetKey: self.viewModel,
               DXTableActionsKey:
                   @{DXTableRowDidSelectActionKey: @"addThing"},
-              DXTablePropertiesKey:
+              DXTableBindingsKey:
                   @{@"textLabel.text": @"Add new thing"}
               },
             ]
@@ -122,12 +122,12 @@ static UIView *lookupFirstResponder(UIView *view)
       DXTableTitleKey: @"Misc.",
       DXTableRowsKey:
           @[@{DXTableNameKey: @"url",
-              DXTablePropertiesKey:
+              DXTableBindingsKey:
                   @{@"textLabel.text": @"URL"}
               },
             @{DXTableNameKey: @"notes",
               DXTableHeightKey: @80,
-              DXTablePropertiesKey:
+              DXTableBindingsKey:
                   @{@"textLabel.text": @"Notes"}
               }
             ]
