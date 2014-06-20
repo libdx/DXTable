@@ -17,6 +17,7 @@ ________
     - sections reordering
 - Cleanup DXTableObserver
 
+- Support for swipe to delete
 - Search support (describe declerative info for UISearchDisplayController and/or UISearchBar and/or UISearchController)
 - Support for model-wide and section-wide rows and sections properties
 ✓ Rename Enabled key to Active key (DXTableEnabledKey to DXTableActiveKey)
