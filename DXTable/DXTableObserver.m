@@ -167,7 +167,10 @@ static void addObjectIfNotNil(NSMutableArray *array, id object)
     info.options = NSKeyValueObservingOptionInitial | NSKeyValueObservingOptionNew;
     info.block = ^(id observer, id object, NSDictionary *change) {
         id newValue = change[NSKeyValueChangeNewKey];
-        [view setValue:nilIfNull(newValue) forKeyPath:viewKeypath];
+        id oldValue = [view valueForKeyPath:viewKeypath];
+        if (NO == [newValue isEqual:oldValue]) {
+            [view setValue:nilIfNull(newValue) forKeyPath:viewKeypath];
+        }
     };
     return info;
 }
