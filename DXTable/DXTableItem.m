@@ -67,6 +67,12 @@ NSString *DXTableParseKeyValue(id value)
     NSString *res;
     if ([value isKindOfClass:[NSString class]]) {
         NSString *string = value;
+
+        // value which contain method signature that accept arguments is illegal
+        if ([string hasSuffix:@":"]) {
+            return nil;
+        }
+
         for (NSString *prefix in @[DXInnerKeyPathPrefix, DXKeypathPrefix]) {
             if ([string hasPrefix:prefix]) {
                 res = [string stringByReplacingOccurrencesOfString:prefix withString:@""];
