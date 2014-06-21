@@ -45,6 +45,11 @@
     return self[DXTableTargetKey];
 }
 
+- (BOOL)isRepeatable
+{
+    return [self[DXTableRepeatableKey] boolValue];
+}
+
 - (CGFloat)height
 {
     CGFloat height = UITableViewAutomaticDimension;
@@ -66,9 +71,33 @@
     [[self.dataContext valueForKeyPath:arrayKeypath] count] : 1;
 }
 
-- (BOOL)isRepeatable
+- (BOOL)isEditable
 {
-    return [self[DXTableRepeatableKey] boolValue];
+    BOOL editable = self.isRepeatable;
+    if ([self[DXTableRowEditableKey] isKindOfClass:[NSNumber class]]) {
+        editable = [self[DXTableRowEditableKey] boolValue];
+    } else {
+        NSString *keypath = DXTableParseKeyValue(self[DXTableRowEditableKey]);
+        if (keypath) {
+            editable = [[self.dataContext valueForKeyPath:keypath] boolValue];
+        }
+    }
+    return editable;
+}
+
+- (NSInteger)editingStyle
+{
+    NSInteger style = self.isRepeatable ?
+    UITableViewCellEditingStyleDelete : UITableViewCellEditingStyleNone;
+    if ([self[DXTableRowEditingStyleKey] isKindOfClass:[NSNumber class]]) {
+        style = [self[DXTableRowEditingStyleKey] integerValue];
+    } else {
+        NSString *keypath = DXTableParseKeyValue(self[DXTableRowEditingStyleKey]);
+        if (keypath) {
+            style = [[self.dataContext valueForKeyPath:keypath] integerValue];
+        }
+    }
+    return style;
 }
 
 @end
@@ -76,6 +105,10 @@
 NSString *const DXTableRowIdentifierKey = @"id";
 NSString *const DXTableRowClassKey = @"class";
 NSString *const DXTableRowNibKey = @"nib";
+NSString *const DXTableRowEditableKey = @"editable";
+NSString *const DXTableRowEditingStyleKey = @"editingStyle";
 
 NSString *const DXTableRowWillSelectActionKey = @"willSelect";
 NSString *const DXTableRowDidSelectActionKey = @"didSelect";
+NSString *const DXTableRowCommitInsertActionKey = @"commitInsert";
+NSString *const DXTableRowCommitDeleteActionKey = @"commitDelete";

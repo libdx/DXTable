@@ -53,7 +53,6 @@ NSString *const DXTableHeightKey = @"height";
 NSString *const DXTableActiveKey = @"active";
 NSString *const DXTableRepeatableKey = @"repeatable";
 NSString *const DXTableArrayKey = @"array";
-NSString *const DXTableEditingStyleKey = @"editingStyle";
 NSString *const DXTableBindingsKey = @"bindings";
 NSString *const DXTableActionsKey = @"actions";
 NSString *const DXTableTargetKey = @"target";

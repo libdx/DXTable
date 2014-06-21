@@ -16,9 +16,13 @@
 //extern NSString *const DXTableRowIdentifierKey; //?
 extern NSString *const DXTableRowClassKey;
 extern NSString *const DXTableRowNibKey;
+extern NSString *const DXTableRowEditableKey;
+extern NSString *const DXTableRowEditingStyleKey;
 
 extern NSString *const DXTableRowWillSelectActionKey;
 extern NSString *const DXTableRowDidSelectActionKey;
+extern NSString *const DXTableRowCommitInsertActionKey;
+extern NSString *const DXTableRowCommitDeleteActionKey;
 
 @interface DXTableRow : DXTableItem
 
@@ -33,5 +37,9 @@ extern NSString *const DXTableRowDidSelectActionKey;
 
 @property (nonatomic, readonly) CGFloat height;
 @property (nonatomic, readonly) NSInteger repeatCount;
+
+// for non-repeatable default is NO, for repeatable default is YES
+@property (nonatomic, readonly, getter=isEditable) BOOL editable;
+@property (nonatomic, readonly) NSInteger editingStyle;
 
 @end

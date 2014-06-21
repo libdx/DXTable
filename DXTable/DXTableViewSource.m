@@ -27,6 +27,18 @@
 
 @end
 
+static UIResponder *lookupRespondent(UIResponder *topResponder, SEL action)
+{
+    UIResponder *responder = topResponder;
+    while (responder) {
+        if ([responder respondsToSelector:action]) {
+            break;
+        }
+        responder = [responder nextResponder];
+    }
+    return responder;
+}
+
 static Class classFromClassOrName(id classOrString)
 {
     return [classOrString isKindOfClass:[NSString class]] ?
@@ -135,19 +147,34 @@ static UINib *nibFromNibOrName(id nibOrString)
     return section.activeRows[indexPath.row].height;
 }
 
-#pragma mark - UITableViewDelegate
-
-static UIResponder *lookupRespondent(UIResponder *topResponder, SEL action)
+- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    UIResponder *responder = topResponder;
-    while (responder) {
-        if ([responder respondsToSelector:action]) {
-            break;
-        }
-        responder = [responder nextResponder];
-    }
-    return responder;
+    DXTableRow *row = [self.tableModel.activeSections[indexPath.section] activeRows][indexPath.row];
+    return row.isEditable;
 }
+
+- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    DXTableRow *row = [self.tableModel.activeSections[indexPath.section] activeRows][indexPath.row];
+    SEL action;
+    if (row.editingStyle == UITableViewCellEditingStyleInsert) {
+        action = NSSelectorFromString(row[DXTableActionsKey][DXTableRowCommitInsertActionKey]);
+    } else if (row.editingStyle == UITableViewCellEditingStyleDelete) {
+        action = NSSelectorFromString(row[DXTableActionsKey][DXTableRowCommitDeleteActionKey]);
+    }
+    if (action) {
+        id target = row.target;
+        if (target == nil) {
+            target = lookupRespondent(tableView, action);
+        }
+        [[UIApplication sharedApplication] sendAction:action
+                                                   to:target
+                                                 from:indexPath
+                                             forEvent:nil];
+    }
+}
+
+#pragma mark - UITableViewDelegate
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
@@ -165,6 +192,12 @@ static UIResponder *lookupRespondent(UIResponder *topResponder, SEL action)
                                                  from:indexPath
                                              forEvent:nil];
     }
+}
+
+- (UITableViewCellEditingStyle)tableView:(UITableView *)tableView editingStyleForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    DXTableRow *row = [self.tableModel.activeSections[indexPath.section] activeRows][indexPath.row];
+    return row.editingStyle;
 }
 
 @end

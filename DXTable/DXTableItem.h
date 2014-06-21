@@ -11,12 +11,11 @@
 //#define DXKeyPath(sel) NSStringFromSelector(@selector(sel)) //?
 
 extern NSString *const DXTableNameKey;
-extern NSString *const DXTableTitleKey;
+extern NSString *const DXTableTitleKey; // aka Header
 extern NSString *const DXTableHeightKey;
 extern NSString *const DXTableActiveKey; // aka Enabled or Visible
 extern NSString *const DXTableRepeatableKey; // aka Template
 extern NSString *const DXTableArrayKey; // aka List or Collection
-extern NSString *const DXTableEditingStyleKey;
 extern NSString *const DXTableBindingsKey; // aka Attributes or Data or Properties or Keypaths
 extern NSString *const DXTableActionsKey;
 extern NSString *const DXTableTargetKey;
@@ -49,6 +48,6 @@ extern NSString *const DXTableTargetKey;
  Examples:
     `@items` - keypath comprises with one key
     `@items.name` - keypath comprises with couple keys
-    `@.name` - keypath is being resolved against `DXTableListKey` value (is used in repeatable rows)
+    `@.name` - keypath is being resolved against `DXTableArrayKey` value (is used with repeatable rows)
  */
 NSString *DXTableParseKeyValue(id value);
