@@ -13,7 +13,7 @@
 
 @class DXTableSection;
 
-//extern NSString *const DXTableRowIdentifierKey; //?
+//extern NSString *const DXTableRowIdentifierKey; // ?
 extern NSString *const DXTableRowClassKey;
 extern NSString *const DXTableRowNibKey;
 extern NSString *const DXTableRowEditableKey;
@@ -35,11 +35,14 @@ extern NSString *const DXTableRowCommitDeleteActionKey;
 
 @property (nonatomic, readonly) id target;
 
-@property (nonatomic, readonly) CGFloat height;
 @property (nonatomic, readonly) NSInteger repeatCount;
+
+@property (nonatomic, readonly) CGFloat height;
 
 // for non-repeatable default is NO, for repeatable default is YES
 @property (nonatomic, readonly, getter=isEditable) BOOL editable;
+
+// for non-repeatable default is None, for repeatable default is Delete
 @property (nonatomic, readonly) NSInteger editingStyle;
 
 @end

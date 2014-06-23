@@ -102,7 +102,7 @@
 
 @end
 
-NSString *const DXTableRowIdentifierKey = @"id";
+// NSString *const DXTableRowIdentifierKey = @"id"; // ?
 NSString *const DXTableRowClassKey = @"class";
 NSString *const DXTableRowNibKey = @"nib";
 NSString *const DXTableRowEditableKey = @"editable";
