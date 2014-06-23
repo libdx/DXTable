@@ -12,6 +12,7 @@
 
 extern NSString *const DXTableNameKey;
 extern NSString *const DXTableTitleKey; // aka Header
+extern NSString *const DXTableFooterKey;
 extern NSString *const DXTableHeightKey;
 extern NSString *const DXTableActiveKey; // aka Enabled or Visible
 extern NSString *const DXTableRepeatableKey; // aka Template

@@ -141,6 +141,11 @@ static UINib *nibFromNibOrName(id nibOrString)
     return self.tableModel.activeSections[section][DXTableTitleKey];
 }
 
+- (NSString *)tableView:(UITableView *)tableView titleForFooterInSection:(NSInteger)section
+{
+    return self.tableModel.activeSections[section][DXTableFooterKey];
+}
+
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     DXTableSection * section = self.tableModel.activeSections[indexPath.section];

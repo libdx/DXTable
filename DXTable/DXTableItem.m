@@ -49,6 +49,7 @@
 
 NSString *const DXTableNameKey = @"name";
 NSString *const DXTableTitleKey = @"title";
+NSString *const DXTableFooterKey = @"footer";
 NSString *const DXTableHeightKey = @"height";
 NSString *const DXTableActiveKey = @"active";
 NSString *const DXTableRepeatableKey = @"repeatable";
