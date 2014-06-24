@@ -84,7 +84,7 @@ static void addObjectIfNotNil(NSMutableArray *array, id object)
     return info;
 }
 
-- (DXKVOInfo *)infoToTriggerRowProperties:(DXTableRow *)row inDataContext:(id)dataContext
+- (DXKVOInfo *)infoToTriggerRowBindings:(DXTableRow *)row inDataContext:(id)dataContext
 {
     id activeValue = row[DXTableActiveKey];
     NSString *keypath = DXTableParseKeyValue(activeValue);
@@ -145,6 +145,49 @@ static void addObjectIfNotNil(NSMutableArray *array, id object)
         };
     }
     return info;
+}
+
+// TODO: do the same for sections
+- (NSArray *)infosToTriggerUpdateCellForRow:(DXTableRow *)row
+                             fromTableModel:(DXTableModel *)tableModel
+                              inDataContext:(id)dataContext
+{
+    NSArray *updates = row[DXTableUpdatesKey];
+    if (updates == nil) {
+        return [NSMutableArray array];
+    }
+    NSAssert([updates isKindOfClass:[NSArray class]], @"Provide array for %@ key", DXTableUpdatesKey);
+    NSMutableArray *infos = [NSMutableArray array];
+    for (NSString *key in updates) {
+        NSString *keypath = DXTableParseKeyValue(key) ?: DXTableParseKeyValue(row[key]);
+        if (keypath) {
+            for (NSUInteger index = 0; index < row.repeatCount; ++index) {
+                DXKVOInfo *info;
+                info = [[DXKVOInfo alloc] init];
+                id dataObject = dataContext;
+                if (row.isRepeatable) {
+                    NSString *arrayKeypath = DXTableParseKeyValue(row[DXTableArrayKey]);
+                    NSAssert(arrayKeypath, @"repeatable row must contain %@ keypath", DXTableArrayKey);
+                    dataObject = [dataContext valueForKeyPath:arrayKeypath][index];
+                }
+                info.object = dataObject;
+                info.keypath = keypath;
+                info.options = NSKeyValueObservingOptionInitial | NSKeyValueObservingOptionNew;
+                info.block = ^(id observer, id dataObject, NSDictionary *change) {
+                    if (_observerFlags.delegateRowChange) {
+                        NSArray *indexPaths = [tableModel indexPathsOfRow:row];
+                        [self.delegate tableObserver:self
+                                 didObserveRowChange:row
+                                        atIndexPaths:indexPaths
+                                       forChangeType:DXTableObserverChangeUpdate
+                                       newIndexPaths:nil];
+                    }
+                };
+                [infos addObject:info];
+            }
+        }
+    }
+    return infos.copy;
 }
 
 - (DXKVOInfo *)infoForEachObjectOfRepeatableRow:(DXTableRow *)row
@@ -238,11 +281,15 @@ static void addObjectIfNotNil(NSMutableArray *array, id object)
         for (DXTableRow *row in section.allRows) {
             addObjectIfNotNil(infos, [self infoForRowActiveKeypath:row
                                                     fromTableModel:tableModel]);
-            addObjectIfNotNil(infos, [self infoToTriggerRowProperties:row
-                                                        inDataContext:dataContext]);
+            addObjectIfNotNil(infos, [self infoToTriggerRowBindings:row
+                                                      inDataContext:dataContext]);
             addObjectIfNotNil(infos, [self infoForRepeatableRow:row
                                                  fromTableModel:tableModel
                                                   inDataContext:dataContext]);
+
+            [infos addObjectsFromArray:[self infosToTriggerUpdateCellForRow:row
+                                                             fromTableModel:tableModel
+                                                              inDataContext:dataContext]];
             // subscribe to each section "active" keypath
             // TODO
         }

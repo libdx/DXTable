@@ -57,6 +57,7 @@ NSString *const DXTableArrayKey = @"array";
 NSString *const DXTableBindingsKey = @"bindings";
 NSString *const DXTableActionsKey = @"actions";
 NSString *const DXTableTargetKey = @"target";
+NSString *const DXTableUpdatesKey = @"updates";
 
 #pragma mark - Parser
 

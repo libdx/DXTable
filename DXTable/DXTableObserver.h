@@ -12,14 +12,11 @@
 @class DXTableModel, DXTableRow;
 @protocol DXTableObserverDelegate;
 
-// FIXME: redesign this class it is mess of code
-
-// TODO: pickup better name
-// possible names are DXTableBinder[Helper] DXTableObser[er][Helper]
 @interface DXTableObserver : NSObject
 
 @property (nonatomic, weak) id<DXTableObserverDelegate> delegate;
 
+// TODO: make a few small specialized methods instead of these huge ones
 - (void)startObservingTableModel:(DXTableModel *)tableModel inDataContext:(id)dataContext;
 - (void)setupBindingsForCell:(UITableViewCell *)cell row:(DXTableRow *)row atIndexPath:(NSIndexPath *)indexPath inDataContext:(id)dataContext;
 
@@ -36,10 +33,13 @@ typedef NS_ENUM(NSInteger, DXTableObserverChangeType) {
 @protocol DXTableObserverDelegate <NSObject>
 
 @optional
+
 - (void)tableObserver:(DXTableObserver *)observer
   didObserveRowChange:(DXTableRow *)row
          atIndexPaths:(NSArray *)indexPaths
         forChangeType:(DXTableObserverChangeType)changeType
         newIndexPaths:(NSArray *)newIndexPaths;
+
+// TODO: add same method for section changes
 
 @end

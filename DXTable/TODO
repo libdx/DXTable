@@ -11,6 +11,7 @@ ________
     ✓ Add DXTableRowArray to abstract repeatable rows
     ✓ Add KVO and KVC for repeatable rows
     - From view to model bindings for repeatable rows
+- Search support (describe declerative info for UISearchDisplayController and/or UISearchBar and/or UISearchController)
 - Add Template rows (same as repeatable, but one row objects to be created per one model object)
 - Inner keypaths support for properties in the template rows
     - i.e. @.rowEditable, @.rowHeight...
@@ -18,24 +19,20 @@ ________
     - rows reordering whithin repeatable items
     - rows reordering in general
     - sections reordering
-- Cleanup DXTableObserver
-
-- Support for swipe to delete
-- Search support (describe declerative info for UISearchDisplayController and/or UISearchBar and/or UISearchController)
-- Support for model-wide and section-wide rows and sections properties
+✓ Support for swipe to delete
+✓ Trigger reloadRowAt... for certain given property list
 ✓ Rename Enabled key to Active key (DXTableEnabledKey to DXTableActiveKey)
 ✓ Accept values for DXTableRowClassKey both string and class object and
     for DXTableRowNibKey both string and nib object
-
+- Support for model-wide and section-wide rows and sections properties
+- Cleanup DXTableObserver
+- Support for retrieve sections and rows by name
 - Support for section's header and footer
     (add new subclass of DXTableItem or put logic into DXTableSection ?)
 - Support for table header and footer with bindings
 - Support for binding of custom UITableViewCell properties (i.e. NSString *title etc) (?)
 - Support of actions for buttons (UIButton, UISegmentedControl)
 - Activating/deactivating sections
-- Trigger reloadRowAt... for certain given property list:
-    - changing height
-    - ...
 - Support for more UITableView actions (willSelectCell..., didHighlightCell... etc)
 - Add ability to extend binding to support custom views' properties for binding to model
     - Declare (DX)Binder protocol or base class

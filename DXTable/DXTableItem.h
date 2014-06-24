@@ -11,20 +11,16 @@
 //#define DXKeyPath(sel) NSStringFromSelector(@selector(sel)) //?
 
 extern NSString *const DXTableNameKey;
-extern NSString *const DXTableHeaderKey; // Header title
-extern NSString *const DXTableFooterKey; // Footer title
-extern NSString *const DXTableHeightKey;
-extern NSString *const DXTableActiveKey; // aka Enabled or Visible
-extern NSString *const DXTableRepeatableKey; // aka Template
-extern NSString *const DXTableArrayKey; // aka List or Collection
-extern NSString *const DXTableBindingsKey; // aka Attributes or Data or Properties or Keypaths
-extern NSString *const DXTableActionsKey;
-extern NSString *const DXTableTargetKey;
-
-// TODO:
-// add key like needsUpdate to trigger reloadRowAt... action
-// return list of keys which chaning values are trigger to call relaodRowAt..
-// for instance when height of cell was changed we need to call reloadRowAt...
+extern NSString *const DXTableHeaderKey; // Header title. Accepts string or keypath.
+extern NSString *const DXTableFooterKey; // Footer title. Accepts string or keypath
+extern NSString *const DXTableHeightKey; // Accepts wrapped in NSNumber float or keypath.
+extern NSString *const DXTableActiveKey; // aka Enabled or Visible. Accepts wrapper in NSNumber bool or keypath.
+extern NSString *const DXTableRepeatableKey; // aka Template. Accepts wrapper in NSNumber bool or keypath.
+extern NSString *const DXTableArrayKey; // aka List or Collection. Accepts keypath pointed to ordered collection.
+extern NSString *const DXTableBindingsKey; // aka Attributes or Data or Properties or Keypaths. Accepts dictionary.
+extern NSString *const DXTableActionsKey; // Accepts dictionary
+extern NSString *const DXTableTargetKey; // Accepts any object
+extern NSString *const DXTableUpdatesKey; // aka Update Upon Change. Accepts array of any DXTable..Key or keypaths
 
 @interface DXTableItem : NSObject
 
