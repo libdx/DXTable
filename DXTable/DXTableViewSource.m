@@ -138,7 +138,7 @@ static UINib *nibFromNibOrName(id nibOrString)
 
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
 {
-    return self.tableModel.activeSections[section][DXTableTitleKey];
+    return self.tableModel.activeSections[section][DXTableHeaderKey];
 }
 
 - (NSString *)tableView:(UITableView *)tableView titleForFooterInSection:(NSInteger)section

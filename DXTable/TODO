@@ -11,7 +11,8 @@ ________
     ✓ Add DXTableRowArray to abstract repeatable rows
     ✓ Add KVO and KVC for repeatable rows
     - From view to model bindings for repeatable rows
-- Inner keypaths support for properties in the repeatable rows
+- Add Template rows (same as repeatable, but one row objects to be created per one model object)
+- Inner keypaths support for properties in the template rows
     - i.e. @.rowEditable, @.rowHeight...
 - Reordering (canMoveRowAt...)
     - rows reordering whithin repeatable items
@@ -32,7 +33,7 @@ ________
 - Support for binding of custom UITableViewCell properties (i.e. NSString *title etc) (?)
 - Support of actions for buttons (UIButton, UISegmentedControl)
 - Activating/deactivating sections
-- Trigger reloadRowAt... for certain cases:
+- Trigger reloadRowAt... for certain given property list:
     - changing height
     - ...
 - Support for more UITableView actions (willSelectCell..., didHighlightCell... etc)

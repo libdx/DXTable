@@ -11,8 +11,8 @@
 //#define DXKeyPath(sel) NSStringFromSelector(@selector(sel)) //?
 
 extern NSString *const DXTableNameKey;
-extern NSString *const DXTableTitleKey; // aka Header
-extern NSString *const DXTableFooterKey;
+extern NSString *const DXTableHeaderKey; // Header title
+extern NSString *const DXTableFooterKey; // Footer title
 extern NSString *const DXTableHeightKey;
 extern NSString *const DXTableActiveKey; // aka Enabled or Visible
 extern NSString *const DXTableRepeatableKey; // aka Template
