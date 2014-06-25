@@ -14,7 +14,6 @@
 
 - (instancetype)initWithTableView:(UITableView *)tableView
                        tableModel:(DXTableModel *)tableModel
-                      dataContext:(id)dataContext
                           options:(NSDictionary *)options;
 
 @end

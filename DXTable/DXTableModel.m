@@ -15,6 +15,20 @@
 
 @implementation DXTableModel
 
+- (instancetype)initWithOptions:(NSDictionary *)options
+{
+    return [self initWithDataContext:nil options:options];
+}
+
+- (instancetype)initWithDataContext:(id)dataContext options:(NSDictionary *)options
+{
+    self = [super initWithOptions:options];
+    if (self) {
+        _dataContext = dataContext;
+    }
+    return self;
+}
+
 @synthesize dataContext = _dataContext;
 - (id)dataContext
 {

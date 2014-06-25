@@ -28,7 +28,7 @@ extern NSString *const DXTableUpdatesKey; // aka Update Upon Change. Accepts arr
 
 @property (nonatomic, getter=isActive) BOOL active;
 
-@property (nonatomic, readonly) id dataContext;
+@property (nonatomic, weak, readonly) id dataContext;
 
 - (instancetype)initWithOptions:(NSDictionary *)options;
 

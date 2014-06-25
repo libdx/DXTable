@@ -21,7 +21,6 @@
 
 @property (nonatomic) DXTableModel *tableModel;
 @property (nonatomic, weak) UITableView *tableView;
-@property (nonatomic, weak) id dataContext;
 @property (nonatomic) DXTableObserver *tableObserver;
 @property (nonatomic) FBKVOController *kvoController;
 
@@ -55,14 +54,11 @@ static UINib *nibFromNibOrName(id nibOrString)
 
 - (instancetype)initWithTableView:(UITableView *)tableView
                        tableModel:(DXTableModel *)tableModel
-                      dataContext:(id)dataContext
                           options:(NSDictionary *)options;
 {
     self = [super init];
     if (self) {
         self.tableModel = tableModel;
-        self.tableModel.dataContext = dataContext;
-        self.dataContext = dataContext;
         self.tableView = tableView;
         tableView.delegate = self;
         tableView.dataSource = self;
@@ -70,7 +66,7 @@ static UINib *nibFromNibOrName(id nibOrString)
         self.tableObserver = [[DXTableObserver alloc] init];
         self.tableObserver.delegate = self;
 
-        [self.tableObserver startObservingTableModel:tableModel inDataContext:dataContext];
+        [self.tableObserver startObservingTableModel:tableModel inDataContext:tableModel.dataContext];
 
         // TODO: add on table model method that returns dictionary of cell classes and nibs
         // register cell classes and nibs
@@ -132,7 +128,7 @@ static UINib *nibFromNibOrName(id nibOrString)
     DXTableRow *row = [self.tableModel.activeSections[indexPath.section] activeRows][indexPath.row];
     id cell = [tableView dequeueReusableCellWithIdentifier:row[DXTableNameKey]
                                               forIndexPath:indexPath];
-    [self.tableObserver setupBindingsForCell:cell row:row atIndexPath:indexPath inDataContext:self.dataContext];
+    [self.tableObserver setupBindingsForCell:cell row:row atIndexPath:indexPath inDataContext:self.tableModel.dataContext];
     return cell;
 }
 

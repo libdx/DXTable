@@ -15,11 +15,6 @@ extern NSString *const DXTableSectionsKey;
 @interface DXTableModel : DXTableItem
 
 /**
- Data context (a.k.a. data provider) an object which have KVO and KVC compliant properties
- */
-@property (nonatomic, weak) id dataContext;
-
-/**
  Sections including disabled (isActive == NO).
  */
 @property (nonatomic, readonly) NSArray *allSections;
@@ -33,6 +28,13 @@ extern NSString *const DXTableSectionsKey;
  Active sections.
  */
 @property (nonatomic, readonly) NSArray *activeSections;
+
+/**
+ Designated initializer.
+ @param dataContext Data context (a.k.a. data provider) an object which have KVO and KVC compliant properties. Unretained (i.e. refered with weak reference).
+ @param options Dictionary object contains model options.
+ */
+- (instancetype)initWithDataContext:(id)dataContext options:(NSDictionary *)options;
 
 /**
  Returns index path objects among active rows.
