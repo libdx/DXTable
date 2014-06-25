@@ -25,7 +25,6 @@ ________
 ✓ Accept values for DXTableRowClassKey both string and class object and
     for DXTableRowNibKey both string and nib object
 - Support for model-wide and section-wide rows and sections properties
-- Cleanup DXTableObserver
 - Support for retrieve sections and rows by name
 - Support for section's header and footer
     (add new subclass of DXTableItem or put logic into DXTableSection ?)
@@ -40,6 +39,8 @@ ________
     - Each class that implements (DX)Binder protocol should return list of supported classes
     - Implement simple Binder that support UIControl's and UITextView
 - Multiple selection support
+
+- Cleanup DXTableObserver
 
 - Add animation key
 - Add configuration properties on TableViewSource
