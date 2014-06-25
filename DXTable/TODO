@@ -11,7 +11,7 @@ ________
     ✓ Add DXTableRowArray to abstract repeatable rows
     ✓ Add KVO and KVC for repeatable rows
     - From view to model bindings for repeatable rows
-- Search support (describe declerative info for UISearchDisplayController and/or UISearchBar and/or UISearchController)
+- Consider DXTableViewSource to work gracefully with UISearchDisplayController's searchResultsTableView
 - Add Template rows (same as repeatable, but one row objects to be created per one model object)
 - Inner keypaths support for properties in the template rows
     - i.e. @.rowEditable, @.rowHeight...
@@ -41,6 +41,8 @@ ________
 - Multiple selection support
 
 - Cleanup DXTableObserver
+
+- Add some ability to copy table items in order to change some of properties (i.e. duplicate repeatable row and change 'array' property to search results)
 
 - Add animation key
 - Add configuration properties on TableViewSource

@@ -12,6 +12,7 @@
 
 @interface DXTableViewSource : NSObject <UITableViewDataSource, UITableViewDelegate>
 
+// sets tableView delegate and dataSource to self and registers cell resources (classes and nibs) provided by tableModel.
 - (instancetype)initWithTableView:(UITableView *)tableView
                        tableModel:(DXTableModel *)tableModel
                           options:(NSDictionary *)options;

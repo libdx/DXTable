@@ -23,6 +23,7 @@
 @property (nonatomic, weak) UITableView *tableView;
 @property (nonatomic) DXTableObserver *tableObserver;
 @property (nonatomic) FBKVOController *kvoController;
+@property (nonatomic, copy) NSDictionary *options;
 
 @end
 
@@ -65,28 +66,36 @@ static UINib *nibFromNibOrName(id nibOrString)
         self.kvoController = [FBKVOController controllerWithObserver:self];
         self.tableObserver = [[DXTableObserver alloc] init];
         self.tableObserver.delegate = self;
+        self.options = options;
 
         [self.tableObserver startObservingTableModel:tableModel inDataContext:tableModel.dataContext];
+        [self registerCellResourcesForTableView:tableView];
+    }
+    return self;
+}
 
-        // TODO: add on table model method that returns dictionary of cell classes and nibs
-        // register cell classes and nibs
-        for (DXTableSection *section in
-             self.tableModel[DXTableSectionsKey])
-        {
-            for (DXTableRow *row in section[DXTableRowsKey]) {
-                Class cls = classFromClassOrName(row[DXTableRowClassKey]);
-                UINib *nib = nibFromNibOrName(row[DXTableRowNibKey]);
-                NSString *identifier = row[DXTableNameKey];
-                cls = cls || nib ? cls : options[DXTableViewSourceCellClassKey];
-                if (cls) {
-                    [tableView registerClass:cls forCellReuseIdentifier:identifier];
-                } else {
-                    [tableView registerNib:nib forCellReuseIdentifier:identifier];
-                }
+- (void)registerCellResourcesForTableView:(UITableView *)tableView
+{
+    if (tableView == nil) {
+        return;
+    }
+    // TODO: add on table model method that returns dictionary of cell classes and nibs
+    // register cell classes and nibs
+    for (DXTableSection *section in
+         self.tableModel[DXTableSectionsKey])
+    {
+        for (DXTableRow *row in section[DXTableRowsKey]) {
+            Class cls = classFromClassOrName(row[DXTableRowClassKey]);
+            UINib *nib = nibFromNibOrName(row[DXTableRowNibKey]);
+            NSString *identifier = row[DXTableNameKey];
+            cls = cls || nib ? cls : self.options[DXTableViewSourceCellClassKey];
+            if (cls) {
+                [tableView registerClass:cls forCellReuseIdentifier:identifier];
+            } else {
+                [tableView registerNib:nib forCellReuseIdentifier:identifier];
             }
         }
     }
-    return self;
 }
 
 #pragma mark - DXTableObserverDelegate
