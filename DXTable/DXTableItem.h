@@ -20,7 +20,7 @@ extern NSString *const DXTableArrayKey; // aka List or Collection. Accepts keypa
 extern NSString *const DXTableBindingsKey; // aka Attributes or Data or Properties or Keypaths. Accepts dictionary.
 extern NSString *const DXTableActionsKey; // Accepts dictionary
 extern NSString *const DXTableTargetKey; // Accepts any object
-extern NSString *const DXTableUpdatesKey; // aka Update Upon Change. Accepts array of any DXTable..Key or keypaths
+extern NSString *const DXTableUpdatesKey; // aka Update Upon Change. Accepts array of any DXTable..Keys or keypaths
 
 @interface DXTableItem : NSObject
 

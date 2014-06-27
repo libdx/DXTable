@@ -52,7 +52,7 @@ static UIView *lookupFirstResponder(UIView *view)
 
     NSDictionary *headSection =
     @{DXTableNameKey: @"head",
-      DXTableTitleKey: @"Event",
+      DXTableHeaderKey: @"Event",
       DXTableRowsKey:
           @[@{DXTableNameKey: @"title",
               DXTableRowNibKey: @"FieldCell",
@@ -71,7 +71,7 @@ static UIView *lookupFirstResponder(UIView *view)
 
     NSDictionary *datesSection =
     @{DXTableNameKey: @"dates",
-      DXTableTitleKey: @"Setup Dates",
+      DXTableHeaderKey: @"Setup Dates",
       DXTableRowsKey:
           @[@{DXTableNameKey: @"dueDate",
               DXTableRowNibKey: @"SwitchCell",
@@ -99,7 +99,7 @@ static UIView *lookupFirstResponder(UIView *view)
 
     NSDictionary *stuffSection =
     @{DXTableNameKey: @"stuff",
-      DXTableTitleKey: @"Stuff to get",
+      DXTableHeaderKey: @"Stuff to get",
       DXTableRowsKey:
           @[@{DXTableNameKey: @"thing",
               DXTableRepeatableKey: @YES,
@@ -119,7 +119,7 @@ static UIView *lookupFirstResponder(UIView *view)
 
     NSDictionary *notesSection =
     @{DXTableNameKey: @"notes",
-      DXTableTitleKey: @"Misc.",
+      DXTableHeaderKey: @"Misc.",
       DXTableRowsKey:
           @[@{DXTableNameKey: @"url",
               DXTableBindingsKey:
@@ -139,11 +139,10 @@ static UIView *lookupFirstResponder(UIView *view)
           @[headSection, datesSection, stuffSection, notesSection]
       };
 
-    self.tableModel = [[DXTableModel alloc] initWithOptions:eventModel];
+    self.tableModel = [[DXTableModel alloc] initWithDataContext:self.viewModel options:eventModel];
     self.tableViewSource = [[DXTableViewSource alloc]
                             initWithTableView:self.tableView
                             tableModel:self.tableModel
-                            dataContext:self.viewModel
                             options:@{DXTableViewSourceCellClassKey:
                                           [UITableViewCell class]}];
 }
