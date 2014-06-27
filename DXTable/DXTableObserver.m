@@ -300,6 +300,35 @@ static void addObjectIfNotNil(NSMutableArray *array, id object)
     }
 }
 
+
+// FIXME: unify this method with setupBindingsForCell:… now it's copy-paste.
+- (void)setupBindingsForView:(UIView *)view item:(DXTableItem *)item inDataContext:(id)dataContext
+{
+    NSDictionary *bindings = item[DXTableBindingsKey];
+    NSMutableArray *modelToViewBindings = [NSMutableArray array];
+    for (NSString *viewKeypath in bindings) {
+        id value = bindings[viewKeypath];
+        NSString *dataKeypath = DXTableParseKeyValue(value);
+        if (dataKeypath == nil) {
+            // assign `value` directly
+            [view setValue:nilIfNull(value) forKeyPath:viewKeypath];
+        } else {
+            // `value` is actually a keypath so deal with bindings
+            DXKVOInfo *info = [self bindInfoFromDataContext:dataContext
+                                                dataKeypath:dataKeypath
+                                                     toView:view
+                                                viewKeypath:viewKeypath];
+            [modelToViewBindings addObject:info];
+        }
+    }
+
+    FBKVOController *viewKvoController = [self kvoControllerForObject:view];
+    [viewKvoController unobserve:view];
+    for (id info in modelToViewBindings) {
+        [self observeWithInfo:info usingKVOController:viewKvoController];
+    }
+}
+
 - (void)setupBindingsForCell:(UITableViewCell *)cell row:(DXTableRow *)row atIndexPath:(NSIndexPath *)indexPath inDataContext:(id)dataContext
 {
     NSDictionary *bindings = row[DXTableBindingsKey];

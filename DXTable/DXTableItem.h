@@ -10,17 +10,44 @@
 
 //#define DXKeyPath(sel) NSStringFromSelector(@selector(sel)) //?
 
+// aka Unique Identifier. Unique accross concrete item type name. For rows and header/footer items is used as reuse identifier.
 extern NSString *const DXTableNameKey;
-extern NSString *const DXTableHeaderKey; // Header title. Accepts string or keypath.
-extern NSString *const DXTableFooterKey; // Footer title. Accepts string or keypath
-extern NSString *const DXTableHeightKey; // Accepts wrapped in NSNumber float or keypath.
-extern NSString *const DXTableActiveKey; // aka Enabled or Visible. Accepts wrapper in NSNumber bool or keypath.
-extern NSString *const DXTableRepeatableKey; // aka Template. Accepts wrapper in NSNumber bool or keypath.
-extern NSString *const DXTableArrayKey; // aka List or Collection. Accepts keypath pointed to ordered collection.
-extern NSString *const DXTableBindingsKey; // aka Attributes or Data or Properties or Keypaths. Accepts dictionary.
-extern NSString *const DXTableActionsKey; // Accepts dictionary
-extern NSString *const DXTableTargetKey; // Accepts any object
-extern NSString *const DXTableUpdatesKey; // aka Update Upon Change. Accepts array of any DXTable..Keys or keypaths
+
+// Header title or view. Accepts string, keypath or dictionary with item options.
+extern NSString *const DXTableHeaderKey;
+
+// Footer title or view. Accepts string, keypath or dictionary with item options.
+extern NSString *const DXTableFooterKey;
+
+// Accepts wrapped in NSNumber float or keypath.
+extern NSString *const DXTableHeightKey;
+
+// Accepts class name as a string or class instance of cell or header/footer view
+extern NSString *const DXTableClassKey;
+
+// Accepts nib name as a string or nib instance of cell or header/footer view
+extern NSString *const DXTableNibKey;
+
+// aka Enabled or Visible. Accepts wrapped in NSNumber bool or keypath.
+extern NSString *const DXTableActiveKey;
+
+// aka Template. Accepts wrapped in NSNumber bool or keypath.
+extern NSString *const DXTableRepeatableKey;
+
+// aka List or Collection. Accepts keypath pointed to ordered collection.
+extern NSString *const DXTableArrayKey;
+
+// aka Attributes or Data or Properties or Keypaths. Accepts dictionary. For header, footer and repeatable rows supports one-way bindings only.
+extern NSString *const DXTableBindingsKey;
+
+// Accepts dictionary of strings which are represent predefined actions (like DXTableRowDidSelectActionKey)
+extern NSString *const DXTableActionsKey;
+
+// Accepts any object. Target should responds to defined actions in table model markup.
+extern NSString *const DXTableTargetKey;
+
+// aka Update Upon Change. Accepts array of any DXTable..Keys or keypaths. All these keypaths must be observable. Changes of this properties triggers call of reloadRowAtIndexPath:… method.
+extern NSString *const DXTableUpdatesKey;
 
 @interface DXTableItem : NSObject
 
@@ -37,7 +64,7 @@ extern NSString *const DXTableUpdatesKey; // aka Update Upon Change. Accepts arr
 @end
 
 
-// TODO: move following functions to bindings (table model bindings) or utils module
+// TODO: move following functions to bindings (table model bindings) or utils module (?)
 /**
  Converts DXTable format of keypath to KVC-compliant keypath.
  Returns `nil` if `object` is nil, not a string object or has wrong format.

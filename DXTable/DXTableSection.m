@@ -6,6 +6,8 @@
 //  Copyright (c) 2014 Alexander Ignatenko. All rights reserved.
 //
 
+#import <UIKit/UIKit.h>
+
 #import "DXTableSection.h"
 #import "DXTableRow.h"
 #import "DXTableModel.h"
@@ -60,6 +62,68 @@
     return [[DXTableRowArray alloc] initWithArray:
     [_allRows filteredArrayUsingPredicate:
      [DXTableItem predicateForActiveItems]]];
+}
+
+@synthesize header = _header;
+- (DXTableItem *)header
+{
+    if (_header == nil) {
+        if (self.headerTitle == nil && self[DXTableHeaderKey]) {
+            _header = [[DXTableItem alloc] initWithOptions:self[DXTableHeaderKey]];
+        }
+    }
+    return _header;
+}
+
+@synthesize footer = _footer;
+- (DXTableItem *)footer
+{
+    if (_footer == nil) {
+        if (self.footerTitle == nil && self[DXTableFooterKey]) {
+            _footer = [[DXTableItem alloc] initWithOptions:self[DXTableFooterKey]];
+        }
+    }
+    return _footer;
+}
+
+- (NSString *)headerTitle
+{
+    NSString *title = self[DXTableHeaderKey];
+    return [title isKindOfClass:[NSString class]] ? title : nil;
+}
+
+- (NSString *)footerTitle
+{
+    NSString *title = self[DXTableFooterKey];
+    return [title isKindOfClass:[NSString class]] ? title : nil;
+}
+
+- (CGFloat)headerHeight
+{
+    CGFloat height = UITableViewAutomaticDimension;
+    if ([self.header[DXTableHeightKey] isKindOfClass:[NSNumber class]]) {
+        height = [self.header[DXTableHeightKey] doubleValue];
+    } else {
+        NSString *heightKeypath = DXTableParseKeyValue(self.header[DXTableHeightKey]);
+        if (heightKeypath) {
+            height = [[self.dataContext valueForKeyPath:heightKeypath] doubleValue];
+        }
+    }
+    return height;
+}
+
+- (CGFloat)footerHeight
+{
+    CGFloat height = UITableViewAutomaticDimension;
+    if ([self.footer[DXTableHeightKey] isKindOfClass:[NSNumber class]]) {
+        height = [self.footer[DXTableHeightKey] doubleValue];
+    } else {
+        NSString *heightKeypath = DXTableParseKeyValue(self.footer[DXTableHeightKey]);
+        if (heightKeypath) {
+            height = [[self.dataContext valueForKeyPath:heightKeypath] doubleValue];
+        }
+    }
+    return height;
 }
 
 @end

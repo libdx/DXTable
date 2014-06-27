@@ -9,7 +9,7 @@
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
 
-@class DXTableModel, DXTableRow;
+@class DXTableModel, DXTableRow, DXTableItem;
 @protocol DXTableObserverDelegate;
 
 @interface DXTableObserver : NSObject
@@ -19,6 +19,7 @@
 // TODO: make a few small specialized methods instead of these huge ones
 - (void)startObservingTableModel:(DXTableModel *)tableModel inDataContext:(id)dataContext;
 - (void)setupBindingsForCell:(UITableViewCell *)cell row:(DXTableRow *)row atIndexPath:(NSIndexPath *)indexPath inDataContext:(id)dataContext;
+- (void)setupBindingsForView:(UIView *)view item:(DXTableItem *)item inDataContext:(id)dataContext;
 
 @end
 

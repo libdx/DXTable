@@ -13,9 +13,6 @@
 
 @class DXTableSection;
 
-//extern NSString *const DXTableRowIdentifierKey; // ?
-extern NSString *const DXTableRowClassKey;
-extern NSString *const DXTableRowNibKey;
 extern NSString *const DXTableRowEditableKey;
 extern NSString *const DXTableRowEditingStyleKey;
 

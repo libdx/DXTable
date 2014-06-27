@@ -6,16 +6,14 @@
 //  Copyright (c) 2014 Alexander Ignatenko. All rights reserved.
 //
 
+#import <Foundation/Foundation.h>
+#import <CoreGraphics/CoreGraphics.h>
+
 #import "DXTableItem.h"
 
 @class DXTableModel, DXTableRowArray;
 
 extern NSString *const DXTableRowsKey;
-
-//extern NSString *const DXTableSectionHeaderView;
-//extern NSString *const DXTableSectionFooterView;
-//extern NSString *const DXTableSectionHeaderClass;
-//extern NSString *const DXTableSectionFooterClass;
 
 @interface DXTableSection : DXTableItem
 
@@ -24,8 +22,14 @@ extern NSString *const DXTableRowsKey;
 @property (nonatomic, readonly) NSArray *allRows;
 @property (nonatomic, readonly) DXTableRowArray *activeRows;
 
-//@property (nonatomic, readonly) DXTableItem *header;
-//@property (nonatomic, readonly) DXTableItem *footer;
+@property (nonatomic, readonly) NSString *headerTitle;
+@property (nonatomic, readonly) NSString *footerTitle;
+
+@property (nonatomic, readonly) DXTableItem *header;
+@property (nonatomic, readonly) DXTableItem *footer;
+
+@property (nonatomic, readonly) CGFloat headerHeight;
+@property (nonatomic, readonly) CGFloat footerHeight;
 
 - (instancetype)initWithModel:(DXTableModel *)tableModel
                       options:(NSDictionary *)options;

@@ -47,17 +47,19 @@
 
 @end
 
-NSString *const DXTableNameKey = @"name";
-NSString *const DXTableHeaderKey = @"header";
-NSString *const DXTableFooterKey = @"footer";
-NSString *const DXTableHeightKey = @"height";
-NSString *const DXTableActiveKey = @"active";
-NSString *const DXTableRepeatableKey = @"repeatable";
-NSString *const DXTableArrayKey = @"array";
-NSString *const DXTableBindingsKey = @"bindings";
-NSString *const DXTableActionsKey = @"actions";
-NSString *const DXTableTargetKey = @"target";
-NSString *const DXTableUpdatesKey = @"updates";
+NSString *const DXTableNameKey          = @"name";
+NSString *const DXTableHeaderKey        = @"header";
+NSString *const DXTableFooterKey        = @"footer";
+NSString *const DXTableHeightKey        = @"height";
+NSString *const DXTableActiveKey        = @"active";
+NSString *const DXTableRepeatableKey    = @"repeatable";
+NSString *const DXTableArrayKey         = @"array";
+NSString *const DXTableBindingsKey      = @"bindings";
+NSString *const DXTableActionsKey       = @"actions";
+NSString *const DXTableTargetKey        = @"target";
+NSString *const DXTableUpdatesKey       = @"updates";
+NSString *const DXTableClassKey         = @"class";
+NSString *const DXTableNibKey           = @"nib";
 
 #pragma mark - Parser
 

@@ -55,7 +55,7 @@ static UIView *lookupFirstResponder(UIView *view)
       DXTableHeaderKey: @"Event",
       DXTableRowsKey:
           @[@{DXTableNameKey: @"title",
-              DXTableRowNibKey: @"FieldCell",
+              DXTableNibKey: @"FieldCell",
               DXTableBindingsKey:
                   @{@"titleLabel.text": @"Title",
                     @"textField.text": @"@title",
@@ -74,7 +74,7 @@ static UIView *lookupFirstResponder(UIView *view)
       DXTableHeaderKey: @"Setup Dates",
       DXTableRowsKey:
           @[@{DXTableNameKey: @"dueDate",
-              DXTableRowNibKey: @"SwitchCell",
+              DXTableNibKey: @"SwitchCell",
               DXTableTargetKey: self.viewModel,
               DXTableActionsKey:
                   @{DXTableRowDidSelectActionKey: @"toggleShowDueDatePicker"},
@@ -83,7 +83,7 @@ static UIView *lookupFirstResponder(UIView *view)
                     @"switchControl.on": @"@showsDueDatePicker"}
               },
             @{DXTableNameKey: @"dueDatePicker",
-              DXTableRowNibKey: @"DatePickerCell",
+              DXTableNibKey: @"DatePickerCell",
               DXTableActiveKey: @"@showsDueDatePicker",
               DXTableHeightKey: @216,
               DXTableBindingsKey:
