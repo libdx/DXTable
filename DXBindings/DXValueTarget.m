@@ -18,7 +18,8 @@ static NSString *valueKeypathForControl(Class control)
                 NSStringFromClass([UIDatePicker class]): @"date",
                 NSStringFromClass([UITextField class]): @"text",
                 NSStringFromClass([UISwitch class]): @"on",
-                NSStringFromClass([UIPageControl class]): @"currentPage"};
+                NSStringFromClass([UIPageControl class]): @"currentPage",
+                NSStringFromClass([UISegmentedControl class]): @"selectedSegmentIndex"};
     });
     return map[NSStringFromClass(control)];
 }
@@ -36,6 +37,21 @@ static UIControlEvents defaultEventsForControl(Class control)
 
 @implementation DXValueTarget
 
+- (instancetype)initWithKeypathByControlMap:(NSDictionary *)map
+{
+    self = [super init];
+    if (self) {
+        self.keypathByControlMap = map;
+    }
+    return self;
+}
+
+- (NSString *)valueKeypathForControl:(Class)controlClass
+{
+    return self.keypathByControlMap[NSStringFromClass(controlClass)] ?:
+    valueKeypathForControl(controlClass);
+}
+
 - (void)becomeTargetOfControl:(UIControl *)control
 {
     [control addTarget:self
@@ -52,7 +68,7 @@ static UIControlEvents defaultEventsForControl(Class control)
 
 - (void)controlChanged:(id)control withEvent:(UIEvent *)event
 {
-    self.value = [control valueForKeyPath:valueKeypathForControl([control class])];
+    self.value = [control valueForKeyPath:[self valueKeypathForControl:[control class]]];
     NSAssert(self.valueChanged, @"valueChanged block is NULL, provide valueChanged block");
     self.valueChanged(self.value, event);
 }

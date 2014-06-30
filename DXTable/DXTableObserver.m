@@ -226,6 +226,18 @@ static void addObjectIfNotNil(NSMutableArray *array, id object)
     return nil;
 }
 
+- (NSDictionary *)metaDataForControlClass:(Class)cls inTableModel:(DXTableModel *)tableModel
+{
+    NSArray *allMetaData = tableModel[DXTableControlsKey];
+    if (allMetaData == nil) {
+        return nil;
+    }
+    NSAssert([allMetaData isKindOfClass:[NSArray class]],
+             @"For key DXTableControlsKey (controls) array of dictionaries must be provided");
+    NSPredicate *p = [NSPredicate predicateWithFormat:@"%K = %@", DXTableClassKey, cls];
+    return [allMetaData filteredArrayUsingPredicate:p].firstObject;
+}
+
 - (FBKVOController *)kvoControllerForObject:(id)object
 {
     static void *ObjectKvoControllerKey = &ObjectKvoControllerKey;
@@ -238,7 +250,7 @@ static void addObjectIfNotNil(NSMutableArray *array, id object)
     return kvoController;
 }
 
-- (DXValueTarget *)valueTargetForControl:(UIControl *)control
+- (DXValueTarget *)valueTargetForControl:(UIControl *)control metaData:(NSDictionary *)metaData
 {
     static void *ControlValueTargetKey = &ControlValueTargetKey;
     DXValueTarget *target = objc_getAssociatedObject(control, ControlValueTargetKey);
@@ -247,6 +259,14 @@ static void addObjectIfNotNil(NSMutableArray *array, id object)
         [target becomeTargetOfControl:control];
         objc_setAssociatedObject(control, ControlValueTargetKey, target, OBJC_ASSOCIATION_RETAIN);
     }
+
+    if (metaData) {
+        NSAssert(metaData[DXTableClassKey] && metaData[DXTableKeypathKey],
+                 @"DXTableClassKey (class) and DXTableKeypathKey (keypath) keys must not be `nil`");
+        target.keypathByControlMap =
+        @{NSStringFromClass(metaData[DXTableClassKey]) : metaData[DXTableKeypathKey]};
+    }
+
     return target;
 }
 
@@ -300,8 +320,7 @@ static void addObjectIfNotNil(NSMutableArray *array, id object)
     }
 }
 
-
-// FIXME: unify this method with setupBindingsForCell:… now it's copy-paste.
+// FIXME: unify this method with setupBindingsForCell:… now it's copy-paste and decouple logic
 - (void)setupBindingsForView:(UIView *)view item:(DXTableItem *)item inDataContext:(id)dataContext
 {
     NSDictionary *bindings = item[DXTableBindingsKey];
@@ -313,12 +332,14 @@ static void addObjectIfNotNil(NSMutableArray *array, id object)
             // assign `value` directly
             [view setValue:nilIfNull(value) forKeyPath:viewKeypath];
         } else {
-            // `value` is actually a keypath so deal with bindings
-            DXKVOInfo *info = [self bindInfoFromDataContext:dataContext
-                                                dataKeypath:dataKeypath
-                                                     toView:view
-                                                viewKeypath:viewKeypath];
-            [modelToViewBindings addObject:info];
+            if (DXTableParseIsDefaultMode(value) || DXTableParseIsToViewMode(value)) {
+                // `value` is actually a keypath so deal with bindings
+                DXKVOInfo *info = [self bindInfoFromDataContext:dataContext
+                                                    dataKeypath:dataKeypath
+                                                         toView:view
+                                                    viewKeypath:viewKeypath];
+                [modelToViewBindings addObject:info];
+            }
         }
     }
 
@@ -329,6 +350,7 @@ static void addObjectIfNotNil(NSMutableArray *array, id object)
     }
 }
 
+// FIXME: decouple this mess
 - (void)setupBindingsForCell:(UITableViewCell *)cell row:(DXTableRow *)row atIndexPath:(NSIndexPath *)indexPath inDataContext:(id)dataContext
 {
     NSDictionary *bindings = row[DXTableBindingsKey];
@@ -344,27 +366,31 @@ static void addObjectIfNotNil(NSMutableArray *array, id object)
             NSMutableArray *modelToViewBindings = [NSMutableArray array];
             // bind model to views
             if (row.isRepeatable) {
-                // support for repeatable rows
+                if (DXTableParseIsDefaultMode(value) || DXTableParseIsToViewMode(value)) {
+                    // support for repeatable rows
 
-                NSString *arrayKeypath = DXTableParseKeyValue(row[DXTableArrayKey]);
-                // stupid way to observe objects in array
-                NSArray *array = [dataContext valueForKeyPath:arrayKeypath];
-                // find first index in section of repeatable row
-                NSUInteger firstRowIndex = [row.section.activeRows indexesOfRow:row].firstIndex;
-                NSInteger rowIndex = indexPath.row - firstRowIndex;
-                id item  = array[rowIndex];
+                    NSString *arrayKeypath = DXTableParseKeyValue(row[DXTableArrayKey]);
+                    // stupid way to observe objects in array
+                    NSArray *array = [dataContext valueForKeyPath:arrayKeypath];
+                    // find first index in section of repeatable row
+                    NSUInteger firstRowIndex = [row.section.activeRows indexesOfRow:row].firstIndex;
+                    NSInteger rowIndex = indexPath.row - firstRowIndex;
+                    id item  = array[rowIndex];
 
-                [modelToViewBindings addObject:
-                 [self bindInfoFromDataContext:item
-                                   dataKeypath:dataKeypath
-                                        toView:cell
-                                   viewKeypath:cellKeypath]];
+                    [modelToViewBindings addObject:
+                     [self bindInfoFromDataContext:item
+                                       dataKeypath:dataKeypath
+                                            toView:cell
+                                       viewKeypath:cellKeypath]];
+                }
             } else {
-                DXKVOInfo *modelToView = [self bindInfoFromDataContext:dataContext
-                                                           dataKeypath:dataKeypath
-                                                                toView:cell
-                                                           viewKeypath:cellKeypath];
-                [modelToViewBindings addObject:modelToView];
+                if (DXTableParseIsDefaultMode(value) || DXTableParseIsToViewMode(value)) {
+                    DXKVOInfo *modelToView = [self bindInfoFromDataContext:dataContext
+                                                               dataKeypath:dataKeypath
+                                                                    toView:cell
+                                                               viewKeypath:cellKeypath];
+                    [modelToViewBindings addObject:modelToView];
+                }
 
                 // bind views (controls) to model
                 // lookup UIControl objects traversing through cellKeypath components
@@ -376,17 +402,21 @@ static void addObjectIfNotNil(NSMutableArray *array, id object)
                      [[cellKeypathComponents subarrayWithRange:NSMakeRange(0, idx + 1)]
                       componentsJoinedByString:@"."];
                      id object = [cell valueForKeyPath:leftSideKeypath];
-                     if ([object isKindOfClass:[UIControl class]]) {
-                         UIControl *control = object;
-                         DXValueTarget *target = [self valueTargetForControl:control];
-                         target.valueChanged = ^(id value, UIEvent *event) {
-                             [dataContext setValue:nilIfNull(value) forKeyPath:dataKeypath];
-                         };
-                     } else if ([object isKindOfClass:[UITextView class]]) {
-                         DXViewDelegate *delegate = [self viewDelegateForTextView:object];
-                         delegate.valueChanged = ^(id value) {
-                             [dataContext setValue:nilIfNull(value) forKeyPath:dataKeypath];
-                         };
+                     if (DXTableParseIsDefaultMode(value) || DXTableParseIsFromViewMode(value)) {
+                         if ([object isKindOfClass:[UIControl class]]) {
+                             UIControl *control = object;
+                             NSDictionary *controlMetaData = [self metaDataForControlClass:[control class]
+                                                                              inTableModel:row.section.tableModel];
+                             DXValueTarget *target = [self valueTargetForControl:control metaData:controlMetaData];
+                             target.valueChanged = ^(id value, UIEvent *event) {
+                                 [dataContext setValue:nilIfNull(value) forKeyPath:dataKeypath];
+                             };
+                         } else if ([object isKindOfClass:[UITextView class]]) {
+                             DXViewDelegate *delegate = [self viewDelegateForTextView:object];
+                             delegate.valueChanged = ^(id value) {
+                                 [dataContext setValue:nilIfNull(value) forKeyPath:dataKeypath];
+                             };
+                         }
                      }
                  }];
             }

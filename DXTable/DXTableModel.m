@@ -119,3 +119,6 @@
 @end
 
 NSString *const DXTableSectionsKey = @"sections";
+NSString *const DXTableControlsKey = @"controls";
+NSString *const DXTableKeypathKey = @"keypath";
+NSString *const DXTableControlEvents = @"events";

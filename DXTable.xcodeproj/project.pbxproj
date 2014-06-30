@@ -25,6 +25,7 @@
 		FA02E8EF19505FA800862BB9 /* DXTableViewSource.m in Sources */ = {isa = PBXBuildFile; fileRef = FA02E8E119505FA800862BB9 /* DXTableViewSource.m */; };
 		FA02E8F019505FA800862BB9 /* FBKVOController.m in Sources */ = {isa = PBXBuildFile; fileRef = FA02E8E519505FA800862BB9 /* FBKVOController.m */; };
 		FA0464641951F63900EF8681 /* DXViewDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = FA0464631951F63900EF8681 /* DXViewDelegate.m */; };
+		FA04A61E1960BE2600CA7EE1 /* DXTableParse.m in Sources */ = {isa = PBXBuildFile; fileRef = FA04A61D1960BE2600CA7EE1 /* DXTableParse.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -85,6 +86,8 @@
 		FA02E8F119505FF100862BB9 /* DXTable-Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "DXTable-Prefix.pch"; sourceTree = "<group>"; };
 		FA0464621951F63900EF8681 /* DXViewDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DXViewDelegate.h; sourceTree = "<group>"; };
 		FA0464631951F63900EF8681 /* DXViewDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DXViewDelegate.m; sourceTree = "<group>"; };
+		FA04A61C1960BE2600CA7EE1 /* DXTableParse.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DXTableParse.h; sourceTree = "<group>"; };
+		FA04A61D1960BE2600CA7EE1 /* DXTableParse.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DXTableParse.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -188,6 +191,8 @@
 				FA02E8D719505FA800862BB9 /* DXTableModel.m */,
 				FA02E8DC19505FA800862BB9 /* DXTableRowArray.h */,
 				FA02E8DD19505FA800862BB9 /* DXTableRowArray.m */,
+				FA04A61C1960BE2600CA7EE1 /* DXTableParse.h */,
+				FA04A61D1960BE2600CA7EE1 /* DXTableParse.m */,
 				FA02E8D819505FA800862BB9 /* DXTableObserver.h */,
 				FA02E8D919505FA800862BB9 /* DXTableObserver.m */,
 				FA02E8E019505FA800862BB9 /* DXTableViewSource.h */,
@@ -292,6 +297,7 @@
 				FA02E8EB19505FA800862BB9 /* DXTableObserver.m in Sources */,
 				FA02E8E919505FA800862BB9 /* DXTableItem.m in Sources */,
 				FA02E8EA19505FA800862BB9 /* DXTableModel.m in Sources */,
+				FA04A61E1960BE2600CA7EE1 /* DXTableParse.m in Sources */,
 				FA02E8F019505FA800862BB9 /* FBKVOController.m in Sources */,
 				FA02E8EF19505FA800862BB9 /* DXTableViewSource.m in Sources */,
 				FA02E8EE19505FA800862BB9 /* DXTableSection.m in Sources */,

@@ -9,6 +9,7 @@
 #import <Foundation/Foundation.h>
 
 //#define DXKeyPath(sel) NSStringFromSelector(@selector(sel)) //?
+#define DXToView(sel) @"@##sel##(ToView)"
 
 // aka Unique Identifier. Unique accross concrete item type name. For rows and header/footer items is used as reuse identifier.
 extern NSString *const DXTableNameKey;
@@ -37,8 +38,14 @@ extern NSString *const DXTableRepeatableKey;
 // aka List or Collection. Accepts keypath pointed to ordered collection.
 extern NSString *const DXTableArrayKey;
 
-// aka Attributes or Data or Properties or Keypaths. Accepts dictionary. For header, footer and repeatable rows supports one-way bindings only.
+// aka Attributes or Data or Properties or Keypaths. Accepts dictionary. For header, footer and repeatable rows supports one-way (to view) bindings only.
 extern NSString *const DXTableBindingsKey;
+
+// bindings mode. Can be either: DXTableToViewMode, DXTableFromViewMode
+extern NSString *const DXTableModeKey;
+
+// Accepts string which represents keypath. Depending on context keypath can be either plain or starts with `@' prefix.
+extern NSString *const DXTableKeypathKey;
 
 // Accepts dictionary of strings which are represent predefined actions (like DXTableRowDidSelectActionKey)
 extern NSString *const DXTableActionsKey;
@@ -48,6 +55,14 @@ extern NSString *const DXTableTargetKey;
 
 // aka Update Upon Change. Accepts array of any DXTable..Keys or keypaths. All these keypaths must be observable. Changes of this properties triggers call of reloadRowAtIndexPath:… method.
 extern NSString *const DXTableUpdatesKey;
+
+// Binding modes
+
+// Mode for updating view on bound data context property change
+extern NSString *const DXTableToViewMode;
+
+// Mode for updating data context on bound view property change
+extern NSString *const DXTableFromViewMode;
 
 @interface DXTableItem : NSObject
 
@@ -62,16 +77,3 @@ extern NSString *const DXTableUpdatesKey;
 - (id)objectForKeyedSubscript:(id)key;
 
 @end
-
-
-// TODO: move following functions to bindings (table model bindings) or utils module (?)
-/**
- Converts DXTable format of keypath to KVC-compliant keypath.
- Returns `nil` if `object` is nil, not a string object or has wrong format.
- Accepted keypath format is any KVC-compliant keypath with `@` or `@.` prefix.
- Examples:
-    `@items` - keypath comprises with one key
-    `@items.name` - keypath comprises with couple keys
-    `@.name` - keypath is being resolved against `DXTableArrayKey` value (is used with repeatable rows)
- */
-NSString *DXTableParseKeyValue(id value);

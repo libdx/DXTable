@@ -12,6 +12,7 @@
 #import "DXTableRow.h"
 #import "DXTableModel.h"
 #import "DXTableRowArray.h"
+#import "DXTableParse.h"
 
 @interface DXTableSection ()
 

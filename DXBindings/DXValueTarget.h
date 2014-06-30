@@ -15,6 +15,15 @@
 
 @property (nonatomic, copy) void (^valueChanged)(id value, UIEvent *event);
 
+/// map in format @{NSStringFromClass([UIStepper class]): @"value", …}
+@property (nonatomic, copy) NSDictionary *keypathByControlMap;
+
+/**
+ Designated initializer.
+ @map NSDictionary object with class name as a key and keypath for retrieving value from control as a value.
+ */
+- (instancetype)initWithKeypathByControlMap:(NSDictionary *)map;
+
 - (void)becomeTargetOfControl:(UIControl *)control;
 - (void)resignTargetOfControl:(UIControl *)control;
 

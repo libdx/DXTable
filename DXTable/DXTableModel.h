@@ -9,6 +9,8 @@
 #import "DXTableItem.h"
 
 extern NSString *const DXTableSectionsKey;
+extern NSString *const DXTableControlsKey;
+extern NSString *const DXTableControlEvents;
 
 @class DXTableRow;
 

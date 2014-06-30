@@ -55,34 +55,12 @@ NSString *const DXTableActiveKey        = @"active";
 NSString *const DXTableRepeatableKey    = @"repeatable";
 NSString *const DXTableArrayKey         = @"array";
 NSString *const DXTableBindingsKey      = @"bindings";
+NSString *const DXTableModeKey          = @"mode";
 NSString *const DXTableActionsKey       = @"actions";
 NSString *const DXTableTargetKey        = @"target";
 NSString *const DXTableUpdatesKey       = @"updates";
 NSString *const DXTableClassKey         = @"class";
 NSString *const DXTableNibKey           = @"nib";
 
-#pragma mark - Parser
-
-static NSString *const DXKeypathPrefix = @"@";
-static NSString *const DXInnerKeyPathPrefix = @"@.";
-
-NSString *DXTableParseKeyValue(id value)
-{
-    NSString *res;
-    if ([value isKindOfClass:[NSString class]]) {
-        NSString *string = value;
-
-        // value which contain method signature that accept arguments is illegal
-        if ([string hasSuffix:@":"]) {
-            return nil;
-        }
-
-        for (NSString *prefix in @[DXInnerKeyPathPrefix, DXKeypathPrefix]) {
-            if ([string hasPrefix:prefix]) {
-                res = [string stringByReplacingOccurrencesOfString:prefix withString:@""];
-                break;
-            }
-        }
-    }
-    return res;
-}
+NSString *const DXTableToViewMode   = @"ToView";
+NSString *const DXTableFromViewMode = @"FromView";
