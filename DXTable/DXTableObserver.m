@@ -354,6 +354,7 @@ static void addObjectIfNotNil(NSMutableArray *array, id object)
 - (void)setupBindingsForCell:(UITableViewCell *)cell row:(DXTableRow *)row atIndexPath:(NSIndexPath *)indexPath inDataContext:(id)dataContext
 {
     NSDictionary *bindings = row[DXTableBindingsKey];
+    NSMutableArray *modelToViewBindings = [NSMutableArray array];
     for (NSString *cellKeypath in bindings) { // "textLabel.text": "Hello"
         id value = bindings[cellKeypath];
         NSString *dataKeypath = DXTableParseKeyValue(value);
@@ -363,7 +364,6 @@ static void addObjectIfNotNil(NSMutableArray *array, id object)
         } else {
             // `value` is actually a keypath so deal with bindings
 
-            NSMutableArray *modelToViewBindings = [NSMutableArray array];
             // bind model to views
             if (row.isRepeatable) {
                 if (DXTableParseIsDefaultMode(value) || DXTableParseIsToViewMode(value)) {
@@ -420,13 +420,12 @@ static void addObjectIfNotNil(NSMutableArray *array, id object)
                      }
                  }];
             }
-
-            FBKVOController *cellKvoController = [self kvoControllerForObject:cell];
-            [cellKvoController unobserve:cell];
-            for (id info in modelToViewBindings) {
-                [self observeWithInfo:info usingKVOController:cellKvoController];
-            }
         }
+    }
+    FBKVOController *cellKvoController = [self kvoControllerForObject:cell];
+    [cellKvoController unobserve:cell];
+    for (id info in modelToViewBindings) {
+        [self observeWithInfo:info usingKVOController:cellKvoController];
     }
 }
 
