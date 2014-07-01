@@ -17,11 +17,12 @@ ________
 ✓ Rename Enabled key to Active key (DXTableEnabledKey to DXTableActiveKey)
 ✓ Accept values for DXTableClassKey both string and class object and
     for DXTableRowNibKey both string and nib object
-- Add Template rows (same as repeatable, but one row objects to be created per one model object)
-- Section indexes (ABCDE...Z)
-- Template (or repeatable) sections
-- Inner keypaths support for properties in the template rows
+✓ Add Templated rows (same as repeatable, but one row objects to be created per one model object)
+✓ Templated sections
+✓ Inner keypaths support for properties in the templated rows and sections
     - i.e. @.rowEditable, @.rowHeight...
+- Section indexes (ABCDE...Z)
+- Activating/deactivating sections
 - Consider DXTableViewSource to work gracefully with UISearchDisplayController's searchResultsTableView
 - Reordering (canMoveRowAt...)
     - rows reordering whithin repeatable items
@@ -32,7 +33,6 @@ ________
 - Support for retrieve sections and rows by name
 - Support for table header and footer with bindings
 - Support of actions for buttons (UIButton, UISegmentedControl)
-- Activating/deactivating sections
 - Support for more UITableView actions (willSelectCell..., didHighlightCell... etc)
 - Add ability to extend binding to support custom views' properties for binding to model
     - Declare (DX)Binder protocol or base class

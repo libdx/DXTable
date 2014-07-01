@@ -44,8 +44,8 @@
     if (_allSections == nil) {
         NSMutableArray *sections = [NSMutableArray array];
         for (NSDictionary *options in self[DXTableSectionsKey]) {
-            [sections addObject:[[DXTableSection alloc]
-                                 initWithModel:self options:options]];
+            [sections addObjectsFromArray:
+             [DXTableSection sectionWithModel:self options:options]];
         }
         _allSections = sections.copy;
     }

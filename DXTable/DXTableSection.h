@@ -17,7 +17,15 @@ extern NSString *const DXTableRowsKey;
 
 @interface DXTableSection : DXTableItem
 
+/**
+ Returns multiple sections if options contain tempate flag set to YES. Returns one secion in array otherwise.
+ */
++ (NSArray *)sectionWithModel:(DXTableModel *)tableModel
+                      options:(NSDictionary *)options;
+
 @property (nonatomic, weak, readonly) DXTableModel *tableModel;
+
+@property (nonatomic, readonly, getter=isTemplated) BOOL templated;
 
 @property (nonatomic, readonly) NSArray *allRows;
 @property (nonatomic, readonly) DXTableRowArray *activeRows;

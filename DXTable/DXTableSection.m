@@ -22,6 +22,26 @@
 
 @implementation DXTableSection
 
++ (NSArray *)sectionWithModel:(DXTableModel *)tableModel
+                      options:(NSDictionary *)options
+{
+    NSMutableArray *sections = [NSMutableArray array];
+    BOOL isTemplate = [options[DXTableTemplateKey] boolValue];
+    if (isTemplate) {
+        NSString *arrayKeypath = DXTableParseKeyValue(options[DXTableArrayKey]);
+        NSArray *array = arrayKeypath ? [tableModel.dataContext valueForKeyPath:arrayKeypath] : nil;
+        NSUInteger count = array ? array.count : 1;
+        for (int i = 0; i < count; ++i) {
+            DXTableSection *section = [[DXTableSection alloc] initWithModel:tableModel options:options];
+            [sections addObject:section];
+        }
+    } else {
+        DXTableSection *section = [[DXTableSection alloc] initWithModel:tableModel options:options];
+        [sections addObject:section];
+    }
+    return sections.copy;
+}
+
 - (instancetype)initWithOptions:(NSDictionary *)options
 {
     NSAssert(NO, @"Use designated initializer: -initWithModel:options:");
@@ -38,10 +58,19 @@
     return self;
 }
 
-
 - (id)dataContext
 {
-    return self.tableModel.dataContext;
+    id dataContext;
+    if (self.isTemplated) {
+        NSString *arrayKeypath = DXTableParseKeyValue(self[DXTableArrayKey]);
+        if (arrayKeypath) {
+            NSArray *array = [self.tableModel.dataContext valueForKeyPath:arrayKeypath];
+            NSUInteger index = [self.tableModel.activeSections indexOfObject:self];
+            dataContext = array[index];
+        }
+    }
+    dataContext = dataContext ?: self.tableModel.dataContext;
+    return dataContext;
 }
 
 @synthesize allRows = _allRows;
@@ -63,6 +92,11 @@
     return [[DXTableRowArray alloc] initWithArray:
             [self.allRows filteredArrayUsingPredicate:
              [DXTableItem predicateForActiveItems]]];
+}
+
+- (BOOL)isTemplated
+{
+    return [self[DXTableTemplateKey] boolValue];
 }
 
 @synthesize header = _header;
@@ -89,14 +123,26 @@
 
 - (NSString *)headerTitle
 {
-    NSString *title = self[DXTableHeaderKey];
-    return [title isKindOfClass:[NSString class]] ? title : nil;
+    NSString *title;
+    NSString *keypath = DXTableParseKeyValue(self[DXTableHeaderKey]);
+    if (keypath) {
+        title = [self.dataContext valueForKeyPath:keypath];
+    } else {
+        title = [self[DXTableHeaderKey] isKindOfClass:[NSString class]] ? self[DXTableHeaderKey] : nil;
+    }
+    return title;
 }
 
 - (NSString *)footerTitle
 {
-    NSString *title = self[DXTableFooterKey];
-    return [title isKindOfClass:[NSString class]] ? title : nil;
+    NSString *title;
+    NSString *keypath = DXTableParseKeyValue(self[DXTableFooterKey]);
+    if (keypath) {
+        title = [self.dataContext valueForKeyPath:keypath];
+    } else {
+        title = [self[DXTableFooterKey] isKindOfClass:[NSString class]] ? self[DXTableFooterKey] : nil;
+    }
+    return title;
 }
 
 - (CGFloat)headerHeight
