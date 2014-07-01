@@ -50,8 +50,8 @@
     if (_allRows == nil) {
         NSMutableArray *rows = [NSMutableArray array];
         for (NSDictionary *options in self[DXTableRowsKey]) {
-            [rows addObject:[[DXTableRow alloc]
-                             initWithSection:self options:options]];
+            [rows addObjectsFromArray:
+             [DXTableRow rowsWithSection:self options:options]];
         }
         _allRows = rows.copy;
     }
@@ -61,8 +61,8 @@
 - (DXTableRowArray *)activeRows
 {
     return [[DXTableRowArray alloc] initWithArray:
-    [_allRows filteredArrayUsingPredicate:
-     [DXTableItem predicateForActiveItems]]];
+            [self.allRows filteredArrayUsingPredicate:
+             [DXTableItem predicateForActiveItems]]];
 }
 
 @synthesize header = _header;

@@ -84,14 +84,14 @@ static void addObjectIfNotNil(NSMutableArray *array, id object)
     return info;
 }
 
-- (DXKVOInfo *)infoToTriggerRowBindings:(DXTableRow *)row inDataContext:(id)dataContext
+- (DXKVOInfo *)infoToTriggerRowBindings:(DXTableRow *)row
 {
     id activeValue = row[DXTableActiveKey];
     NSString *keypath = DXTableParseKeyValue(activeValue);
     DXKVOInfo *info;
     if (keypath) {
         info = [[DXKVOInfo alloc] init];
-        info.object = dataContext;
+        info.object = row.dataContext;
         info.keypath = DXTableParseKeyValue(activeValue);
         info.options = NSKeyValueObservingOptionInitial | NSKeyValueObservingOptionNew;
         info.block = ^(id observer, id dataContext, NSDictionary *change) {
@@ -103,12 +103,11 @@ static void addObjectIfNotNil(NSMutableArray *array, id object)
 
 - (DXKVOInfo *)infoForRepeatableRow:(DXTableRow *)row
                      fromTableModel:(DXTableModel *)tableModel
-                      inDataContext:(id)dataContext
 {
     DXKVOInfo *info;
     if (row.isRepeatable) {
         info = [[DXKVOInfo alloc] init];
-        info.object = dataContext;
+        info.object = row.dataContext;
         info.options = NSKeyValueObservingOptionNew;
         info.keypath = DXTableParseKeyValue(row[DXTableArrayKey]);
         info.block = ^(DXTableObserver *observer, id dataContext, NSDictionary *change) {
@@ -150,7 +149,6 @@ static void addObjectIfNotNil(NSMutableArray *array, id object)
 // TODO: do the same for sections
 - (NSArray *)infosToTriggerUpdateCellForRow:(DXTableRow *)row
                              fromTableModel:(DXTableModel *)tableModel
-                              inDataContext:(id)dataContext
 {
     NSArray *updates = row[DXTableUpdatesKey];
     if (updates == nil) {
@@ -164,11 +162,11 @@ static void addObjectIfNotNil(NSMutableArray *array, id object)
             for (NSUInteger index = 0; index < row.repeatCount; ++index) {
                 DXKVOInfo *info;
                 info = [[DXKVOInfo alloc] init];
-                id dataObject = dataContext;
+                id dataObject = row.dataContext;
                 if (row.isRepeatable) {
                     NSString *arrayKeypath = DXTableParseKeyValue(row[DXTableArrayKey]);
                     NSAssert(arrayKeypath, @"repeatable row must contain %@ keypath", DXTableArrayKey);
-                    dataObject = [dataContext valueForKeyPath:arrayKeypath][index];
+                    dataObject = [row.dataContext valueForKeyPath:arrayKeypath][index];
                 }
                 info.object = dataObject;
                 info.keypath = keypath;
@@ -192,7 +190,6 @@ static void addObjectIfNotNil(NSMutableArray *array, id object)
 
 - (DXKVOInfo *)infoForEachObjectOfRepeatableRow:(DXTableRow *)row
                                  fromTableModel:(DXTableModel *)tableModel
-                                  inDataContext:(id)dataContext
 {
     DXKVOInfo *info;
     return info;
@@ -294,22 +291,19 @@ static void addObjectIfNotNil(NSMutableArray *array, id object)
     [kvoController observe:info.object keyPath:info.keypath options:info.options block:info.block];
 }
 
-- (void)startObservingTableModel:(DXTableModel *)tableModel inDataContext:(id)dataContext
+- (void)startObservingTableModel:(DXTableModel *)tableModel
 {
     NSMutableArray *infos = [NSMutableArray array];
     for (DXTableSection *section in tableModel.allSections) {
         for (DXTableRow *row in section.allRows) {
             addObjectIfNotNil(infos, [self infoForRowActiveKeypath:row
                                                     fromTableModel:tableModel]);
-            addObjectIfNotNil(infos, [self infoToTriggerRowBindings:row
-                                                      inDataContext:dataContext]);
+            addObjectIfNotNil(infos, [self infoToTriggerRowBindings:row]);
             addObjectIfNotNil(infos, [self infoForRepeatableRow:row
-                                                 fromTableModel:tableModel
-                                                  inDataContext:dataContext]);
+                                                 fromTableModel:tableModel]);
 
             [infos addObjectsFromArray:[self infosToTriggerUpdateCellForRow:row
-                                                             fromTableModel:tableModel
-                                                              inDataContext:dataContext]];
+                                                             fromTableModel:tableModel]];
             // subscribe to each section "active" keypath
             // TODO
         }
@@ -321,7 +315,7 @@ static void addObjectIfNotNil(NSMutableArray *array, id object)
 }
 
 // FIXME: unify this method with setupBindingsForCell:… now it's copy-paste and decouple logic
-- (void)setupBindingsForView:(UIView *)view item:(DXTableItem *)item inDataContext:(id)dataContext
+- (void)setupBindingsForView:(UIView *)view item:(DXTableItem *)item
 {
     NSDictionary *bindings = item[DXTableBindingsKey];
     NSMutableArray *modelToViewBindings = [NSMutableArray array];
@@ -334,7 +328,7 @@ static void addObjectIfNotNil(NSMutableArray *array, id object)
         } else {
             if (DXTableParseIsDefaultMode(value) || DXTableParseIsToViewMode(value)) {
                 // `value` is actually a keypath so deal with bindings
-                DXKVOInfo *info = [self bindInfoFromDataContext:dataContext
+                DXKVOInfo *info = [self bindInfoFromDataContext:item.dataContext
                                                     dataKeypath:dataKeypath
                                                          toView:view
                                                     viewKeypath:viewKeypath];
@@ -351,7 +345,7 @@ static void addObjectIfNotNil(NSMutableArray *array, id object)
 }
 
 // FIXME: decouple this mess
-- (void)setupBindingsForCell:(UITableViewCell *)cell row:(DXTableRow *)row atIndexPath:(NSIndexPath *)indexPath inDataContext:(id)dataContext
+- (void)setupBindingsForCell:(UITableViewCell *)cell row:(DXTableRow *)row atIndexPath:(NSIndexPath *)indexPath
 {
     NSDictionary *bindings = row[DXTableBindingsKey];
     NSMutableArray *modelToViewBindings = [NSMutableArray array];
@@ -371,7 +365,7 @@ static void addObjectIfNotNil(NSMutableArray *array, id object)
 
                     NSString *arrayKeypath = DXTableParseKeyValue(row[DXTableArrayKey]);
                     // stupid way to observe objects in array
-                    NSArray *array = [dataContext valueForKeyPath:arrayKeypath];
+                    NSArray *array = [row.dataContext valueForKeyPath:arrayKeypath];
                     // find first index in section of repeatable row
                     NSUInteger firstRowIndex = [row.section.activeRows indexesOfRow:row].firstIndex;
                     NSInteger rowIndex = indexPath.row - firstRowIndex;
@@ -385,7 +379,7 @@ static void addObjectIfNotNil(NSMutableArray *array, id object)
                 }
             } else {
                 if (DXTableParseIsDefaultMode(value) || DXTableParseIsToViewMode(value)) {
-                    DXKVOInfo *modelToView = [self bindInfoFromDataContext:dataContext
+                    DXKVOInfo *modelToView = [self bindInfoFromDataContext:row.dataContext
                                                                dataKeypath:dataKeypath
                                                                     toView:cell
                                                                viewKeypath:cellKeypath];
@@ -409,12 +403,12 @@ static void addObjectIfNotNil(NSMutableArray *array, id object)
                                                                               inTableModel:row.section.tableModel];
                              DXValueTarget *target = [self valueTargetForControl:control metaData:controlMetaData];
                              target.valueChanged = ^(id value, UIEvent *event) {
-                                 [dataContext setValue:nilIfNull(value) forKeyPath:dataKeypath];
+                                 [row.dataContext setValue:nilIfNull(value) forKeyPath:dataKeypath];
                              };
                          } else if ([object isKindOfClass:[UITextView class]]) {
                              DXViewDelegate *delegate = [self viewDelegateForTextView:object];
                              delegate.valueChanged = ^(id value) {
-                                 [dataContext setValue:nilIfNull(value) forKeyPath:dataKeypath];
+                                 [row.dataContext setValue:nilIfNull(value) forKeyPath:dataKeypath];
                              };
                          }
                      }

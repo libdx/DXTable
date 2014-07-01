@@ -23,6 +23,12 @@ extern NSString *const DXTableRowCommitDeleteActionKey;
 
 @interface DXTableRow : DXTableItem
 
+/**
+ Returns multiple rows if options contain tempate flag set to YES. Returns one row in array otherwise.
+ */
++ (NSArray *)rowsWithSection:(DXTableSection *)section
+                     options:(NSDictionary *)options;
+
 - (instancetype)initWithSection:(DXTableSection *)section
                         options:(NSDictionary *)options;
 
@@ -30,16 +36,18 @@ extern NSString *const DXTableRowCommitDeleteActionKey;
 
 @property (nonatomic, readonly, getter=isRepeatable) BOOL repeatable;
 
+@property (nonatomic, readonly, getter=isTemplated) BOOL templated;
+
 @property (nonatomic, readonly) id target;
 
 @property (nonatomic, readonly) NSInteger repeatCount;
 
 @property (nonatomic, readonly) CGFloat height;
 
-// for non-repeatable default is NO, for repeatable default is YES
+// for non-repeatable and non-templated default is NO, for repeatable and templated default is YES
 @property (nonatomic, readonly, getter=isEditable) BOOL editable;
 
-// for non-repeatable default is None, for repeatable default is Delete
+// for non-repeatable and non-templated default is None, for repeatable and templated default is Delete
 @property (nonatomic, readonly) NSInteger editingStyle;
 
 @end

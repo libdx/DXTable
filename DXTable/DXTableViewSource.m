@@ -68,7 +68,7 @@ static UINib *nibFromNibOrName(id nibOrString)
         self.tableObserver.delegate = self;
         self.options = options;
 
-        [self.tableObserver startObservingTableModel:tableModel inDataContext:tableModel.dataContext];
+        [self.tableObserver startObservingTableModel:tableModel];
         [self registerResourcesForTableView:tableView];
     }
     return self;
@@ -79,6 +79,7 @@ static UINib *nibFromNibOrName(id nibOrString)
     if (tableView == nil) {
         return;
     }
+    tableView.sectionIndexBackgroundColor = [UIColor clearColor];
     // TODO: add on table model method that returns dictionary of cell classes and nibs
     // register cell classes and nibs
     for (DXTableSection *section in self.tableModel.allSections)
@@ -167,7 +168,7 @@ static UINib *nibFromNibOrName(id nibOrString)
     DXTableRow *row = [self.tableModel.activeSections[indexPath.section] activeRows][indexPath.row];
     id cell = [tableView dequeueReusableCellWithIdentifier:row[DXTableNameKey]
                                               forIndexPath:indexPath];
-    [self.tableObserver setupBindingsForCell:cell row:row atIndexPath:indexPath inDataContext:self.tableModel.dataContext];
+    [self.tableObserver setupBindingsForCell:cell row:row atIndexPath:indexPath];
     return cell;
 }
 
@@ -247,7 +248,7 @@ static UINib *nibFromNibOrName(id nibOrString)
         return nil;
     }
     UIView *view = [tableView dequeueReusableHeaderFooterViewWithIdentifier:sectionItem.header[DXTableNameKey]];
-    [self.tableObserver setupBindingsForView:view item:sectionItem.header inDataContext:self.tableModel.dataContext];
+    [self.tableObserver setupBindingsForView:view item:sectionItem.header];
     return view;
 }
 
@@ -258,7 +259,7 @@ static UINib *nibFromNibOrName(id nibOrString)
         return nil;
     }
     UIView *view = [tableView dequeueReusableHeaderFooterViewWithIdentifier:sectionItem.footer[DXTableNameKey]];
-    [self.tableObserver setupBindingsForView:view item:sectionItem.footer inDataContext:self.tableModel.dataContext];
+    [self.tableObserver setupBindingsForView:view item:sectionItem.footer];
     return view;
 }
 

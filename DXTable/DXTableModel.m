@@ -59,7 +59,7 @@
 
 - (NSArray *)activeSections
 {
-    return [_allSections filteredArrayUsingPredicate:
+    return [self.allSections filteredArrayUsingPredicate:
             [DXTableItem predicateForActiveItems]];
 }
 
@@ -120,5 +120,4 @@
 
 NSString *const DXTableSectionsKey = @"sections";
 NSString *const DXTableControlsKey = @"controls";
-NSString *const DXTableKeypathKey = @"keypath";
 NSString *const DXTableControlEvents = @"events";

@@ -10,6 +10,7 @@
 
 #import "DXTableRow.h"
 #import "DXTableSection.h"
+#import "DXTableRowArray.h"
 #import "DXTableParse.h"
 
 @interface DXTableRow ()
@@ -19,6 +20,26 @@
 @end
 
 @implementation DXTableRow
+
++ (NSArray *)rowsWithSection:(DXTableSection *)section
+                     options:(NSDictionary *)options
+{
+    NSMutableArray *rows = [NSMutableArray array];
+    BOOL isTemplate = [options[DXTableTemplateKey] boolValue];
+    if (isTemplate) {
+        NSString *arrayKeypath = DXTableParseKeyValue(options[DXTableArrayKey]);
+        NSArray *array = arrayKeypath ? [section.dataContext valueForKeyPath:arrayKeypath] : nil;
+        NSUInteger count = array ? array.count : 1;
+        for (int i = 0; i < count; ++i) {
+            DXTableRow *row = [[DXTableRow alloc] initWithSection:section options:options];
+            [rows addObject:row];
+        }
+    } else {
+        DXTableRow *row = [[DXTableRow alloc] initWithSection:section options:options];
+        [rows addObject:row];
+    }
+    return rows.copy;
+}
 
 - (instancetype)initWithOptions:(NSDictionary *)options
 {
@@ -38,7 +59,19 @@
 
 - (id)dataContext
 {
-    return self.section.dataContext;
+    NSAssert(NO == (self.isTemplated && self.isRepeatable), @"Row cannot be template and repeatable simultaneously");
+    id dataContext;
+    if (self.isTemplated) {
+        NSString *arrayKeypath = DXTableParseKeyValue(self[DXTableArrayKey]);
+        if (arrayKeypath) {
+            NSArray *array = [self.section.dataContext valueForKeyPath:arrayKeypath];
+            // if it's not repeatable row (and it shoudn't) there will be only one index.
+            NSUInteger index = [self.section.activeRows indexesOfRow:self].firstIndex;
+            dataContext = array[index];
+        }
+    }
+    dataContext = dataContext ?: self.section.dataContext;
+    return dataContext;
 }
 
 - (id)target
@@ -49,6 +82,11 @@
 - (BOOL)isRepeatable
 {
     return [self[DXTableRepeatableKey] boolValue];
+}
+
+- (BOOL)isTemplated
+{
+    return [self[DXTableTemplateKey] boolValue];
 }
 
 - (CGFloat)height
@@ -68,13 +106,13 @@
 - (NSInteger)repeatCount
 {
     NSString *arrayKeypath = DXTableParseKeyValue(self[DXTableArrayKey]);
-    return [self[DXTableRepeatableKey] boolValue] == YES ?
+    return self.isRepeatable == YES ?
     [[self.dataContext valueForKeyPath:arrayKeypath] count] : 1;
 }
 
 - (BOOL)isEditable
 {
-    BOOL editable = self.isRepeatable;
+    BOOL editable = self.isRepeatable || self.isTemplated;
     if ([self[DXTableRowEditableKey] isKindOfClass:[NSNumber class]]) {
         editable = [self[DXTableRowEditableKey] boolValue];
     } else {
@@ -88,7 +126,7 @@
 
 - (NSInteger)editingStyle
 {
-    NSInteger style = self.isRepeatable ?
+    NSInteger style = self.isRepeatable || self.isTemplated ?
     UITableViewCellEditingStyleDelete : UITableViewCellEditingStyleNone;
     if ([self[DXTableRowEditingStyleKey] isKindOfClass:[NSNumber class]]) {
         style = [self[DXTableRowEditingStyleKey] integerValue];

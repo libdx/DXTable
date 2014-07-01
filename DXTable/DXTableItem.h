@@ -8,9 +8,6 @@
 
 #import <Foundation/Foundation.h>
 
-//#define DXKeyPath(sel) NSStringFromSelector(@selector(sel)) //?
-#define DXToView(sel) @"@##sel##(ToView)"
-
 // aka Unique Identifier. Unique accross concrete item type name. For rows and header/footer items is used as reuse identifier.
 extern NSString *const DXTableNameKey;
 
@@ -32,8 +29,11 @@ extern NSString *const DXTableNibKey;
 // aka Enabled or Visible. Accepts wrapped in NSNumber bool or keypath.
 extern NSString *const DXTableActiveKey;
 
-// aka Template. Accepts wrapped in NSNumber bool or keypath.
+// Accepts wrapped in NSNumber bool or keypath.
 extern NSString *const DXTableRepeatableKey;
+
+// Accepts wrapped in NSNumber bool or keypath.
+extern NSString *const DXTableTemplateKey;
 
 // aka List or Collection. Accepts keypath pointed to ordered collection.
 extern NSString *const DXTableArrayKey;
