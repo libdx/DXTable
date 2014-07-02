@@ -32,7 +32,7 @@ extern NSString *const DXTableActiveKey;
 // Accepts wrapped in NSNumber bool or keypath.
 extern NSString *const DXTableRepeatableKey;
 
-// Accepts wrapped in NSNumber bool or keypath.
+// Accepts wrapped in NSNumber bool or keypath. Mapping templated rows against mutable array is not supported!
 extern NSString *const DXTableTemplateKey;
 
 // aka List or Collection. Accepts keypath pointed to ordered collection.

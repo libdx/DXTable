@@ -84,7 +84,7 @@ static void addObjectIfNotNil(NSMutableArray *array, id object)
     return info;
 }
 
-- (DXKVOInfo *)infoToTriggerRowBindings:(DXTableRow *)row
+- (DXKVOInfo *)infoToTriggerRowActivity:(DXTableRow *)row
 {
     id activeValue = row[DXTableActiveKey];
     NSString *keypath = DXTableParseKeyValue(activeValue);
@@ -96,6 +96,23 @@ static void addObjectIfNotNil(NSMutableArray *array, id object)
         info.options = NSKeyValueObservingOptionInitial | NSKeyValueObservingOptionNew;
         info.block = ^(id observer, id dataContext, NSDictionary *change) {
             row.active = [change[NSKeyValueChangeNewKey] boolValue];
+        };
+    }
+    return info;
+}
+
+- (DXKVOInfo *)intoToTriggerSectionActivity:(DXTableSection *)section
+{
+    id activeValue = section[DXTableActiveKey];
+    NSString *keypath = DXTableParseKeyValue(activeValue);
+    DXKVOInfo *info;
+    if (keypath) {
+        info = [[DXKVOInfo alloc] init];
+        info.object = section.dataContext;
+        info.keypath = DXTableParseKeyValue(activeValue);
+        info.options = NSKeyValueObservingOptionInitial | NSKeyValueObservingOptionNew;
+        info.block = ^(id observer, id dataContext, NSDictionary *change) {
+            section.active = [change[NSKeyValueChangeNewKey] boolValue];
         };
     }
     return info;
@@ -295,17 +312,18 @@ static void addObjectIfNotNil(NSMutableArray *array, id object)
 {
     NSMutableArray *infos = [NSMutableArray array];
     for (DXTableSection *section in tableModel.allSections) {
+        // subscribe to each section "active" keypath
+        addObjectIfNotNil(infos, [self intoToTriggerSectionActivity:section]);
+        // TODO: trigger section activity (as for rows)
         for (DXTableRow *row in section.allRows) {
             addObjectIfNotNil(infos, [self infoForRowActiveKeypath:row
                                                     fromTableModel:tableModel]);
-            addObjectIfNotNil(infos, [self infoToTriggerRowBindings:row]);
+            addObjectIfNotNil(infos, [self infoToTriggerRowActivity:row]);
             addObjectIfNotNil(infos, [self infoForRepeatableRow:row
                                                  fromTableModel:tableModel]);
 
             [infos addObjectsFromArray:[self infosToTriggerUpdateCellForRow:row
                                                              fromTableModel:tableModel]];
-            // subscribe to each section "active" keypath
-            // TODO
         }
     }
 

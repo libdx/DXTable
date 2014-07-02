@@ -65,7 +65,8 @@
         NSString *arrayKeypath = DXTableParseKeyValue(self[DXTableArrayKey]);
         if (arrayKeypath) {
             NSArray *array = [self.tableModel.dataContext valueForKeyPath:arrayKeypath];
-            NSUInteger index = [self.tableModel.activeSections indexOfObject:self];
+            // templated sections expect to be mapped agains not mutable array
+            NSUInteger index = [self.tableModel.allSections indexOfObject:self];
             dataContext = array[index];
         }
     }

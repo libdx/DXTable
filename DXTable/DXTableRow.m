@@ -65,8 +65,9 @@
         NSString *arrayKeypath = DXTableParseKeyValue(self[DXTableArrayKey]);
         if (arrayKeypath) {
             NSArray *array = [self.section.dataContext valueForKeyPath:arrayKeypath];
+            // templated rows expect to be mapped agains not mutable array
             // if it's not repeatable row (and it shoudn't) there will be only one index.
-            NSUInteger index = [self.section.activeRows indexesOfRow:self].firstIndex;
+            NSUInteger index = [self.section.allRows indexOfObject:self];
             dataContext = array[index];
         }
     }
