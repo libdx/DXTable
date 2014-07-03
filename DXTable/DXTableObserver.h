@@ -9,7 +9,7 @@
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
 
-@class DXTableModel, DXTableRow, DXTableItem;
+@class DXTableModel, DXTableSection, DXTableRow, DXTableItem;
 @protocol DXTableObserverDelegate;
 
 @interface DXTableObserver : NSObject
@@ -41,6 +41,10 @@ typedef NS_ENUM(NSInteger, DXTableObserverChangeType) {
         forChangeType:(DXTableObserverChangeType)changeType
         newIndexPaths:(NSArray *)newIndexPaths;
 
-// TODO: add same method for section changes
+- (void)tableObserver:(DXTableObserver *)observer
+didObserveSectionChange:(DXTableSection *)section
+            atIndexes:(NSIndexSet *)indexes
+        forChangeType:(DXTableObserverChangeType)changeType
+           newIndexes:(NSIndexSet *)newIndexes;
 
 @end

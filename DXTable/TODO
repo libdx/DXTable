@@ -21,8 +21,9 @@ ________
 ✓ Templated sections
 ✓ Inner keypaths support for properties in the templated rows and sections
     - i.e. @.rowEditable, @.rowHeight...
+✓ Activating/deactivating sections
+- Reloading of sections (support for DXTableUpdatesKey key)
 - Section indexes (ABCDE...Z)
-- Activating/deactivating sections
 - Consider DXTableViewSource to work gracefully with UISearchDisplayController's searchResultsTableView
 - Reordering (canMoveRowAt...)
     - rows reordering whithin repeatable items

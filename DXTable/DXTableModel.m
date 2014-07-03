@@ -96,7 +96,7 @@
                                         @[[DXTableItem predicateForActiveItems], byRow]];
 
     DXTableSection *section = [self.activeSections filteredArrayUsingPredicate:containsRow].firstObject;
-    // TODO: handle situation when section disabled
+    // TODO: handle situation when section not active
     DXTableRowArray *rows =
     [[DXTableRowArray alloc] initWithArray:
      [section.allRows filteredArrayUsingPredicate:byActiveAndGivenRow]];
@@ -114,6 +114,21 @@
     }
 
     return indexPaths;
+}
+
+- (NSUInteger)indexOfSection:(DXTableSection *)section
+{
+    return [self.activeSections indexOfObject:section];
+}
+
+- (NSUInteger)indexOfSectionIfWereActive:(DXTableSection *)section
+{
+    NSPredicate *bySection = [NSPredicate predicateWithFormat:@"SELF = %@", section];
+    NSPredicate *byActiveAndGivenSection = [NSCompoundPredicate orPredicateWithSubpredicates:
+                                            @[[DXTableItem predicateForActiveItems], bySection]];
+    NSArray *sections = [section.tableModel.allSections filteredArrayUsingPredicate:byActiveAndGivenSection];
+    NSUInteger index = [sections indexOfObject:section];
+    return index;
 }
 
 @end

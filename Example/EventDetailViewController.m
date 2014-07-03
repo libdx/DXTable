@@ -93,7 +93,26 @@ static UIView *lookupFirstResponder(UIView *view)
               DXTableBindingsKey:
                   @{@"textLabel.text": @"Alert",
                     @"accessoryType": @(UITableViewCellAccessoryDisclosureIndicator)}
+              },
+            @{DXTableNameKey: @"toggleNext",
+              DXTableBindingsKey:
+                  @{@"textLabel.text": @"Toggle next section"},
+              DXTableTargetKey: self.viewModel,
+              DXTableActionsKey:
+                  @{DXTableRowDidSelectActionKey: @"toggleTogglableSection"}
               }
+            ]
+      };
+
+    NSDictionary *togglableSection =
+    @{DXTableNameKey: @"togglable",
+      DXTableActiveKey: @"@togglableSectionShown",
+      DXTableHeaderKey: @"Togglable Section",
+      DXTableRowsKey:
+          @[@{DXTableNameKey: @"togglableSectionCell",
+              DXTableBindingsKey:
+                  @{@"textLabel.text": @"Cell in togglable section"}
+              },
             ]
       };
 
@@ -136,7 +155,7 @@ static UIView *lookupFirstResponder(UIView *view)
     NSDictionary *eventModel =
     @{DXTableNameKey: @"Event",
       DXTableSectionsKey:
-          @[headSection, datesSection, stuffSection, notesSection]
+          @[headSection, datesSection, togglableSection, stuffSection, notesSection]
       };
 
     self.tableModel = [[DXTableModel alloc] initWithDataContext:self.viewModel options:eventModel];

@@ -135,7 +135,7 @@ static UINib *nibFromNibOrName(id nibOrString)
   didObserveRowChange:(DXTableRow *)row
          atIndexPaths:(NSArray *)indexPaths
         forChangeType:(DXTableObserverChangeType)changeType
-        newIndexPaths:(NSArray *)newIndexPaths;
+        newIndexPaths:(NSArray *)newIndexPaths
 {
     if (changeType == DXTableObserverChangeInsert) {
         [self.tableView insertRowsAtIndexPaths:indexPaths
@@ -147,6 +147,26 @@ static UINib *nibFromNibOrName(id nibOrString)
             [self.tableView reloadData];
     } else if (changeType == DXTableObserverChangeUpdate) {
         [self.tableView reloadRowsAtIndexPaths:indexPaths
+                              withRowAnimation:UITableViewRowAnimationFade];
+    }
+}
+
+- (void)tableObserver:(DXTableObserver *)observer
+didObserveSectionChange:(DXTableSection *)section
+            atIndexes:(NSIndexSet *)indexes
+        forChangeType:(DXTableObserverChangeType)changeType
+           newIndexes:(NSIndexSet *)newIndexes
+{
+    if (changeType == DXTableObserverChangeInsert) {
+        [self.tableView insertSections:indexes
+                              withRowAnimation:UITableViewRowAnimationFade];
+    } else if (changeType == DXTableObserverChangeDelete) {
+        [self.tableView deleteSections:indexes
+                              withRowAnimation:UITableViewRowAnimationFade];
+    } else if (changeType == DXTableObserverChangeSetting) {
+        [self.tableView reloadData];
+    } else if (changeType == DXTableObserverChangeUpdate) {
+        [self.tableView reloadSections:indexes
                               withRowAnimation:UITableViewRowAnimationFade];
     }
 }

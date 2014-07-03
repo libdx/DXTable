@@ -16,10 +16,14 @@
 
 @property (nonatomic) BOOL showsDueDatePicker;
 
+@property (nonatomic) BOOL togglableSectionShown;
+
 @property (nonatomic, copy) NSArray *things;
 
 - (void)addThing;
 
 - (void)toggleShowDueDatePicker;
+
+- (void)toggleTogglableSection;
 
 @end

@@ -48,4 +48,9 @@ static NSDate *nextMonth()
     NSLog(@"%@: %@", NSStringFromSelector(_cmd), @(self.showsDueDatePicker));
 }
 
+- (void)toggleTogglableSection
+{
+    self.togglableSectionShown = !self.togglableSectionShown;
+}
+
 @end

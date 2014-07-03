@@ -16,6 +16,7 @@
 {
     struct {
         unsigned delegateRowChange;
+        unsigned delegateSectionChange;
     } _observerFlags;
 }
 
@@ -50,9 +51,13 @@ static void addObjectIfNotNil(NSMutableArray *array, id object)
 {
     if (_delegate != delegate) {
         _delegate = delegate;
-        if ([_delegate respondsToSelector:@selector(tableObserver:didObserveRowChange:atIndexPaths:forChangeType:newIndexPaths:)])
-        {
+        SEL rowChangeSelector = @selector(tableObserver:didObserveRowChange:atIndexPaths:forChangeType:newIndexPaths:);
+        if ([_delegate respondsToSelector:rowChangeSelector]) {
             _observerFlags.delegateRowChange = true;
+        }
+        SEL sectionChangeSelector = @selector(tableObserver:didObserveSectionChange:atIndexes:forChangeType:newIndexes:);
+        if ([_delegate respondsToSelector:sectionChangeSelector]) {
+            _observerFlags.delegateSectionChange = true;
         }
     }
 }
@@ -98,6 +103,34 @@ static void addObjectIfNotNil(NSMutableArray *array, id object)
             row.active = [change[NSKeyValueChangeNewKey] boolValue];
         };
     }
+    return info;
+}
+
+- (DXKVOInfo *)infoForSectionActiveKeypath:(DXTableSection *)section
+{
+    DXKVOInfo *info = [[DXKVOInfo alloc] init];
+    info.object = section;
+    info.keypath = @"active";
+    info.options = NSKeyValueObservingOptionNew;
+    info.block = ^(DXTableObserver *observer, DXTableSection *section, NSDictionary *change) {
+        BOOL isActive = [change[NSKeyValueChangeNewKey] boolValue];
+
+        NSUInteger index = isActive ?
+        [section.tableModel indexOfSection:section] : [section.tableModel indexOfSectionIfWereActive:section];
+
+        NSIndexSet *indexes = [NSIndexSet indexSetWithIndex:index];
+
+        DXTableObserverChangeType changeType = isActive ?
+        DXTableObserverChangeInsert : DXTableObserverChangeDelete;
+
+        if (_observerFlags.delegateSectionChange) {
+            [observer.delegate tableObserver:self
+                         didObserveSectionChange:section
+                                   atIndexes:indexes
+                               forChangeType:changeType
+                                  newIndexes:nil];
+        }
+    };
     return info;
 }
 
@@ -313,8 +346,8 @@ static void addObjectIfNotNil(NSMutableArray *array, id object)
     NSMutableArray *infos = [NSMutableArray array];
     for (DXTableSection *section in tableModel.allSections) {
         // subscribe to each section "active" keypath
+        addObjectIfNotNil(infos, [self infoForSectionActiveKeypath:section]);
         addObjectIfNotNil(infos, [self intoToTriggerSectionActivity:section]);
-        // TODO: trigger section activity (as for rows)
         for (DXTableRow *row in section.allRows) {
             addObjectIfNotNil(infos, [self infoForRowActiveKeypath:row
                                                     fromTableModel:tableModel]);
