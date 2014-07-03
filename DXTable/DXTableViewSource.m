@@ -268,7 +268,7 @@ didObserveSectionChange:(DXTableSection *)section
         return nil;
     }
     UIView *view = [tableView dequeueReusableHeaderFooterViewWithIdentifier:sectionItem.header[DXTableNameKey]];
-    [self.tableObserver setupBindingsForView:view item:sectionItem.header];
+    [self.tableObserver setupBindingsForView:view item:sectionItem.header inDataContext:sectionItem.dataContext];
     return view;
 }
 
@@ -279,7 +279,7 @@ didObserveSectionChange:(DXTableSection *)section
         return nil;
     }
     UIView *view = [tableView dequeueReusableHeaderFooterViewWithIdentifier:sectionItem.footer[DXTableNameKey]];
-    [self.tableObserver setupBindingsForView:view item:sectionItem.footer];
+    [self.tableObserver setupBindingsForView:view item:sectionItem.footer inDataContext:sectionItem.dataContext];
     return view;
 }
 

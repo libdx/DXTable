@@ -288,8 +288,8 @@ static void addObjectIfNotNil(NSMutableArray *array, id object)
 - (FBKVOController *)kvoControllerForObject:(id)object
 {
     static void *ObjectKvoControllerKey = &ObjectKvoControllerKey;
-    // FIXME: leaks!
-    FBKVOController *kvoController;// = objc_getAssociatedObject(object, ObjectKvoControllerKey);
+    // while `object` exists `kvoController` exists as well
+    FBKVOController *kvoController = objc_getAssociatedObject(object, ObjectKvoControllerKey);
     if (kvoController == nil) {
         kvoController = [FBKVOController controllerWithObserver:object];
         objc_setAssociatedObject(object, ObjectKvoControllerKey, kvoController, OBJC_ASSOCIATION_RETAIN);
@@ -300,6 +300,7 @@ static void addObjectIfNotNil(NSMutableArray *array, id object)
 - (DXValueTarget *)valueTargetForControl:(UIControl *)control metaData:(NSDictionary *)metaData
 {
     static void *ControlValueTargetKey = &ControlValueTargetKey;
+    // while `control` exists `target` exists as well
     DXValueTarget *target = objc_getAssociatedObject(control, ControlValueTargetKey);
     if (target == nil) {
         target = [[DXValueTarget alloc] init];
@@ -366,7 +367,7 @@ static void addObjectIfNotNil(NSMutableArray *array, id object)
 }
 
 // FIXME: unify this method with setupBindingsForCell:… now it's copy-paste and decouple logic
-- (void)setupBindingsForView:(UIView *)view item:(DXTableItem *)item
+- (void)setupBindingsForView:(UIView *)view item:(DXTableItem *)item inDataContext:(id)dataContext
 {
     NSDictionary *bindings = item[DXTableBindingsKey];
     NSMutableArray *modelToViewBindings = [NSMutableArray array];
@@ -379,7 +380,7 @@ static void addObjectIfNotNil(NSMutableArray *array, id object)
         } else {
             if (DXTableParseIsDefaultMode(value) || DXTableParseIsToViewMode(value)) {
                 // `value` is actually a keypath so deal with bindings
-                DXKVOInfo *info = [self bindInfoFromDataContext:item.dataContext
+                DXKVOInfo *info = [self bindInfoFromDataContext:dataContext
                                                     dataKeypath:dataKeypath
                                                          toView:view
                                                     viewKeypath:viewKeypath];
@@ -389,7 +390,7 @@ static void addObjectIfNotNil(NSMutableArray *array, id object)
     }
 
     FBKVOController *viewKvoController = [self kvoControllerForObject:view];
-    [viewKvoController unobserve:view];
+    [viewKvoController unobserve:dataContext];
     for (id info in modelToViewBindings) {
         [self observeWithInfo:info usingKVOController:viewKvoController];
     }
@@ -468,7 +469,7 @@ static void addObjectIfNotNil(NSMutableArray *array, id object)
         }
     }
     FBKVOController *cellKvoController = [self kvoControllerForObject:cell];
-    [cellKvoController unobserve:cell];
+    [cellKvoController unobserve:row.dataContext];
     for (id info in modelToViewBindings) {
         [self observeWithInfo:info usingKVOController:cellKvoController];
     }
