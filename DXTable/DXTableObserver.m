@@ -469,8 +469,8 @@ static void addObjectIfNotNil(NSMutableArray *array, id object)
         }
     }
     FBKVOController *cellKvoController = [self kvoControllerForObject:cell];
-    [cellKvoController unobserve:row.dataContext];
-    for (id info in modelToViewBindings) {
+    for (DXKVOInfo *info in modelToViewBindings) {
+        [cellKvoController unobserve:info.object];
         [self observeWithInfo:info usingKVOController:cellKvoController];
     }
 }
