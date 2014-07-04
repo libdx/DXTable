@@ -40,7 +40,14 @@ NSString *DXTableParseKeyValue(id value)
 
 BOOL DXTableParseIsDefaultMode(id value)
 {
-    return [value isKindOfClass:[NSString class]];
+    // dict with DXTableModeKey ("mode") key overrides default binding mode
+    BOOL res = YES;
+    if ([value isKindOfClass:[NSDictionary class]]) {
+        if (value[DXTableModeKey] != nil) {
+            res = NO;
+        }
+    }
+    return res;
 }
 
 BOOL DXTableParseIsToViewMode(id value)

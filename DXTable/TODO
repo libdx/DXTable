@@ -51,6 +51,8 @@ ________
 - Make TableViewSource subclassable (?)
 - JSON
 
+- Make a Cocoapod
+
 ## Issues
 ✓ Fix action sent to deallocated DXValueTarger instance issues
 - Profile and fix possible leaks
