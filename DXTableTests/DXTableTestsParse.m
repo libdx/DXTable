@@ -29,25 +29,27 @@
 
 - (void)testParseKeyValue
 {
+    NSString *const Keypath = @"items";
     NSString *const DXTableKeypath = @"@items";
     NSString *keypathResult = DXTableParseKeyValue(DXTableKeypath);
     XCTAssertNotNil(keypathResult, @"%@ must be parsed to regular keypath", DXTableKeypath);
+    XCTAssertEqualObjects(keypathResult, Keypath, @"Providing keypath prefixed with @ must be parsed to the same keypath without @-prefix");
 
     NSString *const DXTableInnerKeypath = @"@.items";
     NSString *innerKeypathResult = DXTableParseKeyValue(DXTableInnerKeypath);
     XCTAssertNotNil(innerKeypathResult, @"%@ must be parsed to regular keypath", DXTableInnerKeypath);
 
-    NSString *const DXTableStringValue = @"This is a title";
-    NSString *valueResult = DXTableParseKeyValue(DXTableStringValue);
-    XCTAssertNil(valueResult, @"%@ must be parsed to `nil`", DXTableStringValue);
+    NSString *const StringValue = @"This is a title";
+    NSString *valueResult = DXTableParseKeyValue(StringValue);
+    XCTAssertNil(valueResult, @"%@ must be parsed to `nil`", StringValue);
 
-    NSNumber *const DXTableNumberValue = @42;
-    NSString *numberValueResult = DXTableParseKeyValue(DXTableNumberValue);
-    XCTAssertNil(numberValueResult, @"%@ must be parsed to `nil`", DXTableNumberValue);
+    NSNumber *const NumberValue = @42;
+    NSString *numberValueResult = DXTableParseKeyValue(NumberValue);
+    XCTAssertNil(numberValueResult, @"%@ must be parsed to `nil`", NumberValue);
 
-    NSDictionary *const DXTableDictValue = @{@"key": @42};
-    NSString *dictValueResult = DXTableParseKeyValue(DXTableDictValue);
-    XCTAssertNil(dictValueResult, @"%@ must be parsed to `nil`", DXTableDictValue);
+    NSDictionary *const DictValue = @{@"key": @42};
+    NSString *dictValueResult = DXTableParseKeyValue(DictValue);
+    XCTAssertNil(dictValueResult, @"%@ must be parsed to `nil`", DictValue);
 }
 
 - (void)testParseBindingsIsDefaultMode
