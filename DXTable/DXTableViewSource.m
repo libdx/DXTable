@@ -79,7 +79,9 @@ static UINib *nibFromNibOrName(id nibOrString)
     if (tableView == nil) {
         return;
     }
-    tableView.sectionIndexBackgroundColor = [UIColor clearColor];
+    if ([tableView respondsToSelector:@selector(setSectionIndexBackgroundColor:)]) {
+        tableView.sectionIndexBackgroundColor = [UIColor clearColor];
+    }
     // TODO: add on table model method that returns dictionary of cell classes and nibs
     // register cell classes and nibs
     for (DXTableSection *section in self.tableModel.allSections)
