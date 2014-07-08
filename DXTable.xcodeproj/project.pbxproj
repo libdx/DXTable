@@ -13,7 +13,7 @@
 		FA02E8B819505F5300862BB9 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FA02E8B719505F5300862BB9 /* UIKit.framework */; };
 		FA02E8BB19505F5300862BB9 /* libDXTable.a in Frameworks */ = {isa = PBXBuildFile; fileRef = FA02E8A319505F5300862BB9 /* libDXTable.a */; };
 		FA02E8C119505F5300862BB9 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = FA02E8BF19505F5300862BB9 /* InfoPlist.strings */; };
-		FA02E8C319505F5300862BB9 /* DXTableTestsParse.m in Sources */ = {isa = PBXBuildFile; fileRef = FA02E8C219505F5300862BB9 /* DXTableTestsParse.m */; };
+		FA02E8C319505F5300862BB9 /* DXTableParseTests.m in Sources */ = {isa = PBXBuildFile; fileRef = FA02E8C219505F5300862BB9 /* DXTableParseTests.m */; };
 		FA02E8E719505FA800862BB9 /* DXKVOInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = FA02E8CF19505FA800862BB9 /* DXKVOInfo.m */; };
 		FA02E8E819505FA800862BB9 /* DXValueTarget.m in Sources */ = {isa = PBXBuildFile; fileRef = FA02E8D119505FA800862BB9 /* DXValueTarget.m */; };
 		FA02E8E919505FA800862BB9 /* DXTableItem.m in Sources */ = {isa = PBXBuildFile; fileRef = FA02E8D519505FA800862BB9 /* DXTableItem.m */; };
@@ -34,6 +34,7 @@
 		FA0813CA19674A2D00BCBBBC /* DXTableParse.m in Sources */ = {isa = PBXBuildFile; fileRef = FA04A61D1960BE2600CA7EE1 /* DXTableParse.m */; };
 		FA0813CB19674A2D00BCBBBC /* DXTableObserver.m in Sources */ = {isa = PBXBuildFile; fileRef = FA02E8D919505FA800862BB9 /* DXTableObserver.m */; };
 		FA0813CC19674A2D00BCBBBC /* DXTableViewSource.m in Sources */ = {isa = PBXBuildFile; fileRef = FA02E8E119505FA800862BB9 /* DXTableViewSource.m */; };
+		FA0813CE196757C700BCBBBC /* DXTableRowArrayTests.m in Sources */ = {isa = PBXBuildFile; fileRef = FA0813CD196757C700BCBBBC /* DXTableRowArrayTests.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -66,7 +67,7 @@
 		FA02E8B719505F5300862BB9 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = Library/Frameworks/UIKit.framework; sourceTree = DEVELOPER_DIR; };
 		FA02E8BE19505F5300862BB9 /* DXTableTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "DXTableTests-Info.plist"; sourceTree = "<group>"; };
 		FA02E8C019505F5300862BB9 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
-		FA02E8C219505F5300862BB9 /* DXTableTestsParse.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DXTableTestsParse.m; sourceTree = "<group>"; };
+		FA02E8C219505F5300862BB9 /* DXTableParseTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DXTableParseTests.m; sourceTree = "<group>"; };
 		FA02E8CD19505FA800862BB9 /* DXBindings.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DXBindings.h; sourceTree = "<group>"; };
 		FA02E8CE19505FA800862BB9 /* DXKVOInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DXKVOInfo.h; sourceTree = "<group>"; };
 		FA02E8CF19505FA800862BB9 /* DXKVOInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DXKVOInfo.m; sourceTree = "<group>"; };
@@ -96,6 +97,7 @@
 		FA0464631951F63900EF8681 /* DXViewDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DXViewDelegate.m; sourceTree = "<group>"; };
 		FA04A61C1960BE2600CA7EE1 /* DXTableParse.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DXTableParse.h; sourceTree = "<group>"; };
 		FA04A61D1960BE2600CA7EE1 /* DXTableParse.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DXTableParse.m; sourceTree = "<group>"; };
+		FA0813CD196757C700BCBBBC /* DXTableRowArrayTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DXTableRowArrayTests.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -155,7 +157,8 @@
 		FA02E8BC19505F5300862BB9 /* DXTableTests */ = {
 			isa = PBXGroup;
 			children = (
-				FA02E8C219505F5300862BB9 /* DXTableTestsParse.m */,
+				FA02E8C219505F5300862BB9 /* DXTableParseTests.m */,
+				FA0813CD196757C700BCBBBC /* DXTableRowArrayTests.m */,
 				FA02E8BD19505F5300862BB9 /* Supporting Files */,
 			);
 			path = DXTableTests;
@@ -323,7 +326,8 @@
 				FA0813CB19674A2D00BCBBBC /* DXTableObserver.m in Sources */,
 				FA0813C719674A2D00BCBBBC /* DXTableSection.m in Sources */,
 				FA0813C819674A2D00BCBBBC /* DXTableModel.m in Sources */,
-				FA02E8C319505F5300862BB9 /* DXTableTestsParse.m in Sources */,
+				FA0813CE196757C700BCBBBC /* DXTableRowArrayTests.m in Sources */,
+				FA02E8C319505F5300862BB9 /* DXTableParseTests.m in Sources */,
 				FA0813CC19674A2D00BCBBBC /* DXTableViewSource.m in Sources */,
 				FA0813CA19674A2D00BCBBBC /* DXTableParse.m in Sources */,
 				FA0813C519674A2D00BCBBBC /* DXTableItem.m in Sources */,
@@ -451,6 +455,7 @@
 		FA02E8CA19505F5300862BB9 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(SDKROOT)/Developer/Library/Frameworks",
 					"$(inherited)",
@@ -471,6 +476,7 @@
 		FA02E8CB19505F5300862BB9 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(SDKROOT)/Developer/Library/Frameworks",
 					"$(inherited)",

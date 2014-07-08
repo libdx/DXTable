@@ -24,8 +24,11 @@
 
 - (id)objectAtIndexedSubscript:(NSUInteger)idx
 {
+    if (idx >= self.count) {
+        [NSException raise:NSRangeException
+                    format:@"%u is out of range [0..%u]", idx, self.count - 1];
+    }
     // TODO: make optimisations
-    // TODO: Cover by tests
     NSInteger repeatCount = 0;
     DXTableRow *row;
     for (row in self.array) {

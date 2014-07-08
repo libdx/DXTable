@@ -1,5 +1,5 @@
 //
-//  DXTableTestsParse.m
+//  DXTableParseTests.m
 //  DXTableTests
 //
 //  Created by Alexander Ignatenko on 17/06/14.
@@ -11,11 +11,11 @@
 #import "DXTableParse.h"
 #import "DXTableItem.h"
 
-@interface DXTableTestsParse : XCTestCase
+@interface DXTableParseTests : XCTestCase
 
 @end
 
-@implementation DXTableTestsParse
+@implementation DXTableParseTests
 
 - (void)setUp
 {

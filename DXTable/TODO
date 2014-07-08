@@ -46,6 +46,7 @@ ________
 
 - Add some ability to copy table items in order to change some of properties (i.e. duplicate repeatable row and change 'array' property to search results)
 
+- Tests
 - Add animation key
 - Add configuration properties on TableViewSource or put more options into TableModel
 - Make TableViewSource subclassable (?)
