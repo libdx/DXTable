@@ -47,8 +47,14 @@ extern NSString *const DXTableModeKey;
 // Accepts string which represents keypath. Depending on context keypath can be either plain or starts with `@' prefix.
 extern NSString *const DXTableKeypathKey;
 
-// Accepts dictionary of strings which are represent predefined actions (like DXTableRowDidSelectActionKey)
+// Accepts dictionary of strings keys which are represent predefined actions (like DXTableRowDidSelectActionKey). Values can be either: a string representation of selector, a bool wrapped as a NSNumber or keypath to property that returns bool or a dictionary with DXTableSelectorKey and DXTableEnabledKey.
 extern NSString *const DXTableActionsKey;
+
+// Accepts string representation of selector.
+extern NSString *const DXTableSelectorKey;
+
+// Accepts bool value wrapped as NSNumber or a keypath to property that returns bool value.
+extern NSString *const DXTableEnabledKey;
 
 // Accepts any object. Target should responds to defined actions in table model markup.
 extern NSString *const DXTableTargetKey;
@@ -71,6 +77,9 @@ extern NSString *const DXTableFromViewMode;
 @property (nonatomic, getter=isActive) BOOL active;
 
 @property (nonatomic, weak, readonly) id dataContext;
+
+// returns enabled actions. each action's value is a string representation of selector.
+@property (nonatomic, readonly) NSDictionary *actions;
 
 - (instancetype)initWithOptions:(NSDictionary *)options;
 

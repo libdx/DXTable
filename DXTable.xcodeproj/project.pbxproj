@@ -35,6 +35,7 @@
 		FA0813CB19674A2D00BCBBBC /* DXTableObserver.m in Sources */ = {isa = PBXBuildFile; fileRef = FA02E8D919505FA800862BB9 /* DXTableObserver.m */; };
 		FA0813CC19674A2D00BCBBBC /* DXTableViewSource.m in Sources */ = {isa = PBXBuildFile; fileRef = FA02E8E119505FA800862BB9 /* DXTableViewSource.m */; };
 		FA0813CE196757C700BCBBBC /* DXTableRowArrayTests.m in Sources */ = {isa = PBXBuildFile; fileRef = FA0813CD196757C700BCBBBC /* DXTableRowArrayTests.m */; };
+		FA3BF9D0196EC4B80060475B /* DXTableItemTests.m in Sources */ = {isa = PBXBuildFile; fileRef = FA3BF9CF196EC4B80060475B /* DXTableItemTests.m */; };
 		FA42016C196C8DFB00F9C96F /* DXTableObserverTests.m in Sources */ = {isa = PBXBuildFile; fileRef = FA42016B196C8DFB00F9C96F /* DXTableObserverTests.m */; };
 /* End PBXBuildFile section */
 
@@ -99,6 +100,7 @@
 		FA04A61C1960BE2600CA7EE1 /* DXTableParse.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DXTableParse.h; sourceTree = "<group>"; };
 		FA04A61D1960BE2600CA7EE1 /* DXTableParse.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DXTableParse.m; sourceTree = "<group>"; };
 		FA0813CD196757C700BCBBBC /* DXTableRowArrayTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DXTableRowArrayTests.m; sourceTree = "<group>"; };
+		FA3BF9CF196EC4B80060475B /* DXTableItemTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DXTableItemTests.m; sourceTree = "<group>"; };
 		FA42016B196C8DFB00F9C96F /* DXTableObserverTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DXTableObserverTests.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -162,6 +164,7 @@
 				FA02E8C219505F5300862BB9 /* DXTableParseTests.m */,
 				FA0813CD196757C700BCBBBC /* DXTableRowArrayTests.m */,
 				FA42016B196C8DFB00F9C96F /* DXTableObserverTests.m */,
+				FA3BF9CF196EC4B80060475B /* DXTableItemTests.m */,
 				FA02E8BD19505F5300862BB9 /* Misc */,
 			);
 			path = DXTableTests;
@@ -333,6 +336,7 @@
 				FA0813CE196757C700BCBBBC /* DXTableRowArrayTests.m in Sources */,
 				FA02E8C319505F5300862BB9 /* DXTableParseTests.m in Sources */,
 				FA0813CC19674A2D00BCBBBC /* DXTableViewSource.m in Sources */,
+				FA3BF9D0196EC4B80060475B /* DXTableItemTests.m in Sources */,
 				FA0813CA19674A2D00BCBBBC /* DXTableParse.m in Sources */,
 				FA0813C519674A2D00BCBBBC /* DXTableItem.m in Sources */,
 				FA0813C619674A2D00BCBBBC /* DXTableRow.m in Sources */,
