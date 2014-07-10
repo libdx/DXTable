@@ -15,6 +15,7 @@
 
 extern NSString *const DXTableRowEditableKey;
 extern NSString *const DXTableRowEditingStyleKey;
+extern NSString *const DXTableRowSelectionEnabledKey;
 
 extern NSString *const DXTableRowWillSelectActionKey;
 extern NSString *const DXTableRowDidSelectActionKey;
@@ -37,6 +38,8 @@ extern NSString *const DXTableRowCommitDeleteActionKey;
 @property (nonatomic, readonly, getter=isRepeatable) BOOL repeatable;
 
 @property (nonatomic, readonly, getter=isTemplated) BOOL templated;
+
+@property (nonatomic, readonly, getter=isSelectionEnabled) BOOL selectionEnabled;
 
 @property (nonatomic, readonly) id target;
 

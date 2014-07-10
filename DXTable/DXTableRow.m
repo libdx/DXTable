@@ -90,6 +90,20 @@
     return [self[DXTableTemplateKey] boolValue];
 }
 
+- (BOOL)isSelectionEnabled
+{
+    BOOL enabled = YES;
+    if ([self[DXTableRowSelectionEnabledKey] isKindOfClass:[NSNumber class]]) {
+        enabled = [self[DXTableRowSelectionEnabledKey] boolValue];
+    } else {
+        NSString *keypath = DXTableParseKeyValue(self[DXTableRowSelectionEnabledKey]);
+        if (keypath) {
+            enabled = [[self.dataContext valueForKeyPath:keypath] boolValue];
+        }
+    }
+    return enabled;
+}
+
 - (CGFloat)height
 {
     CGFloat height = UITableViewAutomaticDimension;
@@ -144,6 +158,7 @@
 
 NSString *const DXTableRowEditableKey = @"editable";
 NSString *const DXTableRowEditingStyleKey = @"editingStyle";
+NSString *const DXTableRowSelectionEnabledKey = @"selectionEnabled";
 
 NSString *const DXTableRowWillSelectActionKey = @"willSelect";
 NSString *const DXTableRowDidSelectActionKey = @"didSelect";

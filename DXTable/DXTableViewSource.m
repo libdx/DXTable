@@ -239,6 +239,13 @@ didObserveSectionChange:(DXTableSection *)section
 
 #pragma mark - UITableViewDelegate
 
+- (NSIndexPath *)tableView:(UITableView *)tableView willSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    DXTableSection *section = self.tableModel.activeSections[indexPath.section];
+    DXTableRow *row = section.activeRows[indexPath.row];
+    return row.isSelectionEnabled ? indexPath : nil;
+}
+
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     [self.tableView deselectRowAtIndexPath:indexPath animated:YES];
