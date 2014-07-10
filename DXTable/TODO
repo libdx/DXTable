@@ -22,6 +22,9 @@ ________
 ✓ Inner keypaths support for properties in the templated rows and sections
     - i.e. @.rowEditable, @.rowHeight...
 ✓ Activating/deactivating sections
+
+- Support of actions for buttons (UIButton, UISegmentedControl)
+
 - Reloading of sections (support for DXTableUpdatesKey key)
 - Section indexes (ABCDE...Z)
 - Consider DXTableViewSource to work gracefully with UISearchDisplayController's searchResultsTableView
@@ -33,7 +36,6 @@ ________
 - Support for model-wide and section-wide rows and sections properties
 - Support for retrieve sections and rows by name
 - Support for table header and footer with bindings
-- Support of actions for buttons (UIButton, UISegmentedControl)
 - Support for more UITableView actions (willSelectCell..., didHighlightCell... etc)
 - Add ability to extend binding to support custom views' properties for binding to model
     - Declare (DX)Binder protocol or base class
@@ -41,7 +43,6 @@ ________
     - Each class that implements (DX)Binder protocol should return list of supported classes
     - Implement simple Binder that support UIControl's and UITextView
 - Multiple selection support
-
 - Cleanup DXTableObserver
 
 - Add some ability to copy table items in order to change some of properties (i.e. duplicate repeatable row and change 'array' property to search results)
