@@ -68,9 +68,13 @@ static void addObjectIfNotNil(NSMutableArray *array, id object)
     DXKVOInfo *info = [[DXKVOInfo alloc] init];
     info.object = row;
     info.keypath = @"active";
-    info.options = NSKeyValueObservingOptionNew;
+    info.options = NSKeyValueObservingOptionNew | NSKeyValueObservingOptionOld;
     info.block = ^(DXTableObserver *observer, DXTableRow *row, NSDictionary *change) {
         BOOL isActive = [change[NSKeyValueChangeNewKey] boolValue];
+        BOOL wasActive = [change[NSKeyValueChangeOldKey] boolValue];
+
+        if (isActive == wasActive)
+            return;
 
         NSArray *indexPaths = isActive ?
         [tableModel indexPathsOfRow:row] : [tableModel indexPathsOfRowIfWereActive:row];
@@ -111,9 +115,13 @@ static void addObjectIfNotNil(NSMutableArray *array, id object)
     DXKVOInfo *info = [[DXKVOInfo alloc] init];
     info.object = section;
     info.keypath = @"active";
-    info.options = NSKeyValueObservingOptionNew;
+    info.options = NSKeyValueObservingOptionNew | NSKeyValueObservingOptionOld;
     info.block = ^(DXTableObserver *observer, DXTableSection *section, NSDictionary *change) {
         BOOL isActive = [change[NSKeyValueChangeNewKey] boolValue];
+        BOOL wasActive = [change[NSKeyValueChangeOldKey] boolValue];
+
+        if (isActive == wasActive)
+            return;
 
         NSUInteger index = isActive ?
         [section.tableModel indexOfSection:section] : [section.tableModel indexOfSectionIfWereActive:section];
@@ -455,12 +463,18 @@ static void addObjectIfNotNil(NSMutableArray *array, id object)
                                                                               inTableModel:row.section.tableModel];
                              DXValueTarget *target = [self valueTargetForControl:control metaData:controlMetaData];
                              target.valueChanged = ^(id value, UIEvent *event) {
-                                 [row.dataContext setValue:nilIfNull(value) forKeyPath:dataKeypath];
+                                 id oldValue = [row.dataContext valueForKeyPath:dataKeypath];
+                                 if (NO == [value isEqual:oldValue]) {
+                                     [row.dataContext setValue:nilIfNull(value) forKeyPath:dataKeypath];
+                                 }
                              };
                          } else if ([object isKindOfClass:[UITextView class]]) {
                              DXViewDelegate *delegate = [self viewDelegateForTextView:object];
                              delegate.valueChanged = ^(id value) {
-                                 [row.dataContext setValue:nilIfNull(value) forKeyPath:dataKeypath];
+                                 id oldValue = [row.dataContext valueForKeyPath:dataKeypath];
+                                 if (NO == [value isEqual:oldValue]) {
+                                     [row.dataContext setValue:nilIfNull(value) forKeyPath:dataKeypath];
+                                 }
                              };
                          }
                      }
@@ -469,8 +483,12 @@ static void addObjectIfNotNil(NSMutableArray *array, id object)
         }
     }
     FBKVOController *cellKvoController = [self kvoControllerForObject:cell];
+    // unobserve
     for (DXKVOInfo *info in modelToViewBindings) {
         [cellKvoController unobserve:info.object];
+    }
+    // observe
+    for (DXKVOInfo *info in modelToViewBindings) {
         [self observeWithInfo:info usingKVOController:cellKvoController];
     }
 }

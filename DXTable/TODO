@@ -59,6 +59,7 @@ ________
 ✓ Fix action sent to deallocated DXValueTarger instance issues
 - Profile and fix possible leaks
 ✓ Fix freeze when setting observable array
+- Fix getting row indexes on non-active sections
 
 
 Example:
