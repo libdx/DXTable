@@ -228,7 +228,7 @@ static void addObjectIfNotNil(NSMutableArray *array, id object)
                 }
                 info.object = dataObject;
                 info.keypath = keypath;
-                info.options = NSKeyValueObservingOptionInitial | NSKeyValueObservingOptionNew;
+                info.options = NSKeyValueObservingOptionNew;
                 info.block = ^(id observer, id dataObject, NSDictionary *change) {
                     if (_observerFlags.delegateRowChange) {
                         NSArray *indexPaths = [tableModel indexPathsOfRow:row];

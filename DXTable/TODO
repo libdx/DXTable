@@ -23,7 +23,9 @@ ________
     - i.e. @.rowEditable, @.rowHeight...
 ✓ Activating/deactivating sections
 
+- From view to model bindings for repeatable rows
 - Support of actions for buttons (UIButton, UISegmentedControl)
+- Workaround cell.shouldIndentWhileEditing (by adding new key to row RowShouldIndentWhileEditingKey)
 
 - Reloading of sections (support for DXTableUpdatesKey key)
 - Section indexes (ABCDE...Z)
@@ -32,7 +34,6 @@ ________
     - rows reordering whithin repeatable items
     - rows reordering in general
     - sections reordering
-- From view to model bindings for repeatable rows
 - Support for model-wide and section-wide rows and sections properties
 - Support for retrieve sections and rows by name
 - Support for table header and footer with bindings
