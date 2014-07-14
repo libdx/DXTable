@@ -23,7 +23,7 @@ ________
     - i.e. @.rowEditable, @.rowHeight...
 ✓ Activating/deactivating sections
 
-- From view to model bindings for repeatable rows
+✓ From view to model bindings for repeatable rows
 - Support of actions for buttons (UIButton, UISegmentedControl)
 - Workaround cell.shouldIndentWhileEditing (by adding new key to row RowShouldIndentWhileEditingKey)
 
