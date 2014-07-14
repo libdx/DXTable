@@ -330,7 +330,8 @@ static void addObjectIfNotNil(NSMutableArray *array, id object)
 {
     static void *DelegateKey = &DelegateKey;
     DXViewDelegate *delegate = objc_getAssociatedObject(textView, DelegateKey);
-    if (delegate == nil) {
+    // make it possibl to provide delegate from client's code checking whenever textView have delegate already set
+    if (delegate == nil && textView.delegate == nil) {
         delegate = [[DXViewDelegate alloc] init];
         textView.delegate = delegate;
         objc_setAssociatedObject(textView, DelegateKey, delegate, OBJC_ASSOCIATION_RETAIN);
