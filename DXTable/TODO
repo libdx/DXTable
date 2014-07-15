@@ -61,6 +61,7 @@ ________
 - Profile and fix possible leaks
 ✓ Fix freeze when setting observable array
 - Fix getting row indexes on non-active sections
+- Fix Updates (reloadRows) trigger
 
 
 Example:
