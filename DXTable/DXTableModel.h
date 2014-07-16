@@ -60,4 +60,9 @@ extern NSString *const DXTableControlEvents;
  */
 - (NSUInteger)indexOfSectionIfWereActive:(DXTableSection *)section;
 
+/**
+ Lookup for row with given `name` among all rows and return it if found, `nil` otherwise.
+ */
+- (DXTableRow *)rowWithName:(NSString *)name;
+
 @end

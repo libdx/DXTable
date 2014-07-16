@@ -38,6 +38,17 @@ NSString *DXTableParseKeyValue(id value)
     return res;
 }
 
+BOOL DXTableParseIsInnerKeypath(id value)
+{
+    BOOL res = NO;
+    NSString *keypath = DXTableParseKeyValue(value);
+    if (keypath) {
+        NSString *string = value;
+        res = [string hasPrefix:DXInnerKeyPathPrefix];
+    }
+    return res;
+}
+
 BOOL DXTableParseIsDefaultMode(id value)
 {
     // dict with DXTableModeKey ("mode") key overrides default binding mode

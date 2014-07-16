@@ -45,6 +45,11 @@
             NSStringFromClass([self class]), self, self.options];
 }
 
+- (NSString *)name
+{
+    return self[DXTableNameKey];
+}
+
 @end
 
 NSString *const DXTableNameKey          = @"name";

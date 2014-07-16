@@ -53,6 +53,7 @@ extern NSString *const DXTableActionsKey;
 // Accepts any object. Target should responds to defined actions in table model markup.
 extern NSString *const DXTableTargetKey;
 
+// Functionality for this key currently is broken. Dont use it!
 // aka Update Upon Change. Accepts array of any DXTable..Keys or keypaths. All these keypaths must be observable. Changes of this properties triggers call of reloadRowAtIndexPath:… method.
 extern NSString *const DXTableUpdatesKey;
 
@@ -67,6 +68,8 @@ extern NSString *const DXTableFromViewMode;
 @interface DXTableItem : NSObject
 
 + (NSPredicate *)predicateForActiveItems;
+
+@property (nonatomic, readonly) NSString *name;
 
 @property (nonatomic, getter=isActive) BOOL active;
 

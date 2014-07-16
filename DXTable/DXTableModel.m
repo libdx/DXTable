@@ -131,6 +131,12 @@
     return index;
 }
 
+- (DXTableRow *)rowWithName:(NSString *)name
+{
+    NSPredicate *byName = [NSPredicate predicateWithFormat:@"name = %@", name];
+    return [self.allRows filteredArrayUsingPredicate:byName].firstObject;
+}
+
 @end
 
 NSString *const DXTableSectionsKey = @"sections";

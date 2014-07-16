@@ -19,6 +19,13 @@
  */
 NSString *DXTableParseKeyValue(id value);
 
+// TODO: Test DXTableParseIsInnerKeypath function
+
+/**
+ Returns YES if value is valid DXTable keypath and has a `@.` prefix.
+ */
+BOOL DXTableParseIsInnerKeypath(id value);
+
 /**
  Returns true if `value` should be bind with default mode (which depends on type of view).
  */

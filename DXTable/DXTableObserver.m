@@ -221,7 +221,7 @@ static void addObjectIfNotNil(NSMutableArray *array, id object)
                 DXKVOInfo *info;
                 info = [[DXKVOInfo alloc] init];
                 id dataObject = row.dataContext;
-                if (row.isRepeatable) {
+                if (row.isRepeatable && DXTableParseIsInnerKeypath(key)) {
                     NSString *arrayKeypath = DXTableParseKeyValue(row[DXTableArrayKey]);
                     NSAssert(arrayKeypath, @"repeatable row must contain %@ keypath", DXTableArrayKey);
                     dataObject = [row.dataContext valueForKeyPath:arrayKeypath][index];
