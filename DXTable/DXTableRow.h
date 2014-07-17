@@ -16,6 +16,7 @@
 extern NSString *const DXTableRowEditableKey;
 extern NSString *const DXTableRowEditingStyleKey;
 extern NSString *const DXTableRowSelectionEnabledKey;
+extern NSString *const DXTableRowEditingIndentKey; // workaround for cell's shouldIndentWhileEditing property is not working properly
 
 extern NSString *const DXTableRowWillSelectActionKey;
 extern NSString *const DXTableRowDidSelectActionKey;
@@ -40,6 +41,8 @@ extern NSString *const DXTableRowCommitDeleteActionKey;
 @property (nonatomic, readonly, getter=isTemplated) BOOL templated;
 
 @property (nonatomic, readonly, getter=isSelectionEnabled) BOOL selectionEnabled;
+
+@property (nonatomic, readonly) BOOL shouldIndentWhileEditing;
 
 @property (nonatomic, readonly) id target;
 

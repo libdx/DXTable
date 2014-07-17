@@ -104,6 +104,20 @@
     return enabled;
 }
 
+- (BOOL)shouldIndentWhileEditing
+{
+    BOOL should = YES;
+    if ([self[DXTableRowEditingIndentKey] isKindOfClass:[NSNumber class]]) {
+        should = [self[DXTableRowEditingIndentKey] boolValue];
+    } else {
+        NSString *keypath = DXTableParseKeyValue(self[DXTableRowEditingIndentKey]);
+        if (keypath) {
+            should = [[self.dataContext valueForKeyPath:keypath] boolValue];
+        }
+    }
+    return should;
+}
+
 - (CGFloat)height
 {
     CGFloat height = UITableViewAutomaticDimension;
@@ -159,6 +173,7 @@
 NSString *const DXTableRowEditableKey = @"editable";
 NSString *const DXTableRowEditingStyleKey = @"editingStyle";
 NSString *const DXTableRowSelectionEnabledKey = @"selectionEnabled";
+NSString *const DXTableRowEditingIndentKey = @"editingIndentKey";
 
 NSString *const DXTableRowWillSelectActionKey = @"willSelect";
 NSString *const DXTableRowDidSelectActionKey = @"didSelect";

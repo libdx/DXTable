@@ -304,6 +304,13 @@ didObserveSectionChange:(DXTableSection *)section
     return sectionItem.footerHeight;
 }
 
+- (BOOL)tableView:(UITableView *)tableView shouldIndentWhileEditingRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    DXTableSection *section = self.tableModel.activeSections[indexPath.section];
+    DXTableRow *row = section.activeRows[indexPath.row];
+    return row.shouldIndentWhileEditing;
+}
+
 @end
 
 NSString *DXTableViewSourceCellClassKey = @"CellClass";
