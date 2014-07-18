@@ -18,9 +18,9 @@
 
 @interface DXTableViewSource () <DXTableObserverDelegate>
 
-@property (nonatomic) DXTableModel *tableModel;
+@property (nonatomic, strong) DXTableModel *tableModel;
 @property (nonatomic, weak) UITableView *tableView;
-@property (nonatomic) DXTableObserver *tableObserver;
+@property (nonatomic, strong) DXTableObserver *tableObserver;
 @property (nonatomic, copy) NSDictionary *options;
 
 @end
