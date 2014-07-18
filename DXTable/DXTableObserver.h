@@ -18,6 +18,7 @@
 
 // TODO: make a few small specialized methods instead of these huge ones
 - (void)startObservingTableModel:(DXTableModel *)tableModel;
+- (void)stopObserving;
 - (void)setupBindingsForCell:(UITableViewCell *)cell row:(DXTableRow *)row atIndexPath:(NSIndexPath *)indexPath;
 - (void)setupBindingsForView:(UIView *)view item:(DXTableItem *)item inDataContext:(id)dataContext;
 

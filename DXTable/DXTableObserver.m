@@ -397,6 +397,11 @@ static void addObjectIfNotNil(NSMutableArray *array, id object)
     }
 }
 
+- (void)stopObserving
+{
+    [self.kvoController unobserveAll];
+}
+
 // FIXME: unify this method with setupBindingsForCell:… now it's copy-paste and decouple logic
 - (void)setupBindingsForView:(UIView *)view item:(DXTableItem *)item inDataContext:(id)dataContext
 {

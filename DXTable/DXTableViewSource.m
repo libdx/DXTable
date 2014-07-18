@@ -71,6 +71,11 @@ static UINib *nibFromNibOrName(id nibOrString)
     return self;
 }
 
+- (void)dealloc
+{
+    [self.tableObserver stopObserving];
+}
+
 - (void)registerResourcesForTableView:(UITableView *)tableView
 {
     if (tableView == nil) {
