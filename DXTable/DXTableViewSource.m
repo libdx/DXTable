@@ -12,7 +12,6 @@
 #import "DXTableRow.h"
 #import "DXTableRowArray.h"
 #import "DXTableObserver.h"
-#import "FBKVOController.h"
 #import "DXBindings.h"
 
 #import <objc/runtime.h>
@@ -22,7 +21,6 @@
 @property (nonatomic) DXTableModel *tableModel;
 @property (nonatomic, weak) UITableView *tableView;
 @property (nonatomic) DXTableObserver *tableObserver;
-@property (nonatomic) FBKVOController *kvoController;
 @property (nonatomic, copy) NSDictionary *options;
 
 @end
@@ -63,7 +61,6 @@ static UINib *nibFromNibOrName(id nibOrString)
         self.tableView = tableView;
         tableView.delegate = self;
         tableView.dataSource = self;
-        self.kvoController = [FBKVOController controllerWithObserver:self];
         self.tableObserver = [[DXTableObserver alloc] init];
         self.tableObserver.delegate = self;
         self.options = options;
