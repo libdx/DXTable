@@ -69,7 +69,9 @@ static void addObjectIfNotNil(NSMutableArray *array, id object)
     info.object = row;
     info.keypath = @"active";
     info.options = NSKeyValueObservingOptionNew | NSKeyValueObservingOptionOld;
+    __weak id weakSelf = self;
     info.block = ^(DXTableObserver *observer, DXTableRow *row, NSDictionary *change) {
+        id strongSelf = weakSelf;
         BOOL isActive = [change[NSKeyValueChangeNewKey] boolValue];
         BOOL wasActive = [change[NSKeyValueChangeOldKey] boolValue];
 
@@ -83,7 +85,7 @@ static void addObjectIfNotNil(NSMutableArray *array, id object)
         DXTableObserverChangeInsert : DXTableObserverChangeDelete;
 
         if (_observerFlags.delegateRowChange) {
-            [observer.delegate tableObserver:self
+            [observer.delegate tableObserver:strongSelf
                          didObserveRowChange:row
                                 atIndexPaths:indexPaths
                                forChangeType:changeType
@@ -116,7 +118,9 @@ static void addObjectIfNotNil(NSMutableArray *array, id object)
     info.object = section;
     info.keypath = @"active";
     info.options = NSKeyValueObservingOptionNew | NSKeyValueObservingOptionOld;
+    __weak id weakSelf = self;
     info.block = ^(DXTableObserver *observer, DXTableSection *section, NSDictionary *change) {
+        id strongSelf = weakSelf;
         BOOL isActive = [change[NSKeyValueChangeNewKey] boolValue];
         BOOL wasActive = [change[NSKeyValueChangeOldKey] boolValue];
 
@@ -132,7 +136,7 @@ static void addObjectIfNotNil(NSMutableArray *array, id object)
         DXTableObserverChangeInsert : DXTableObserverChangeDelete;
 
         if (_observerFlags.delegateSectionChange) {
-            [observer.delegate tableObserver:self
+            [observer.delegate tableObserver:strongSelf
                          didObserveSectionChange:section
                                    atIndexes:indexes
                                forChangeType:changeType
@@ -229,10 +233,12 @@ static void addObjectIfNotNil(NSMutableArray *array, id object)
                 info.object = dataObject;
                 info.keypath = keypath;
                 info.options = NSKeyValueObservingOptionNew;
+                __weak id weakSelf = self;
                 info.block = ^(id observer, id dataObject, NSDictionary *change) {
+                    DXTableObserver *strongSelf = weakSelf;
                     if (_observerFlags.delegateRowChange) {
                         NSArray *indexPaths = [tableModel indexPathsOfRow:row];
-                        [self.delegate tableObserver:self
+                        [strongSelf.delegate tableObserver:strongSelf
                                  didObserveRowChange:row
                                         atIndexPaths:indexPaths
                                        forChangeType:DXTableObserverChangeUpdate
