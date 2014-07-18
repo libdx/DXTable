@@ -105,8 +105,10 @@ static void addObjectIfNotNil(NSMutableArray *array, id object)
         info.object = row.dataContext;
         info.keypath = DXTableParseKeyValue(activeValue);
         info.options = NSKeyValueObservingOptionInitial | NSKeyValueObservingOptionNew;
+        __weak DXTableRow *weakRow = row;
         info.block = ^(id observer, id dataContext, NSDictionary *change) {
-            row.active = [change[NSKeyValueChangeNewKey] boolValue];
+            DXTableRow *strongRow = weakRow;
+            strongRow.active = [change[NSKeyValueChangeNewKey] boolValue];
         };
     }
     return info;
@@ -156,8 +158,10 @@ static void addObjectIfNotNil(NSMutableArray *array, id object)
         info.object = section.dataContext;
         info.keypath = DXTableParseKeyValue(activeValue);
         info.options = NSKeyValueObservingOptionInitial | NSKeyValueObservingOptionNew;
+        __weak DXTableSection *weakSection = section;
         info.block = ^(id observer, id dataContext, NSDictionary *change) {
-            section.active = [change[NSKeyValueChangeNewKey] boolValue];
+            DXTableSection *strongSection = weakSection;
+            strongSection.active = [change[NSKeyValueChangeNewKey] boolValue];
         };
     }
     return info;
@@ -172,7 +176,9 @@ static void addObjectIfNotNil(NSMutableArray *array, id object)
         info.object = row.dataContext;
         info.options = NSKeyValueObservingOptionNew;
         info.keypath = DXTableParseKeyValue(row[DXTableArrayKey]);
+        __weak DXTableRow *weakRow = row;
         info.block = ^(DXTableObserver *observer, id dataContext, NSDictionary *change) {
+            DXTableRow *strongRow = weakRow;
             if (!_observerFlags.delegateRowChange) {
                 return;
             }
@@ -182,7 +188,7 @@ static void addObjectIfNotNil(NSMutableArray *array, id object)
             NSMutableArray *indexPaths = [NSMutableArray array];
             NSUInteger index = indexes ? indexes.firstIndex : NSNotFound;
             while (index != NSNotFound) {
-                NSInteger sectionIndex = [tableModel.activeSections indexOfObject:row.section];
+                NSInteger sectionIndex = [tableModel.activeSections indexOfObject:strongRow.section];
                 NSIndexPath *indexPath = [NSIndexPath indexPathForRow:index inSection:sectionIndex];
                 [indexPaths addObject:indexPath];
                 index = [indexes indexGreaterThanIndex:index];
@@ -199,7 +205,7 @@ static void addObjectIfNotNil(NSMutableArray *array, id object)
             }
 
             [observer.delegate tableObserver:observer
-                         didObserveRowChange:row
+                         didObserveRowChange:strongRow
                                 atIndexPaths:indexPaths
                                forChangeType:changeType
                                newIndexPaths:nil];
@@ -234,12 +240,17 @@ static void addObjectIfNotNil(NSMutableArray *array, id object)
                 info.keypath = keypath;
                 info.options = NSKeyValueObservingOptionNew;
                 __weak id weakSelf = self;
+                __weak DXTableRow *weakRow = row;
+                __weak DXTableModel *weakTableModel = tableModel;
                 info.block = ^(id observer, id dataObject, NSDictionary *change) {
                     DXTableObserver *strongSelf = weakSelf;
-                    if (_observerFlags.delegateRowChange) {
-                        NSArray *indexPaths = [tableModel indexPathsOfRow:row];
+                    DXTableRow *strongRow = weakRow;
+                    DXTableModel *strongTableModel = weakTableModel;
+                    
+                    if (strongSelf->_observerFlags.delegateRowChange) {
+                        NSArray *indexPaths = [strongTableModel indexPathsOfRow:strongRow];
                         [strongSelf.delegate tableObserver:strongSelf
-                                 didObserveRowChange:row
+                                 didObserveRowChange:strongRow
                                         atIndexPaths:indexPaths
                                        forChangeType:DXTableObserverChangeUpdate
                                        newIndexPaths:nil];
@@ -269,11 +280,16 @@ static void addObjectIfNotNil(NSMutableArray *array, id object)
     info.object = dataContext;
     info.keypath = dataKeypath;
     info.options = NSKeyValueObservingOptionInitial | NSKeyValueObservingOptionNew;
+    
+    __weak UIView *weakView = view;
+    __weak NSString *weakViewKeypath = viewKeypath;
     info.block = ^(id observer, id object, NSDictionary *change) {
+        UIView *strongView = weakView;
+        NSString *strongViewKeypath = weakViewKeypath;
         id newValue = change[NSKeyValueChangeNewKey];
-        id oldValue = [view valueForKeyPath:viewKeypath];
+        id oldValue = [strongView valueForKeyPath:strongViewKeypath];
         if (NO == [newValue isEqual:oldValue]) {
-            [view setValue:nilIfNull(newValue) forKeyPath:viewKeypath];
+            [strongView setValue:nilIfNull(newValue) forKeyPath:strongViewKeypath];
         }
     };
     return info;
@@ -473,18 +489,23 @@ static void addObjectIfNotNil(NSMutableArray *array, id object)
                          NSDictionary *controlMetaData = [self metaDataForControlClass:[control class]
                                                                           inTableModel:row.section.tableModel];
                          DXValueTarget *target = [self valueTargetForControl:control metaData:controlMetaData];
+                         
+                         __weak id weakDataObject = dataObject;
                          target.valueChanged = ^(id value, UIEvent *event) {
-                             id oldValue = [dataObject valueForKeyPath:dataKeypath];
+                             id strongDataObject = weakDataObject;
+                             id oldValue = [strongDataObject valueForKeyPath:dataKeypath];
                              if (NO == [value isEqual:oldValue]) {
-                                 [dataObject setValue:nilIfNull(value) forKeyPath:dataKeypath];
+                                 [strongDataObject setValue:nilIfNull(value) forKeyPath:dataKeypath];
                              }
                          };
                      } else if ([object isKindOfClass:[UITextView class]]) {
                          DXViewDelegate *delegate = [self viewDelegateForTextView:object];
+                         __weak id weakDataObject = dataObject;
                          delegate.valueChanged = ^(id value) {
-                             id oldValue = [dataObject valueForKeyPath:dataKeypath];
+                             id strongDataObject = weakDataObject;
+                             id oldValue = [strongDataObject valueForKeyPath:dataKeypath];
                              if (NO == [value isEqual:oldValue]) {
-                                 [dataObject setValue:nilIfNull(value) forKeyPath:dataKeypath];
+                                 [strongDataObject setValue:nilIfNull(value) forKeyPath:dataKeypath];
                              }
                          };
                      }
