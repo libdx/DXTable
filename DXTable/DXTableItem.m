@@ -18,7 +18,12 @@
 
 + (NSPredicate *)predicateForActiveItems
 {
-    return [NSPredicate predicateWithFormat:@"isActive = YES"];
+    static NSPredicate *predicate;
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        predicate = [NSPredicate predicateWithFormat:@"isActive = YES"];
+    });
+    return predicate;
 }
 
 - (instancetype)initWithOptions:(NSDictionary *)options
