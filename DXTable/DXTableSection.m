@@ -174,6 +174,26 @@
     return height;
 }
 
+- (CGFloat)rowHeight
+{
+    CGFloat height = UITableViewAutomaticDimension;
+    if ([self[DXTableRowHeightKey] isKindOfClass:[NSNumber class]]) {
+        height = [self[DXTableRowHeightKey] doubleValue];
+    } else {
+        NSString *keypath = DXTableParseKeyValue(self[DXTableRowHeightKey]);
+        if (keypath) {
+            height = [[self.dataContext valueForKeyPath:keypath] doubleValue];
+        }
+    }
+    return height;
+}
+
+- (BOOL)isRowHeightSet
+{
+    return self[DXTableRowHeightKey] != nil;
+}
+
 @end
 
 NSString *const DXTableRowsKey = @"rows";
+NSString *const DXTableRowHeightKey = @"rowHeight";

@@ -14,6 +14,7 @@
 @class DXTableModel, DXTableRowArray;
 
 extern NSString *const DXTableRowsKey;
+extern NSString *const DXTableRowHeightKey;
 
 @interface DXTableSection : DXTableItem
 
@@ -38,6 +39,16 @@ extern NSString *const DXTableRowsKey;
 
 @property (nonatomic, readonly) CGFloat headerHeight;
 @property (nonatomic, readonly) CGFloat footerHeight;
+
+/**
+ The height to be used for each row in section.
+ Has higher priority over per row height.
+ Exists for optimization purpose when need to display long lists (hundred rows or more).
+ */
+@property (nonatomic, readonly) CGFloat rowHeight;
+
+/// Returns YES when rowHeight is set through options dictionary using DXTableRowHeightKey ("rowHeight") key.
+@property (nonatomic, readonly, getter=isRowHeightSet) BOOL rowHeightSet;
 
 - (instancetype)initWithModel:(DXTableModel *)tableModel
                       options:(NSDictionary *)options;

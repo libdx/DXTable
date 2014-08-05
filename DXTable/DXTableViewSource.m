@@ -208,8 +208,10 @@ didObserveSectionChange:(DXTableSection *)section
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    DXTableSection * section = self.tableModel.activeSections[indexPath.section];
-    return section.activeRows[indexPath.row].height;
+    CGFloat height = UITableViewAutomaticDimension;
+    DXTableSection *section = self.tableModel.activeSections[indexPath.section];
+    height = section.isRowHeightSet ? section.rowHeight : section.activeRows[indexPath.row].height;
+    return height;
 }
 
 - (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath
