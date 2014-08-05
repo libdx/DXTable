@@ -24,9 +24,11 @@ ________
 ✓ Activating/deactivating sections
 
 ✓ From view to model bindings for repeatable rows
-- Support of actions for buttons (UIButton, UISegmentedControl)
-- Workaround cell.shouldIndentWhileEditing (by adding new key to row RowShouldIndentWhileEditingKey)
-- Add DXTableViewSourceOptions class
+- Support of actions for buttons (
+    ✓ UISegmentedControl
+    - UIButton
+✓ Workaround cell.shouldIndentWhileEditing (by adding new key to row RowShouldIndentWhileEditingKey)
+✓ Add DXTableViewSourceOptions class
 - Replace DXTableNameKey by name property in DXTableViewSource class
 
 - Reloading of sections (support for DXTableUpdatesKey key)
@@ -71,3 +73,11 @@ __________
 
 - Implement more custom cells (with switches etc)
     - Make nice looking form (with alert and other subforms)
+
+Thoughts
+__________
+- Possible options for DXTableViewSource:
+    - insertAnimationKey;
+    - useLocalizedStringKey;
+    - canEditRowsKey; // are rows editable by default
+- Consider to put all options from DXTableViewSourceOptions at TableModel level

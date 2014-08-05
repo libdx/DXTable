@@ -21,7 +21,7 @@
 @property (nonatomic, strong) DXTableModel *tableModel;
 @property (nonatomic, weak) UITableView *tableView;
 @property (nonatomic, strong) DXTableObserver *tableObserver;
-@property (nonatomic, copy) NSDictionary *options;
+@property (nonatomic, strong) DXTableViewSourceOptions *options;
 
 @end
 
@@ -49,11 +49,15 @@ static UINib *nibFromNibOrName(id nibOrString)
     [UINib nibWithNibName:nibOrString bundle:nil] : nibOrString;
 }
 
+@implementation DXTableViewSourceOptions
+
+@end
+
 @implementation DXTableViewSource
 
 - (instancetype)initWithTableView:(UITableView *)tableView
                        tableModel:(DXTableModel *)tableModel
-                          options:(NSDictionary *)options;
+                          options:(DXTableViewSourceOptions *)options;
 {
     self = [super init];
     if (self) {
@@ -108,7 +112,7 @@ static UINib *nibFromNibOrName(id nibOrString)
     Class cls = classFromClassOrName(item[DXTableClassKey]);
     UINib *nib = nibFromNibOrName(item[DXTableNibKey]);
     NSString *identifier = item[DXTableNameKey];
-    cls = cls || nib ? cls : self.options[DXTableViewSourceCellClassKey];
+    cls = cls || nib ? cls : self.options.cellClass;
     if (cls) {
         [tableView registerClass:cls forHeaderFooterViewReuseIdentifier:identifier];
     } else {
@@ -125,7 +129,7 @@ static UINib *nibFromNibOrName(id nibOrString)
     Class cls = classFromClassOrName(row[DXTableClassKey]);
     UINib *nib = nibFromNibOrName(row[DXTableNibKey]);
     NSString *identifier = row[DXTableNameKey];
-    cls = cls || nib ? cls : self.options[DXTableViewSourceCellClassKey];
+    cls = cls || nib ? cls : self.options.cellClass;
     if (cls) {
         [tableView registerClass:cls forCellReuseIdentifier:identifier];
     } else {
@@ -316,8 +320,3 @@ didObserveSectionChange:(DXTableSection *)section
 }
 
 @end
-
-NSString *DXTableViewSourceCellClassKey = @"CellClass";
-NSString *DXTableViewSourceInsertAnimationKey = @"InsertAnimation";
-NSString *DXTableViewSourceUseLocalizedStringKey = @"UseLocalizedString";
-NSString *DXTableViewSourceCanEditRowsKey = @"CanEditRows";

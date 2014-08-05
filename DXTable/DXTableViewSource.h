@@ -10,16 +10,17 @@
 
 @class DXTableModel;
 
+@interface DXTableViewSourceOptions : NSObject
+
+@property (nonatomic, unsafe_unretained) Class cellClass;
+
+@end
+
 @interface DXTableViewSource : NSObject <UITableViewDataSource, UITableViewDelegate>
 
 // sets tableView delegate and dataSource to self and registers cell resources (classes and nibs) provided by tableModel.
 - (instancetype)initWithTableView:(UITableView *)tableView
                        tableModel:(DXTableModel *)tableModel
-                          options:(NSDictionary *)options;
+                          options:(DXTableViewSourceOptions *)options;
 
 @end
-
-extern NSString *DXTableViewSourceCellClassKey;
-extern NSString *DXTableViewSourceInsertAnimationKey;
-extern NSString *DXTableViewSourceUseLocalizedStringKey;
-extern NSString *DXTableViewSourceCanEditRowsKey; // are rows editable by default
