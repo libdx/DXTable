@@ -97,7 +97,7 @@ static UINib *nibFromNibOrName(id nibOrString)
         [self registerViewResourcesOfRow:section.footer forTableView:tableView];
 
         // register classes and nibs for cells
-        for (DXTableRow *row in section[DXTableRowsKey]) {
+        for (DXTableRow *row in section.allRows) {
             [self registerCellResourcesOfRow:row forTableView:tableView];
         }
     }
@@ -111,7 +111,7 @@ static UINib *nibFromNibOrName(id nibOrString)
 
     Class cls = classFromClassOrName(item[DXTableClassKey]);
     UINib *nib = nibFromNibOrName(item[DXTableNibKey]);
-    NSString *identifier = item[DXTableNameKey];
+    NSString *identifier = item.name;
     cls = cls || nib ? cls : self.options.cellClass;
     if (cls) {
         [tableView registerClass:cls forHeaderFooterViewReuseIdentifier:identifier];
@@ -128,7 +128,7 @@ static UINib *nibFromNibOrName(id nibOrString)
 
     Class cls = classFromClassOrName(row[DXTableClassKey]);
     UINib *nib = nibFromNibOrName(row[DXTableNibKey]);
-    NSString *identifier = row[DXTableNameKey];
+    NSString *identifier = row.name;
     cls = cls || nib ? cls : self.options.cellClass;
     if (cls) {
         [tableView registerClass:cls forCellReuseIdentifier:identifier];
@@ -194,7 +194,7 @@ didObserveSectionChange:(DXTableSection *)section
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     DXTableRow *row = [self.tableModel.activeSections[indexPath.section] activeRows][indexPath.row];
-    id cell = [tableView dequeueReusableCellWithIdentifier:row[DXTableNameKey]
+    id cell = [tableView dequeueReusableCellWithIdentifier:row.name
                                               forIndexPath:indexPath];
     [self.tableObserver setupBindingsForCell:cell row:row atIndexPath:indexPath];
     return cell;
@@ -284,7 +284,7 @@ didObserveSectionChange:(DXTableSection *)section
     if (sectionItem.header == nil) {
         return nil;
     }
-    UIView *view = [tableView dequeueReusableHeaderFooterViewWithIdentifier:sectionItem.header[DXTableNameKey]];
+    UIView *view = [tableView dequeueReusableHeaderFooterViewWithIdentifier:sectionItem.header.name];
     [self.tableObserver setupBindingsForView:view item:sectionItem.header inDataContext:sectionItem.dataContext];
     return view;
 }
@@ -295,7 +295,7 @@ didObserveSectionChange:(DXTableSection *)section
     if (sectionItem.footer == nil) {
         return nil;
     }
-    UIView *view = [tableView dequeueReusableHeaderFooterViewWithIdentifier:sectionItem.footer[DXTableNameKey]];
+    UIView *view = [tableView dequeueReusableHeaderFooterViewWithIdentifier:sectionItem.footer.name];
     [self.tableObserver setupBindingsForView:view item:sectionItem.footer inDataContext:sectionItem.dataContext];
     return view;
 }
