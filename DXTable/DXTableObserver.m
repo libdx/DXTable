@@ -108,7 +108,14 @@ static void addObjectIfNotNil(NSMutableArray *array, id object)
         __weak DXTableRow *weakRow = row;
         info.block = ^(id observer, id dataContext, NSDictionary *change) {
             DXTableRow *strongRow = weakRow;
-            strongRow.active = [change[NSKeyValueChangeNewKey] boolValue];
+            id newValue = change[NSKeyValueChangeNewKey];
+            if ([newValue isKindOfClass:[NSNumber class]]) {
+                // ask NSNumber its boolean value
+                strongRow.active = [newValue boolValue];
+            } else {
+                // check any other object than NSNumber for nil-nes and treat nil/null as false/NO
+                strongRow.active = ![newValue isKindOfClass:[NSNull class]];
+            }
         };
     }
     return info;
@@ -161,7 +168,14 @@ static void addObjectIfNotNil(NSMutableArray *array, id object)
         __weak DXTableSection *weakSection = section;
         info.block = ^(id observer, id dataContext, NSDictionary *change) {
             DXTableSection *strongSection = weakSection;
-            strongSection.active = [change[NSKeyValueChangeNewKey] boolValue];
+            id newValue = change[NSKeyValueChangeNewKey];
+            if ([newValue isKindOfClass:[NSNumber class]]) {
+                // ask NSNumber its boolean value
+                strongSection.active = [newValue boolValue];
+            } else {
+                // check any other object than NSNumber for nil-nes and treat nil/null as false/NO
+                strongSection.active = ![newValue isKindOfClass:[NSNull class]];
+            }
         };
     }
     return info;
