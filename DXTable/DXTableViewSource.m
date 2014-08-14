@@ -220,7 +220,15 @@ didObserveSectionChange:(DXTableSection *)section
 
 - (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    DXTableRow *row = [self.tableModel.activeSections[indexPath.section] activeRows][indexPath.row];
+    DXTableSection *section = self.tableModel.activeSections[indexPath.section];
+
+    // on iOS 6 reloadData causes tableView:canEditRowAtIndexPath: to be called before tableView:numberOfRowsInSection:
+    // which in situation of changing number of rows could lead to access row beyond the acctual number of rows.
+    if (section.activeRows.count <= indexPath.row) {
+        return NO;
+    }
+
+    DXTableRow *row = section.activeRows[indexPath.row];
     return row.isEditable;
 }
 
