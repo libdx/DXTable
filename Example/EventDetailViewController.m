@@ -158,12 +158,14 @@ static UIView *lookupFirstResponder(UIView *view)
           @[headSection, datesSection, togglableSection, stuffSection, notesSection]
       };
 
+    DXTableViewSourceOptions *sourceOptions = [[DXTableViewSourceOptions alloc] init];
+    sourceOptions.cellClass = [UITableViewCell class];
+
     self.tableModel = [[DXTableModel alloc] initWithDataContext:self.viewModel options:eventModel];
     self.tableViewSource = [[DXTableViewSource alloc]
                             initWithTableView:self.tableView
                             tableModel:self.tableModel
-                            options:@{DXTableViewSourceCellClassKey:
-                                          [UITableViewCell class]}];
+                            options:sourceOptions];
 }
 
 - (EventViewModel *)viewModel
