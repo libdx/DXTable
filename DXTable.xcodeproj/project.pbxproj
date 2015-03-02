@@ -23,7 +23,7 @@
 		FA02E8ED19505FA800862BB9 /* DXTableRowArray.m in Sources */ = {isa = PBXBuildFile; fileRef = FA02E8DD19505FA800862BB9 /* DXTableRowArray.m */; };
 		FA02E8EE19505FA800862BB9 /* DXTableSection.m in Sources */ = {isa = PBXBuildFile; fileRef = FA02E8DF19505FA800862BB9 /* DXTableSection.m */; };
 		FA02E8EF19505FA800862BB9 /* DXTableViewSource.m in Sources */ = {isa = PBXBuildFile; fileRef = FA02E8E119505FA800862BB9 /* DXTableViewSource.m */; };
-		FA02E8F019505FA800862BB9 /* FBKVOController.m in Sources */ = {isa = PBXBuildFile; fileRef = FA02E8E519505FA800862BB9 /* FBKVOController.m */; };
+		FA02E8F019505FA800862BB9 /* DXFBKVOController.m in Sources */ = {isa = PBXBuildFile; fileRef = FA02E8E519505FA800862BB9 /* DXFBKVOController.m */; };
 		FA0464641951F63900EF8681 /* DXViewDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = FA0464631951F63900EF8681 /* DXViewDelegate.m */; };
 		FA04A61E1960BE2600CA7EE1 /* DXTableParse.m in Sources */ = {isa = PBXBuildFile; fileRef = FA04A61D1960BE2600CA7EE1 /* DXTableParse.m */; };
 		FA0813C519674A2D00BCBBBC /* DXTableItem.m in Sources */ = {isa = PBXBuildFile; fileRef = FA02E8D519505FA800862BB9 /* DXTableItem.m */; };
@@ -90,8 +90,8 @@
 		FA02E8E019505FA800862BB9 /* DXTableViewSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DXTableViewSource.h; sourceTree = "<group>"; };
 		FA02E8E119505FA800862BB9 /* DXTableViewSource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DXTableViewSource.m; sourceTree = "<group>"; };
 		FA02E8E219505FA800862BB9 /* TODO */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = TODO; sourceTree = "<group>"; };
-		FA02E8E419505FA800862BB9 /* FBKVOController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FBKVOController.h; sourceTree = "<group>"; };
-		FA02E8E519505FA800862BB9 /* FBKVOController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FBKVOController.m; sourceTree = "<group>"; };
+		FA02E8E419505FA800862BB9 /* DXFBKVOController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DXFBKVOController.h; sourceTree = "<group>"; };
+		FA02E8E519505FA800862BB9 /* DXFBKVOController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DXFBKVOController.m; sourceTree = "<group>"; };
 		FA02E8E619505FA800862BB9 /* LICENSE */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = LICENSE; sourceTree = "<group>"; };
 		FA02E8F119505FF100862BB9 /* DXTable-Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "DXTable-Prefix.pch"; sourceTree = "<group>"; };
 		FA0464621951F63900EF8681 /* DXViewDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DXViewDelegate.h; sourceTree = "<group>"; };
@@ -219,8 +219,8 @@
 		FA02E8E319505FA800862BB9 /* FBKVOController */ = {
 			isa = PBXGroup;
 			children = (
-				FA02E8E419505FA800862BB9 /* FBKVOController.h */,
-				FA02E8E519505FA800862BB9 /* FBKVOController.m */,
+				FA02E8E419505FA800862BB9 /* DXFBKVOController.h */,
+				FA02E8E519505FA800862BB9 /* DXFBKVOController.m */,
 				FA02E8E619505FA800862BB9 /* LICENSE */,
 			);
 			path = FBKVOController;
@@ -312,7 +312,7 @@
 				FA02E8E919505FA800862BB9 /* DXTableItem.m in Sources */,
 				FA02E8EA19505FA800862BB9 /* DXTableModel.m in Sources */,
 				FA04A61E1960BE2600CA7EE1 /* DXTableParse.m in Sources */,
-				FA02E8F019505FA800862BB9 /* FBKVOController.m in Sources */,
+				FA02E8F019505FA800862BB9 /* DXFBKVOController.m in Sources */,
 				FA02E8EF19505FA800862BB9 /* DXTableViewSource.m in Sources */,
 				FA02E8EE19505FA800862BB9 /* DXTableSection.m in Sources */,
 				FA0464641951F63900EF8681 /* DXViewDelegate.m in Sources */,

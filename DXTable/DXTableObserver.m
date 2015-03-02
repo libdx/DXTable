@@ -9,7 +9,7 @@
 #import "DXTableObserver.h"
 #import "DXTable.h"
 #import "DXBindings.h"
-#import "FBKVOController.h"
+#import "DXFBKVOController.h"
 #import <objc/runtime.h>
 
 @interface DXTableObserver ()
@@ -20,7 +20,7 @@
     } _observerFlags;
 }
 
-@property (nonatomic) FBKVOController *kvoController;
+@property (nonatomic) DXFBKVOController *kvoController;
 
 @end
 
@@ -42,7 +42,7 @@ static void addObjectIfNotNil(NSMutableArray *array, id object)
 {
     self = [super init];
     if (self) {
-        self.kvoController = [FBKVOController controllerWithObserver:self];
+        self.kvoController = [DXFBKVOController controllerWithObserver:self];
     }
     return self;
 }
@@ -329,13 +329,13 @@ static void addObjectIfNotNil(NSMutableArray *array, id object)
     return [allMetaData filteredArrayUsingPredicate:p].firstObject;
 }
 
-- (FBKVOController *)kvoControllerForObject:(id)object
+- (DXFBKVOController *)kvoControllerForObject:(id)object
 {
     static void *ObjectKvoControllerKey = &ObjectKvoControllerKey;
     // while `object` exists `kvoController` exists as well
-    FBKVOController *kvoController = objc_getAssociatedObject(object, ObjectKvoControllerKey);
+    DXFBKVOController *kvoController = objc_getAssociatedObject(object, ObjectKvoControllerKey);
     if (kvoController == nil) {
-        kvoController = [FBKVOController controllerWithObserver:object];
+        kvoController = [DXFBKVOController controllerWithObserver:object];
         objc_setAssociatedObject(object, ObjectKvoControllerKey, kvoController, OBJC_ASSOCIATION_RETAIN);
     }
     return kvoController;
@@ -382,7 +382,7 @@ static void addObjectIfNotNil(NSMutableArray *array, id object)
     }
 }
 
-- (void)observeWithInfo:(DXKVOInfo *)info usingKVOController:(FBKVOController *)kvoController
+- (void)observeWithInfo:(DXKVOInfo *)info usingKVOController:(DXFBKVOController *)kvoController
 {
     [kvoController observe:info.object keyPath:info.keypath options:info.options block:info.block];
 }
@@ -439,7 +439,7 @@ static void addObjectIfNotNil(NSMutableArray *array, id object)
         }
     }
 
-    FBKVOController *viewKvoController = [self kvoControllerForObject:view];
+    DXFBKVOController *viewKvoController = [self kvoControllerForObject:view];
     [viewKvoController unobserve:dataContext];
     for (id info in modelToViewBindings) {
         [self observeWithInfo:info usingKVOController:viewKvoController];
@@ -532,7 +532,7 @@ static void addObjectIfNotNil(NSMutableArray *array, id object)
             }
         }
     }
-    FBKVOController *cellKvoController = [self kvoControllerForObject:cell];
+    DXFBKVOController *cellKvoController = [self kvoControllerForObject:cell];
     // unobserve
     for (DXKVOInfo *info in modelToViewBindings) {
         [cellKvoController unobserve:info.object];

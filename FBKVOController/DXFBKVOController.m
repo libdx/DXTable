@@ -7,7 +7,7 @@
   of patent rights can be found in the PATENTS file in the same directory.
  */
 
-#import "FBKVOController.h"
+#import "DXFBKVOController.h"
 
 #import <libkern/OSAtomic.h>
 #import <objc/message.h>
@@ -84,13 +84,13 @@ static NSString *describe_options(NSKeyValueObservingOptions options)
  @abstract The key-value observation info.
  @discussion Object equality is only used within the scope of a controller instance. Safely omit controller from equality definition.
  */
-@interface _FBKVOInfo : NSObject
+@interface _DXFBKVOInfo : NSObject
 @end
 
-@implementation _FBKVOInfo
+@implementation _DXFBKVOInfo
 {
 @public
-  __weak FBKVOController *_controller;
+  __weak DXFBKVOController *_controller;
   NSString *_keyPath;
   NSKeyValueObservingOptions _options;
   SEL _action;
@@ -98,7 +98,7 @@ static NSString *describe_options(NSKeyValueObservingOptions options)
   FBKVONotificationBlock _block;
 }
 
-- (instancetype)initWithController:(FBKVOController *)controller keyPath:(NSString *)keyPath options:(NSKeyValueObservingOptions)options block:(FBKVONotificationBlock)block action:(SEL)action context:(void *)context
+- (instancetype)initWithController:(DXFBKVOController *)controller keyPath:(NSString *)keyPath options:(NSKeyValueObservingOptions)options block:(FBKVONotificationBlock)block action:(SEL)action context:(void *)context
 {
   self = [super init];
   if (nil != self) {
@@ -112,22 +112,22 @@ static NSString *describe_options(NSKeyValueObservingOptions options)
   return self;
 }
 
-- (instancetype)initWithController:(FBKVOController *)controller keyPath:(NSString *)keyPath options:(NSKeyValueObservingOptions)options block:(FBKVONotificationBlock)block
+- (instancetype)initWithController:(DXFBKVOController *)controller keyPath:(NSString *)keyPath options:(NSKeyValueObservingOptions)options block:(FBKVONotificationBlock)block
 {
   return [self initWithController:controller keyPath:keyPath options:options block:block action:NULL context:NULL];
 }
 
-- (instancetype)initWithController:(FBKVOController *)controller keyPath:(NSString *)keyPath options:(NSKeyValueObservingOptions)options action:(SEL)action
+- (instancetype)initWithController:(DXFBKVOController *)controller keyPath:(NSString *)keyPath options:(NSKeyValueObservingOptions)options action:(SEL)action
 {
   return [self initWithController:controller keyPath:keyPath options:options block:NULL action:action context:NULL];
 }
 
-- (instancetype)initWithController:(FBKVOController *)controller keyPath:(NSString *)keyPath options:(NSKeyValueObservingOptions)options context:(void *)context
+- (instancetype)initWithController:(DXFBKVOController *)controller keyPath:(NSString *)keyPath options:(NSKeyValueObservingOptions)options context:(void *)context
 {
   return [self initWithController:controller keyPath:keyPath options:options block:NULL action:NULL context:context];
 }
 
-- (instancetype)initWithController:(FBKVOController *)controller keyPath:(NSString *)keyPath
+- (instancetype)initWithController:(DXFBKVOController *)controller keyPath:(NSString *)keyPath
 {
   return [self initWithController:controller keyPath:keyPath options:0 block:NULL action:NULL context:NULL];
 }
@@ -148,7 +148,7 @@ static NSString *describe_options(NSKeyValueObservingOptions options)
   if (![object isKindOfClass:[self class]]) {
     return NO;
   }
-  return [_keyPath isEqualToString:((_FBKVOInfo *)object)->_keyPath];
+  return [_keyPath isEqualToString:((_DXFBKVOInfo *)object)->_keyPath];
 }
 
 - (NSString *)debugDescription
@@ -178,23 +178,23 @@ static NSString *describe_options(NSKeyValueObservingOptions options)
  @abstract The shared KVO controller instance.
  @discussion Acts as a receptionist, receiving and forwarding KVO notifications.
  */
-@interface _FBKVOSharedController : NSObject
+@interface _DXFBKVOSharedController : NSObject
 
 /** A shared instance that never deallocates. */
 + (instancetype)sharedController;
 
 /** observe an object, info pair */
-- (void)observe:(id)object info:(_FBKVOInfo *)info;
+- (void)observe:(id)object info:(_DXFBKVOInfo *)info;
 
 /** unobserve an object, info pair */
-- (void)unobserve:(id)object info:(_FBKVOInfo *)info;
+- (void)unobserve:(id)object info:(_DXFBKVOInfo *)info;
 
 /** unobserve an object with a set of infos */
 - (void)unobserve:(id)object infos:(NSSet *)infos;
 
 @end
 
-@implementation _FBKVOSharedController
+@implementation _DXFBKVOSharedController
 {
   NSHashTable *_infos;
   OSSpinLock _lock;
@@ -202,10 +202,10 @@ static NSString *describe_options(NSKeyValueObservingOptions options)
 
 + (instancetype)sharedController
 {
-  static _FBKVOSharedController *_controller = nil;
+  static _DXFBKVOSharedController *_controller = nil;
   static dispatch_once_t onceToken;
   dispatch_once(&onceToken, ^{
-    _controller = [[_FBKVOSharedController alloc] init];
+    _controller = [[_DXFBKVOSharedController alloc] init];
   });
   return _controller;
 }
@@ -242,7 +242,7 @@ static NSString *describe_options(NSKeyValueObservingOptions options)
   OSSpinLockLock(&_lock);
   
   NSMutableArray *infoDescriptions = [NSMutableArray arrayWithCapacity:_infos.count];
-  for (_FBKVOInfo *info in _infos) {
+  for (_DXFBKVOInfo *info in _infos) {
     [infoDescriptions addObject:info.debugDescription];
   }
   
@@ -255,7 +255,7 @@ static NSString *describe_options(NSKeyValueObservingOptions options)
   return s;
 }
 
-- (void)observe:(id)object info:(_FBKVOInfo *)info
+- (void)observe:(id)object info:(_DXFBKVOInfo *)info
 {
   if (nil == info) {
     return;
@@ -270,7 +270,7 @@ static NSString *describe_options(NSKeyValueObservingOptions options)
   [object addObserver:self forKeyPath:info->_keyPath options:info->_options context:(void *)info];
 }
 
-- (void)unobserve:(id)object info:(_FBKVOInfo *)info
+- (void)unobserve:(id)object info:(_DXFBKVOInfo *)info
 {
   if (nil == info) {
     return;
@@ -293,13 +293,13 @@ static NSString *describe_options(NSKeyValueObservingOptions options)
   
   // unregister info
   OSSpinLockLock(&_lock);
-  for (_FBKVOInfo *info in infos) {
+  for (_DXFBKVOInfo *info in infos) {
     [_infos removeObject:info];
   }
   OSSpinLockUnlock(&_lock);
   
   // remove observer
-  for (_FBKVOInfo *info in infos) {
+  for (_DXFBKVOInfo *info in infos) {
     [object removeObserver:self forKeyPath:info->_keyPath context:(void *)info];
   }
 }
@@ -308,7 +308,7 @@ static NSString *describe_options(NSKeyValueObservingOptions options)
 {
   NSAssert(context, @"missing context keyPath:%@ object:%@ change:%@", keyPath, object, change);
   
-  _FBKVOInfo *info;
+  _DXFBKVOInfo *info;
   
   {
     // lookup context in registered infos, taking out a strong reference only if it exists
@@ -320,7 +320,7 @@ static NSString *describe_options(NSKeyValueObservingOptions options)
   if (nil != info) {
     
     // take strong reference to controller
-    FBKVOController *controller = info->_controller;
+    DXFBKVOController *controller = info->_controller;
     if (nil != controller) {
       
       // take strong reference to observer
@@ -347,7 +347,7 @@ static NSString *describe_options(NSKeyValueObservingOptions options)
 
 #pragma mark FBKVOController -
 
-@implementation FBKVOController
+@implementation DXFBKVOController
 {
   NSMapTable *_objectInfosMap;
   OSSpinLock _lock;
@@ -393,7 +393,7 @@ static NSString *describe_options(NSKeyValueObservingOptions options)
   for (id object in _objectInfosMap) {
     NSMutableSet *infos = [_objectInfosMap objectForKey:object];
     NSMutableArray *infoDescriptions = [NSMutableArray arrayWithCapacity:infos.count];
-    [infos enumerateObjectsUsingBlock:^(_FBKVOInfo *info, BOOL *stop) {
+    [infos enumerateObjectsUsingBlock:^(_DXFBKVOInfo *info, BOOL *stop) {
       [infoDescriptions addObject:info.debugDescription];
     }];
     [s appendFormat:@"%@ -> %@", object, infoDescriptions];
@@ -408,7 +408,7 @@ static NSString *describe_options(NSKeyValueObservingOptions options)
 
 #pragma mark Utilities -
 
-- (void)_observe:(id)object info:(_FBKVOInfo *)info
+- (void)_observe:(id)object info:(_DXFBKVOInfo *)info
 {
   // lock
   OSSpinLockLock(&_lock);
@@ -416,7 +416,7 @@ static NSString *describe_options(NSKeyValueObservingOptions options)
   NSMutableSet *infos = [_objectInfosMap objectForKey:object];
   
   // check for info existence
-  _FBKVOInfo *existingInfo = [infos member:info];
+  _DXFBKVOInfo *existingInfo = [infos member:info];
   if (nil != existingInfo) {
     NSLog(@"observation info already exists %@", existingInfo);
     
@@ -437,10 +437,10 @@ static NSString *describe_options(NSKeyValueObservingOptions options)
   // unlock prior to callout
   OSSpinLockUnlock(&_lock);
   
-  [[_FBKVOSharedController sharedController] observe:object info:info];
+  [[_DXFBKVOSharedController sharedController] observe:object info:info];
 }
 
-- (void)_unobserve:(id)object info:(_FBKVOInfo *)info
+- (void)_unobserve:(id)object info:(_DXFBKVOInfo *)info
 {
   // lock
   OSSpinLockLock(&_lock);
@@ -449,7 +449,7 @@ static NSString *describe_options(NSKeyValueObservingOptions options)
   NSMutableSet *infos = [_objectInfosMap objectForKey:object];
   
   // lookup registered info instance
-  _FBKVOInfo *registeredInfo = [infos member:info];
+  _DXFBKVOInfo *registeredInfo = [infos member:info];
   
   if (nil != registeredInfo) {
     [infos removeObject:registeredInfo];
@@ -464,7 +464,7 @@ static NSString *describe_options(NSKeyValueObservingOptions options)
   OSSpinLockUnlock(&_lock);
   
   // unobserve
-  [[_FBKVOSharedController sharedController] unobserve:object info:registeredInfo];
+  [[_DXFBKVOSharedController sharedController] unobserve:object info:registeredInfo];
 }
 
 - (void)_unobserve:(id)object
@@ -481,7 +481,7 @@ static NSString *describe_options(NSKeyValueObservingOptions options)
   OSSpinLockUnlock(&_lock);
   
   // unobserve
-  [[_FBKVOSharedController sharedController] unobserve:object infos:infos];
+  [[_DXFBKVOSharedController sharedController] unobserve:object infos:infos];
 }
 
 - (void)_unobserveAll
@@ -497,7 +497,7 @@ static NSString *describe_options(NSKeyValueObservingOptions options)
   // unlock
   OSSpinLockUnlock(&_lock);
   
-  _FBKVOSharedController *shareController = [_FBKVOSharedController sharedController];
+  _DXFBKVOSharedController *shareController = [_DXFBKVOSharedController sharedController];
   
   for (id object in objectInfoMaps) {
     // unobserve each registered object and infos
@@ -516,7 +516,7 @@ static NSString *describe_options(NSKeyValueObservingOptions options)
   }
   
   // create info
-  _FBKVOInfo *info = [[_FBKVOInfo alloc] initWithController:self keyPath:keyPath options:options block:block];
+  _DXFBKVOInfo *info = [[_DXFBKVOInfo alloc] initWithController:self keyPath:keyPath options:options block:block];
   
   // observe object with info
   [self _observe:object info:info];
@@ -531,7 +531,7 @@ static NSString *describe_options(NSKeyValueObservingOptions options)
   }
   
   // create info
-  _FBKVOInfo *info = [[_FBKVOInfo alloc] initWithController:self keyPath:keyPath options:options action:action];
+  _DXFBKVOInfo *info = [[_DXFBKVOInfo alloc] initWithController:self keyPath:keyPath options:options action:action];
   
   // observe object with info
   [self _observe:object info:info];
@@ -545,7 +545,7 @@ static NSString *describe_options(NSKeyValueObservingOptions options)
   }
   
   // create info
-  _FBKVOInfo *info = [[_FBKVOInfo alloc] initWithController:self keyPath:keyPath options:options context:context];
+  _DXFBKVOInfo *info = [[_DXFBKVOInfo alloc] initWithController:self keyPath:keyPath options:options context:context];
   
   // observe object with info
   [self _observe:object info:info];
@@ -554,7 +554,7 @@ static NSString *describe_options(NSKeyValueObservingOptions options)
 - (void)unobserve:(id)object keyPath:(NSString *)keyPath
 {
   // create representative info
-  _FBKVOInfo *info = [[_FBKVOInfo alloc] initWithController:self keyPath:keyPath];
+  _DXFBKVOInfo *info = [[_DXFBKVOInfo alloc] initWithController:self keyPath:keyPath];
   
   // unobserve object property
   [self _unobserve:object info:info];
