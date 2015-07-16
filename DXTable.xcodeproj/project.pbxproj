@@ -270,7 +270,7 @@
 		FA02E89B19505F5300862BB9 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0510;
+				LastUpgradeCheck = 0640;
 				ORGANIZATIONNAME = "Alexander Ignatenko";
 			};
 			buildConfigurationList = FA02E89E19505F5300862BB9 /* Build configuration list for PBXProject "DXTable" */;
@@ -457,7 +457,6 @@
 		FA02E8CA19505F5300862BB9 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(SDKROOT)/Developer/Library/Frameworks",
 					"$(inherited)",
@@ -478,7 +477,6 @@
 		FA02E8CB19505F5300862BB9 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(SDKROOT)/Developer/Library/Frameworks",
 					"$(inherited)",
