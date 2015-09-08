@@ -12,7 +12,6 @@
 		FA02E8B619505F5300862BB9 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FA02E8A619505F5300862BB9 /* Foundation.framework */; };
 		FA02E8B819505F5300862BB9 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FA02E8B719505F5300862BB9 /* UIKit.framework */; };
 		FA02E8BB19505F5300862BB9 /* libDXTable.a in Frameworks */ = {isa = PBXBuildFile; fileRef = FA02E8A319505F5300862BB9 /* libDXTable.a */; };
-		FA02E8C119505F5300862BB9 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = FA02E8BF19505F5300862BB9 /* InfoPlist.strings */; };
 		FA02E8C319505F5300862BB9 /* DXTableParseTests.m in Sources */ = {isa = PBXBuildFile; fileRef = FA02E8C219505F5300862BB9 /* DXTableParseTests.m */; };
 		FA02E8E719505FA800862BB9 /* DXKVOInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = FA02E8CF19505FA800862BB9 /* DXKVOInfo.m */; };
 		FA02E8E819505FA800862BB9 /* DXValueTarget.m in Sources */ = {isa = PBXBuildFile; fileRef = FA02E8D119505FA800862BB9 /* DXValueTarget.m */; };
@@ -67,7 +66,6 @@
 		FA02E8B419505F5300862BB9 /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
 		FA02E8B719505F5300862BB9 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = Library/Frameworks/UIKit.framework; sourceTree = DEVELOPER_DIR; };
 		FA02E8BE19505F5300862BB9 /* DXTableTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "DXTableTests-Info.plist"; sourceTree = "<group>"; };
-		FA02E8C019505F5300862BB9 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		FA02E8C219505F5300862BB9 /* DXTableParseTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DXTableParseTests.m; sourceTree = "<group>"; };
 		FA02E8CD19505FA800862BB9 /* DXBindings.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DXBindings.h; sourceTree = "<group>"; };
 		FA02E8CE19505FA800862BB9 /* DXKVOInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DXKVOInfo.h; sourceTree = "<group>"; };
@@ -171,7 +169,6 @@
 			isa = PBXGroup;
 			children = (
 				FA02E8BE19505F5300862BB9 /* DXTableTests-Info.plist */,
-				FA02E8BF19505F5300862BB9 /* InfoPlist.strings */,
 			);
 			name = Misc;
 			sourceTree = "<group>";
@@ -296,7 +293,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				FA02E8C119505F5300862BB9 /* InfoPlist.strings in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -349,17 +345,6 @@
 			targetProxy = FA02E8B919505F5300862BB9 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
-
-/* Begin PBXVariantGroup section */
-		FA02E8BF19505F5300862BB9 /* InfoPlist.strings */ = {
-			isa = PBXVariantGroup;
-			children = (
-				FA02E8C019505F5300862BB9 /* en */,
-			);
-			name = InfoPlist.strings;
-			sourceTree = "<group>";
-		};
-/* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
 		FA02E8C419505F5300862BB9 /* Debug */ = {
