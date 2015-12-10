@@ -26,7 +26,7 @@
 {
     if (idx >= self.count) {
         [NSException raise:NSRangeException
-                    format:@"%u is out of range [0..%u]", idx, self.count - 1];
+                    format:@"%lu is out of range [0..%lu]", (unsigned long)idx, (unsigned long)self.count - 1];
     }
     // TODO: make optimisations
     NSInteger repeatCount = 0;
